@@ -35,12 +35,12 @@
                     />
 
                     <div>
-                        <ButtonSolidBlue buttonText="Register" />
+                        <ButtonSolidBlue class="w-full" buttonText="Register" />
                     </div>
 
                     <div class="text-sm">
                         Already have an account?
-                        <router-link to="/" class="font-medium text-blue-light hover:text-blue">Sign In</router-link>
+                        <router-link to="/login" class="font-medium text-blue-light hover:text-blue">Sign In</router-link>
                     </div>
                 </div>
             </form>

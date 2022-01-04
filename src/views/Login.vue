@@ -43,7 +43,7 @@
                     </div>
 
                     <div>
-                        <ButtonSolidBlue buttonText="Sign In" />
+                        <ButtonSolidBlue class="w-full" buttonText="Sign In" />
                     </div>
 
                     <div class="text-sm">

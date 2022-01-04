@@ -9,23 +9,39 @@
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Login</h1>
             <p class="mt-4">Log in with your phone number and password that you entered during your registration.</p>
 
-            <form action="">
+            <Form @submit="stop" :validation-schema="schema" v-slot="{ errors }">
                 <div class="mt-10 space-y-4">
-                    <Input
-                        v-model="event.phoneNumber"
+                    <label class="block text-sm font-medium">Phone Number</label>
+                    <Field
+                        v-model="state.phone_number"
+                        v-bind:class="{ 'border border-red-400': errors['phone_number'] }"
                         type="text"
+                        as="input"
                         id="phone-number"
                         name="phone_number"
                         label="Phone number" 
+                        class="rounded w-full"
                     />
 
-                    <Input 
-                        v-model="event.password"
+                    <div class="text-red-500">
+                        {{ errors.phone_number }}
+                    </div>
+
+                    <label class="block text-sm font-medium">Password</label>
+                    <Field 
+                        v-model="state.password"
+                        v-bind:class="{ 'border border-red-400': errors['password'] }"
                         type="password"
+                        as="input"
                         id="password"
                         name="password"
                         label="Password" 
+                        class="rounded w-full"
                     />
+
+                    <div class="text-red-500">
+                        {{ errors.password }}
+                    </div>
                     
                     <div class="flex items-center justify-between">
                         <div class="flex items-center">
@@ -61,20 +77,42 @@
     import Input from '../components/Input'
     import ButtonSolidBlue from '../components/buttons/ButtonSolidBlue'
     import ButtonOutlineGreen from '../components/buttons/ButtonOutlineGreen'
-
+    import { reactive } from "vue";
+    import { Form, Field } from "vee-validate";
+    import * as yup from "yup";
+    
     export default {
         components: {
             LockClosedIcon,
             Input,
-            ButtonSolidBlue
+            ButtonSolidBlue,
+            Form,
+            Field,
         },
-        data() {
+
+        setup() {
+            const state = reactive({
+                phone_number: "",
+                password: "",
+            });
+            
+            const schema = yup.object().shape({
+            phone_number: yup
+                .string()
+                .required("Phone number is required")
+                .matches(
+                /^(09|\+639)\d{9}$/,
+                "Phone number is not valid"
+                ),
+            password: yup
+                .string()
+                .min(6, 'Password must be at least 6 characters').required("Password is required"),
+            });
+            //some other function
             return {
-                event: {
-                    phoneNumber: '',
-                    password: ''
-                }
-            }
-        }
+                state,
+                schema,
+            };
+        },
     }
 </script>

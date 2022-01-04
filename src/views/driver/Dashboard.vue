@@ -13,22 +13,10 @@
                     </router-link>
                 </li>
                 <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <router-link to="/dashboard" class="flex items-center space-x-2 w-full p-2">
+                    <router-link to="/transactions" class="flex items-center space-x-2 w-full p-2">
                         <RefreshIcon class="h-5 w-5"/>
-                        <span>Delivery History</span>
+                        <span>Transactions</span>
                     </router-link>
-                </li>
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <a href="#" class="flex items-center space-x-2 w-full p-2">
-                        <CogIcon class="h-5 w-5"/>
-                        <span>Settings</span>
-                    </a>
-                </li>
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <a href="#" class="flex items-center space-x-2 w-full p-2">
-                        <QuestionMarkCircleIcon class="h-5 w-5"/>
-                        <span>Help</span>
-                    </a>
                 </li>
             </ul>
         </aside>

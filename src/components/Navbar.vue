@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <nav class="flex justify-between items-center space-x-12 py-2 px-6 md:px-12 lg:px-16 border-b">
-            <a href="https://agrabah.ph">
+            <a href="#">
                 <img class="w-64" src="../../public/img/agrabah-logo.png" alt="Agrabah">
             </a>
             

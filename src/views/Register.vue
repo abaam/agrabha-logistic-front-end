@@ -8,34 +8,58 @@
 
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Registration</h1>
 
-            <form action="">
+            <Form @submit="stop" :validation-schema="schema" v-slot="{ errors }">
                 <div class="mt-10 space-y-4">
-                    <Input 
-                        v-model="event.phoneNumber"
+                    <label class="block text-sm font-medium">Phone Number</label>
+                    <Field 
+                        v-model="state.phone_number"
+                        v-bind:class="{ 'border border-red-400': errors['phone_number'] }"
                         type="text"
+                        as="input"
                         id="phone-number"
                         name="phone_number"
                         label="Phone number" 
+                        class="rounded w-full"
                     />
 
-                    <Input 
-                        v-model="event.password"
+                    <div class="text-red-500">
+                        {{ errors.phone_number }}
+                    </div>
+
+                    <label class="block text-sm font-medium">Password</label>
+                    <Field 
+                        v-model="state.password"
+                        v-bind:class="{ 'border border-red-400': errors['password', 'retype_password'] }"
                         type="password"
+                        as="input"
                         id="password"
                         name="password"
                         label="Password" 
+                        class="rounded w-full"
                     />
 
-                    <Input 
-                        v-model="event.retypePassword"
+                    <div class="text-red-500">
+                        {{ errors.password }}
+                    </div>
+
+                    <label class="block text-sm font-medium">Re-type Password</label>
+                    <Field 
+                        v-model="state.retype_password"
+                        v-bind:class="{ 'border border-red-400': errors['retype_password'] }"
                         type="password"
+                        as="input"
                         id="retype-password"
                         name="retype_password"
                         label="Re-type Password" 
+                        class="rounded w-full"
                     />
 
+                    <div class="text-red-500">
+                        {{ errors.retype_password }}
+                    </div>
+
                     <SelectInput 
-                        v-model="event.registerAs"
+                        v-model="state.register_as"
                         :roles="roles"
                         id="register-as"
                         name="register_as"
@@ -61,6 +85,9 @@
     import Input from '../components/Input'
     import SelectInput from '../components/SelectInput'
     import ButtonSolidBlue from '../components/buttons/ButtonSolidBlue'
+    import { reactive } from "vue";
+    import { Form, Field } from "vee-validate";
+    import * as yup from "yup";
 
     const roles = [
         {
@@ -74,26 +101,43 @@
     ]
 
     export default {
-        setup() {
-            return {
-                roles,
-            }
-        },
         components: {
             LockClosedIcon,
             Input,
             ButtonSolidBlue,
-            SelectInput
+            SelectInput,
+            Form,
+            Field,
         },
-        data() {
+
+        setup() {
+            const state = reactive({
+                phone_number: "",
+                password: "",
+                retype_password: "",
+                register_as: "",
+            });
+            
+            const schema = yup.object().shape({
+            phone_number: yup
+                .string()
+                .required("Phone number is required")
+                .matches(
+                /^(09|\+639)\d{9}$/,
+                "Phone number is not valid"
+                ),
+            password: yup
+                .string()
+                .min(6, 'Password must be at least 6 characters').required("Password is required"),
+            retype_password: yup.string()
+                .oneOf([yup.ref('password'), null], 'Passwords must match'),
+            });
+            //some other function
             return {
-                event: {
-                    phoneNumber: '',
-                    password: '',
-                    retypePassword: '',
-                    registerAs: ''
-                }
-            }
-        }
+                state,
+                schema,
+                roles,
+            };
+        },
     }
 </script>

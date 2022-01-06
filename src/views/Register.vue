@@ -22,7 +22,7 @@
                         class="rounded w-full"
                     />
 
-                    <div class="text-red-500">
+                    <div class="text-purple-500">
                         {{ errors.phone_number }}
                     </div>
 
@@ -38,7 +38,7 @@
                         class="rounded w-full"
                     />
 
-                    <div class="text-red-500">
+                    <div class="text-purple-500">
                         {{ errors.password }}
                     </div>
 
@@ -54,7 +54,7 @@
                         class="rounded w-full"
                     />
 
-                    <div class="text-red-500">
+                    <div class="text-purple-500">
                         {{ errors.retype_password }}
                     </div>
 
@@ -66,8 +66,8 @@
                         label="Register As"
                         class="rounded w-full"
                     >
-                    <option value="driver">Driver</option>
-                    <option value="customer">Customer</option>
+                    <option value="1">Driver</option>
+                    <option value="2">Customer</option>
                     </Field>
 
                     <div>
@@ -94,17 +94,6 @@
     import * as yup from "yup";
     import axios from 'axios';
 
-    const roles = [
-        {
-            id: 'driver',
-            name: 'Driver'
-        },
-        {
-            id: 'customer',
-            name: 'Customer'
-        }
-    ]
-
     export default {
         components: {
             LockClosedIcon,
@@ -120,7 +109,7 @@
                 phone_number: '',
                 password: '',
                 retype_password: '',
-                register_as: 'driver',
+                register_as: '1',
             });
             
             const schema = yup.object().shape({
@@ -141,7 +130,6 @@
             return {
                 state,
                 schema,
-                roles,
             };
         },
 

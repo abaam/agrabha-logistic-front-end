@@ -14,7 +14,7 @@
             </b-alert>
 
             <Form @submit="login" :validation-schema="schema" v-slot="{ errors }">
-                <div class="mt-10 space-y-4">
+                <div class="mt-10">
                     <div role="alert" v-show="invalidCredentials">
                         <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
                             Incorrect Credentials
@@ -23,60 +23,55 @@
                             <p>{{ invalidCredentials }}</p>
                         </div>
                     </div>
-                    <label class="block text-sm font-medium">Phone Number</label>
-                    <Field
-                        v-model="state.phone_number"
-                        v-bind:class="{ 'border border-red-400': errors['phone_number'] }"
-                        type="text"
-                        as="input"
-                        id="phone-number"
-                        name="phone_number"
-                        label="Phone number" 
-                        class="rounded w-full"
-                    />
-
-                    <div class="text-red-500">
-                        {{ errors.phone_number }}
+                    
+                    <div class="mb-4">
+                        <label for="phone-number" class="block text-sm font-semibold">Phone number</label>
+                        <Field
+                            v-model="state.phone_number"
+                            type="text"
+                            as="input"
+                            id="phone-number"
+                            name="phone_number"
+                            class="appearance-none rounded relative block w-full px-3 py-2 border border-grey placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="{ 'border border-purple': errors['phone_number'] }"
+                        />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="phone_number" />
                     </div>
 
-                    <label class="block text-sm font-medium">Password</label>
-                    <Field 
-                        v-model="state.password"
-                        v-bind:class="{ 'border border-red-400': errors['password'] }"
-                        type="password"
-                        as="input"
-                        id="password"
-                        name="password"
-                        label="Password" 
-                        class="rounded w-full"
-                    />
-
-                    <div class="text-red-500">
-                        {{ errors.password }}
+                    <div class="mb-4">
+                        <label for="password" class="block text-sm font-semibold">Password</label>
+                        <Field 
+                            v-model="state.password"
+                            type="password"
+                            as="input"
+                            id="password"
+                            name="password"
+                            class="appearance-none rounded relative block w-full px-3 py-2 border border-grey placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="{ 'border border-purple': errors['password'] }"
+                        />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="password" />
                     </div>
                     
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center">
                             <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue focus:ring-blue border-gray-300 rounded" />
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                            <label for="remember-me" class="ml-2 block text-sm">
                             Remember me
                             </label>
                         </div>
 
                         <div class="text-sm">
-                            <a href="#" class="font-medium text-blue-light hover:text-blue">
+                            <a href="#" class="font-semibold text-blue-light hover:text-blue">
                                 Forgot your password?
                             </a>
                         </div>
                     </div>
 
-                    <div>
-                        <ButtonSolidBlue type="submit" class="w-full" buttonText="Sign In" />
-                    </div>
+                    <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Sign In" />
 
                     <div class="text-sm">
                         Not registered yet? 
-                        <router-link to="/register" class="font-medium text-blue-light hover:text-blue">Create an account?</router-link>
+                        <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Create an account?</router-link>
                     </div>
                 </div>
             </form>
@@ -85,37 +80,33 @@
 </template>
 
 <script>
-    import { LockClosedIcon } from '@heroicons/vue/solid'
-    import Input from '../components/Input'
-    import ButtonSolidBlue from '../components/buttons/ButtonSolidBlue'
-    import ButtonOutlineGreen from '../components/buttons/ButtonOutlineGreen'
-    import { reactive } from "vue";
-    import { Form, Field } from "vee-validate";
     import * as yup from "yup";
     import axios from 'axios';
+    import { reactive } from "vue";
+    import { Form, Field, ErrorMessage } from "vee-validate";
+    import { LockClosedIcon } from '@heroicons/vue/solid'
+    import ButtonSolidBlue from '../components/buttons/ButtonSolidBlue'
     
     export default {
         components: {
             LockClosedIcon,
-            Input,
             ButtonSolidBlue,
             Form,
             Field,
+            ErrorMessage
         },
-
         data() {
             return {
                 invalidCredentials: '',
             };
         },
-
         setup() {
             const state = reactive({
                 phone_number: '',
                 password: '',
                 serverError: '',
             });
-            
+
             const schema = yup.object().shape({
             phone_number: yup
                 .string()
@@ -126,15 +117,13 @@
                 ),
             password: yup
                 .string()
-                .min(6, 'Password must be at least 6 characters').required("Password is required"),
+                .min(8, 'Password must be at least 8 characters').required("Password is required"),
             });
-            //some other function
             return {
                 state,
                 schema,
             };
         },
-
         methods: {
             login(){
                 let self = this

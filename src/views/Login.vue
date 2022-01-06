@@ -9,8 +9,20 @@
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Login</h1>
             <p class="mt-4">Log in with your phone number and password that you entered during your registration.</p>
 
-            <Form @submit="stop" :validation-schema="schema" v-slot="{ errors }">
+            <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
+                {{ serverError }}
+            </b-alert>
+
+            <Form @submit="login" :validation-schema="schema" v-slot="{ errors }">
                 <div class="mt-10 space-y-4">
+                    <div role="alert" v-show="invalidCredentials">
+                        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+                            Incorrect Credentials
+                        </div>
+                        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                            <p>{{ invalidCredentials }}</p>
+                        </div>
+                    </div>
                     <label class="block text-sm font-medium">Phone Number</label>
                     <Field
                         v-model="state.phone_number"
@@ -59,7 +71,7 @@
                     </div>
 
                     <div>
-                        <ButtonSolidBlue class="w-full" buttonText="Sign In" />
+                        <ButtonSolidBlue type="submit" class="w-full" buttonText="Sign In" />
                     </div>
 
                     <div class="text-sm">
@@ -80,6 +92,7 @@
     import { reactive } from "vue";
     import { Form, Field } from "vee-validate";
     import * as yup from "yup";
+    import axios from 'axios';
     
     export default {
         components: {
@@ -90,10 +103,17 @@
             Field,
         },
 
+        data() {
+            return {
+                invalidCredentials: '',
+            };
+        },
+
         setup() {
             const state = reactive({
-                phone_number: "",
-                password: "",
+                phone_number: '',
+                password: '',
+                serverError: '',
             });
             
             const schema = yup.object().shape({
@@ -113,6 +133,24 @@
                 state,
                 schema,
             };
+        },
+
+        methods: {
+            login(){
+                let self = this
+                axios.post(process.env.VUE_APP_API + "login", {
+                    phone_number: this.state.phone_number,
+                    password: this.state.password
+                })
+                .then(() => {
+                    this.$router.push("/dashboard");
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        self.invalidCredentials = error.response.data.message;
+                    }
+                })
+            }
         },
     }
 </script>

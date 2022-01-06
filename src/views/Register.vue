@@ -22,8 +22,13 @@
                         class="rounded w-full"
                     />
 
-                    <div class="text-purple-500">
+                    <div class="text-purple-500 phone-number-error">
                         {{ errors.phone_number }}
+                    </div>
+
+                    <div class="text-purple-500 phone-number-error"
+                    v-bind:class="{ 'hidden': errors['phone_number'] }">
+                        {{ uniquePhoneNumber }}
                     </div>
 
                     <label class="block text-sm font-medium">Password</label>
@@ -104,6 +109,12 @@
             Field,
         },
 
+        data() {
+            return {
+                uniquePhoneNumber: '',
+            };
+        },
+
         setup() {
             const state = reactive({
                 phone_number: '',
@@ -111,7 +122,7 @@
                 retype_password: '',
                 register_as: '1',
             });
-            
+
             const schema = yup.object().shape({
             phone_number: yup
                 .string()
@@ -135,12 +146,19 @@
 
         methods: {
             register(){
+                let self = this
                 axios.post(process.env.VUE_APP_API + "register", {
                     phone_number: this.state.phone_number,
                     password: this.state.password,
                     register_as: this.state.register_as
-                }).then((response)=>{
-                    window.location = "/dashboard"
+                })
+                .then(() => {
+                    this.$router.push("/dashboard");
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        self.uniquePhoneNumber = error.response.data.errors.phone_number[0];
+                    }
                 })
             }
         },

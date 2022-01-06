@@ -8,7 +8,7 @@
 
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Registration</h1>
 
-            <Form @submit="stop" :validation-schema="schema" v-slot="{ errors }">
+            <Form @submit="register" :validation-schema="schema" v-slot="{ errors }">
                 <div class="mt-10 space-y-4">
                     <label class="block text-sm font-medium">Phone Number</label>
                     <Field 
@@ -58,16 +58,20 @@
                         {{ errors.retype_password }}
                     </div>
 
-                    <SelectInput 
-                        v-model="state.register_as"
-                        :roles="roles"
+                    <label class="block text-sm font-medium">Register As</label>
+                    <Field as="select"
+                    v-model="state.register_as"
                         id="register-as"
                         name="register_as"
                         label="Register As"
-                    />
+                        class="rounded w-full"
+                    >
+                    <option value="driver">Driver</option>
+                    <option value="customer">Customer</option>
+                    </Field>
 
                     <div>
-                        <ButtonSolidBlue class="w-full" buttonText="Register" />
+                        <ButtonSolidBlue type="submit" class="w-full" buttonText="Register" />
                     </div>
 
                     <div class="text-sm">
@@ -88,14 +92,15 @@
     import { reactive } from "vue";
     import { Form, Field } from "vee-validate";
     import * as yup from "yup";
+    import axios from 'axios';
 
     const roles = [
         {
-            id: 1,
+            id: 'driver',
             name: 'Driver'
         },
         {
-            id: 2,
+            id: 'customer',
             name: 'Customer'
         }
     ]
@@ -112,10 +117,10 @@
 
         setup() {
             const state = reactive({
-                phone_number: "",
-                password: "",
-                retype_password: "",
-                register_as: "",
+                phone_number: '',
+                password: '',
+                retype_password: '',
+                register_as: 'driver',
             });
             
             const schema = yup.object().shape({
@@ -138,6 +143,18 @@
                 schema,
                 roles,
             };
+        },
+
+        methods: {
+            register(){
+                axios.post(process.env.VUE_APP_API + "register", {
+                    phone_number: this.state.phone_number,
+                    password: this.state.password,
+                    register_as: this.state.register_as
+                }).then((response)=>{
+                    window.location = "/dashboard"
+                })
+            }
         },
     }
 </script>

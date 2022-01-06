@@ -28,6 +28,12 @@ const routes = [
     path: '/transactions',
     name: 'Transaction',
     component: Transaction
+  },
+
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
   }
 ]
 

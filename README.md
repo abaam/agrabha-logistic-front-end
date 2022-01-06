@@ -1,4 +1,4 @@
-# agrabah
+# Agrabah Logistics
 
 ## Project setup
 ```

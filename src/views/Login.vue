@@ -28,8 +28,8 @@
                             as="input"
                             id="phone-number"
                             name="phone_number"
-                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
-                            :class="errors['phone_number'] ? 'border border-purple' : 'border border-grey'"
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:z-10 sm:text-sm"
+                            :class="errors['phone_number'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                         />
                         <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="phone_number" />
                     </div>
@@ -42,8 +42,8 @@
                             as="input"
                             id="password"
                             name="password"
-                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
-                            :class="errors['password'] ? 'border border-purple' : 'border border-grey'"
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:z-10 sm:text-sm"
+                            :class="errors['password'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                         />
                         <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="password" />
                     </div>
@@ -66,6 +66,7 @@
                     <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Sign In" />
                 </div>
             </Form>
+
             <div class="text-sm">
                 Not registered yet? 
                 <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Create an account?</router-link>

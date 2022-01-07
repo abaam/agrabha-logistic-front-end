@@ -64,13 +64,12 @@
                     </div>
                     
                     <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Sign In" />
-
-                    <div class="text-sm">
-                        Not registered yet? 
-                        <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Create an account?</router-link>
-                    </div>
                 </div>
-            </form>
+            </Form>
+            <div class="text-sm">
+                Not registered yet? 
+                <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Create an account?</router-link>
+            </div>
         </div>
     </div>
 </template>

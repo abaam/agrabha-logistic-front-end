@@ -9,10 +9,6 @@
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Login</h1>
             <p class="mt-4">Log in with your phone number and password that you entered during your registration.</p>
 
-            <b-alert v-model="showDismissibleAlert" variant="danger" dismissible>
-                {{ serverError }}
-            </b-alert>
-
             <Form @submit="login" :validation-schema="schema" v-slot="{ errors }">
                 <div class="mt-10">
                     <div role="alert" v-show="invalidCredentials">
@@ -21,7 +17,7 @@
                         </div>
                         <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
                             <p>{{ invalidCredentials }}</p>
-                        </div>
+                        </div><br>
                     </div>
                     
                     <div class="mb-4">
@@ -32,8 +28,8 @@
                             as="input"
                             id="phone-number"
                             name="phone_number"
-                            class="appearance-none rounded relative block w-full px-3 py-2 border border-grey placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
-                            :class="{ 'border border-purple': errors['phone_number'] }"
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="errors['phone_number'] ? 'border border-purple' : 'border border-grey'"
                         />
                         <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="phone_number" />
                     </div>
@@ -46,8 +42,8 @@
                             as="input"
                             id="password"
                             name="password"
-                            class="appearance-none rounded relative block w-full px-3 py-2 border border-grey placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
-                            :class="{ 'border border-purple': errors['password'] }"
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="errors['password'] ? 'border border-purple' : 'border border-grey'"
                         />
                         <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="password" />
                     </div>
@@ -98,13 +94,13 @@
         data() {
             return {
                 invalidCredentials: '',
+                valid: true,
             };
         },
         setup() {
             const state = reactive({
                 phone_number: '',
                 password: '',
-                serverError: '',
             });
 
             const schema = yup.object().shape({
@@ -117,7 +113,7 @@
                 ),
             password: yup
                 .string()
-                .min(8, 'Password must be at least 8 characters').required("Password is required"),
+                .required("Password is required"),
             });
             return {
                 state,
@@ -137,6 +133,7 @@
                 .catch(function (error) {
                     if (error.response) {
                         self.invalidCredentials = error.response.data.message;
+                        self.valid = false;
                     }
                 })
             }

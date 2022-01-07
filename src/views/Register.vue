@@ -9,71 +9,76 @@
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Registration</h1>
 
             <Form @submit="register" :validation-schema="schema" v-slot="{ errors }">
-                <div class="mt-10 space-y-4">
-                    <label class="block text-sm font-medium">Phone Number</label>
-                    <Field 
-                        v-model="state.phone_number"
-                        v-bind:class="{ 'border border-red-400': errors['phone_number'] }"
-                        type="text"
-                        as="input"
-                        id="phone-number"
-                        name="phone_number"
-                        label="Phone number" 
-                        class="rounded w-full"
-                    />
-
-                    <div class="text-purple-500 phone-number-error">
-                        {{ errors.phone_number }}
+                <div class="mt-10">
+                    <div id="alert-2" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200 dismissible" role="alert" v-show="uniquePhoneNumber">
+                        <svg class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                            {{ uniquePhoneNumber }}
+                        </div>
+                        <button @click="closeAlert" type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300" data-collapse-toggle="alert-2" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
                     </div>
 
-                    <div class="text-purple-500 phone-number-error"
-                    v-bind:class="{ 'hidden': errors['phone_number'] }">
-                        {{ uniquePhoneNumber }}
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold">Phone Number</label>
+                        <Field 
+                            v-model="state.phone_number"
+                            type="text"
+                            as="input"
+                            id="phone-number"
+                            name="phone_number"
+                            label="Phone number" 
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="errors['phone_number'] ? 'border border-purple' : 'border border-grey'"
+                        />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="phone_number" />
                     </div>
 
-                    <label class="block text-sm font-medium">Password</label>
-                    <Field 
-                        v-model="state.password"
-                        v-bind:class="{ 'border border-red-400': errors['password', 'retype_password'] }"
-                        type="password"
-                        as="input"
-                        id="password"
-                        name="password"
-                        label="Password" 
-                        class="rounded w-full"
-                    />
-
-                    <div class="text-purple-500">
-                        {{ errors.password }}
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold">Password</label>
+                        <Field 
+                            v-model="state.password"
+                            type="password"
+                            as="input"
+                            id="password"
+                            name="password"
+                            label="Password" 
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="errors['password'] ? 'border border-purple' : 'border border-grey'"
+                        />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="password" />
                     </div>
 
-                    <label class="block text-sm font-medium">Re-type Password</label>
-                    <Field 
-                        v-model="state.retype_password"
-                        v-bind:class="{ 'border border-red-400': errors['retype_password'] }"
-                        type="password"
-                        as="input"
-                        id="retype-password"
-                        name="retype_password"
-                        label="Re-type Password" 
-                        class="rounded w-full"
-                    />
-
-                    <div class="text-purple-500">
-                        {{ errors.retype_password }}
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold">Re-type Password</label>
+                        <Field 
+                            v-model="state.retype_password"
+                            type="password"
+                            as="input"
+                            id="retype-password"
+                            name="retype_password"
+                            label="Re-type Password" 
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                            :class="errors['retype_password'] ? 'border border-purple' : 'border border-grey'"
+                        />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="retype_password" />
                     </div>
 
-                    <label class="block text-sm font-medium">Register As</label>
-                    <Field as="select"
-                    v-model="state.register_as"
-                        id="register-as"
-                        name="register_as"
-                        label="Register As"
-                        class="rounded w-full"
-                    >
-                    <option value="1">Driver</option>
-                    <option value="2">Customer</option>
-                    </Field>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold">Register As</label>
+                        <Field as="select"
+                        v-model="state.register_as"
+                            id="register-as"
+                            name="register_as"
+                            label="Register As"
+                            class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey border border-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
+                        >
+                        <option value="1">Driver</option>
+                        <option value="2">Customer</option>
+                        </Field>
+                    </div>
 
                     <div>
                         <ButtonSolidBlue type="submit" class="w-full" buttonText="Register" />
@@ -95,7 +100,7 @@
     import SelectInput from '../components/SelectInput'
     import ButtonSolidBlue from '../components/buttons/ButtonSolidBlue'
     import { reactive } from "vue";
-    import { Form, Field } from "vee-validate";
+    import { Form, Field, ErrorMessage } from "vee-validate";
     import * as yup from "yup";
     import axios from 'axios';
 
@@ -107,6 +112,7 @@
             SelectInput,
             Form,
             Field,
+            ErrorMessage,
         },
 
         data() {
@@ -133,7 +139,7 @@
                 ),
             password: yup
                 .string()
-                .min(6, 'Password must be at least 6 characters').required("Password is required"),
+                .min(8, 'Password must be at least 6 characters').required("Password is required"),
             retype_password: yup.string()
                 .oneOf([yup.ref('password'), null], 'Passwords must match'),
             });
@@ -160,6 +166,11 @@
                         self.uniquePhoneNumber = error.response.data.errors.phone_number[0];
                     }
                 })
+            },
+
+            closeAlert() {
+                let self = this
+                self.uniquePhoneNumber = '';
             }
         },
     }

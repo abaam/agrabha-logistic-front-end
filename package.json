@@ -7,11 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.4.2",
     "@heroicons/vue": "^1.0.5",
     "@tailwindcss/forms": "^0.4.0",
     "@vee-validate/rules": "^4.5.7",
-    "@vue-hero-icons/outline": "^1.7.2",
-    "@vue-hero-icons/solid": "^1.7.2",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "dotenv-webpack": "^7.0.3",

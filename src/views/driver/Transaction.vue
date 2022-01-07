@@ -1,71 +1,19 @@
 <template>
-    <div class="flex">
-        <aside class="flex-none md:w-16 min-h-screen p-3 bg-blue-light hidden md:block">
-            <div class="px-3 md:px-0">
-                <img class="block md:hidden w-40 -ml-1" src="../../../public/img/agrabah-logo-white.png" alt="Agrabah Logo">
+    <div class="flex min-h-screen">
+        <SidebarDesktop />
 
-                <!-- Show on medium devices -->
-                <img class="hidden md:block w-40 mt-1 mb-2" src="../../../public/img/agrabah-logo-white-icon.png" alt="Agrabah Logo">
-
-                <hr class="mt-2.5 md:mt-4 border-blue opacity-25">
-            </div>
-
-            <ul class="mt-8">
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <router-link to="/dashboard" class="flex items-center space-x-3 w-full px-3 py-2">
-                        <ViewGridIcon class="h-5 w-5"/>
-                        <span class="md:sr-only">Dashboard</span>
-                    </router-link>
-                </li>
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <router-link to="/transactions" class="flex items-center space-x-3 w-full px-3 py-2">
-                        <RefreshIcon class="h-5 w-5"/>
-                        <span class="md:sr-only">Transactions</span>
-                    </router-link>
-                </li>
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <router-link to="/bookings" class="flex items-center space-x-3 w-full px-3 py-2">
-                        <TagIcon class="h-5 w-5"/>
-                        <span class="md:sr-only">Bookings</span>
-                    </router-link>
-                </li>
-            </ul>
-        </aside>
+        <SidebarMobile />
 
         <main class="flex-1">
-            <nav class="flex justify-between items-center border-b p-3">
-                <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
-
+            <nav class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
+                <button @click="isOpen = !isOpen" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
+                    <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
+                </button>
                 <!-- Show on mobile devices -->
                 <img class="w-32 -ml-1 md:sr-only" src="../../../public/img/agrabah-logo.png" alt="Agrabah Logo">
 
-                <a href="#" class="flex space-x-2 items-center">
-                    <img class="rounded-full bg-grey w-10 h-10" src="https://picsum.photos/200" alt="">
-                    <span class="hidden md:flex">John Doe</span>
-                    <ChevronDownIcon class="h-4 w-4 hidden md:flex" />
-                </a>
+                <UserMenu />
             </nav>
-
-            <!-- Navbar user dropdown menu -->
-            <div class="flex justify-end mt-1 mr-3 sr-only">
-                <div class="w-48 border rounded-md p-2 bg-white shadow-md">
-                    <ul>
-                        <li>
-                            <a href="" class="flex items-center space-x-2 w-full p-2 text-grey-dark rounded-md hover:text-white hover:bg-blue-light">
-                                <UserCircleIcon class="h-5 w-5" />
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="flex items-center space-x-2 w-full p-2 text-grey-dark rounded-md hover:text-white hover:bg-blue-light">
-                                <LogoutIcon class="h-5 w-5" />
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /Navbar user dropdown menu -->
 
             <section class="px-3 py-6">
                 
@@ -138,7 +86,11 @@
 </template>
 
 <script>
-    import { ViewGridIcon, MenuAlt1Icon, TagIcon, FilterIcon, CheckIcon, TruckIcon, RefreshIcon, LogoutIcon, UserCircleIcon, ChevronDownIcon } from '@heroicons/vue/outline'
+    import { ref } from 'vue'
+    import UserMenu from "../../components/UserMenu"
+    import SidebarDesktop from "../../components/SidebarDesktop"
+    import SidebarMobile from "../../components/SidebarMobile"
+    import { MenuAlt1Icon, TagIcon, FilterIcon, CheckIcon, TruckIcon, RefreshIcon } from '@heroicons/vue/outline'
 
     const deliveries = [
         {
@@ -172,21 +124,20 @@
 
     export default {
         setup() {
+            const isOpen = ref(true)
+            
             return {
-                deliveries,
+                isOpen,
+                deliveries
             }
         },
-        components: { 
-            ViewGridIcon,
-            MenuAlt1Icon,
-            CheckIcon,
-            TruckIcon,
-            TagIcon,
-            FilterIcon,
-            ChevronDownIcon,
-            RefreshIcon,
-            LogoutIcon,
-            UserCircleIcon
+        data() {
+            return {
+                sidebarOpened: false
+            }
+        },
+        components: {
+            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, FilterIcon, RefreshIcon, UserMenu, SidebarDesktop, SidebarMobile
         }
     }
 </script>

@@ -94,7 +94,6 @@
         data() {
             return {
                 invalidCredentials: '',
-                valid: true,
             };
         },
         setup() {
@@ -133,7 +132,6 @@
                 .catch(function (error) {
                     if (error.response) {
                         self.invalidCredentials = error.response.data.message;
-                        self.valid = false;
                     }
                 })
             }

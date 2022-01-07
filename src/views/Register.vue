@@ -80,13 +80,11 @@
                         </Field>
                     </div>
 
-                    <div>
-                        <ButtonSolidBlue type="submit" class="w-full" buttonText="Register" />
-                    </div>
+                    <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Register" />
 
                     <div class="text-sm">
                         Already have an account?
-                        <router-link to="/login" class="font-medium text-blue-light hover:text-blue">Sign In</router-link>
+                        <router-link to="/login" class="font-semibold text-blue-light hover:text-blue">Sign In</router-link>
                     </div>
                 </div>
             </form>

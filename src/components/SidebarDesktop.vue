@@ -78,6 +78,11 @@
         },
         components: {
             ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay
+        },
+        methods: {
+            changeView() {
+                this.isOpen = true;
+            }
         }
     }
 </script>

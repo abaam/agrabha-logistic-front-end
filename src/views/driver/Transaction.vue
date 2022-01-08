@@ -1,12 +1,12 @@
 <template>
     <div class="flex min-h-screen">
-        <SidebarDesktop />
+        <SidebarDesktop ref="sidebar"/>
 
         <SidebarMobile />
 
         <main class="flex-1">
             <nav class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
-                <button @click="isOpen = !isOpen" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
+                <button @click="$refs.sidebar.changeView()" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
                     <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
                 </button>
                 <!-- Show on mobile devices -->

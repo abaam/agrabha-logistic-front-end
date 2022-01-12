@@ -6,7 +6,7 @@
 
         <main class="flex-1">
             <!-- Show if current route is /dashboard -->
-            <nav class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
+            <nav v-if="$route.path==='/dashboard'" class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
                 <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
                     <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
                 </button>
@@ -18,7 +18,7 @@
             <!-- /Show if current route is /dashboard -->
 
             <!-- Else -->
-            <nav class="bg-white grid grid-cols-1 gap-y-7 border-b shadow px-6 pt-3">
+            <nav v-else class="bg-white grid grid-cols-1 gap-y-7 border-b shadow px-6 pt-3">
                 <div class="flex items-center justify-start space-x-6">
                     <router-link to="/dashboard">
                         <ArrowLeftIcon class="h-5 w-5 text-blue" />

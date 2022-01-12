@@ -21,7 +21,7 @@
                     <div class="mt-8 overflow-y-auto flex-1">
                         <ul>
                             <li v-for="menu in sidebarMenus" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                                <router-link :to="menu.href" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
                                     <component :is="menu.icon" class="h-5 w-5"/>
                                     <span>{{ menu.label }}</span>
                                 </router-link>

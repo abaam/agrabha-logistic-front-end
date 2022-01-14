@@ -42,10 +42,10 @@
                         <!-- Filter -->
                         <div class="flex items-center space-x-2">
                             <p>Show</p>
-                            <select class="appearance-none rounded relative block w-20 px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
-                                <option>10</option>
-                                <option>25</option>
-                                <option>100</option>
+                            <select v-model="show_entries" @change="showEntries($event)" class="appearance-none rounded relative block w-20 px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="100">100</option>
                             </select>
                             <p>entries</p>
                         </div>
@@ -53,7 +53,7 @@
                         <!-- Search -->
                         <div class="flex items-center space-x-1">
                             <p>Search:</p>
-                            <input type="text" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
+                            <input type="text" @keyup="searchDelivery" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
                         </div>
                     </div>
 
@@ -87,13 +87,13 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody class="bg-white divide-y divide-grey-light">
-                                            <tr v-for="delivery in deliveries" :key="delivery.id">
+                                        <tbody class="bg-white divide-y divide-grey-light" v-if="deliveries.data !=''" >
+                                            <tr v-for="delivery in deliveries.data" :key="delivery.id">
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="text-sm">{{ delivery.date }}</div>
+                                                    <div class="text-sm">{{ delivery.delivery_date }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div class="text-sm">{{ delivery.id }}</div>
+                                                    <div class="text-sm">{{ delivery.delivery_id }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm">{{ delivery.origin }}</div>
@@ -105,19 +105,19 @@
                                                     <div class="text-sm">{{ delivery.cost }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div v-if="delivery.status == 'In Transit'">
+                                                    <div v-if="delivery.status == 2">
                                                         <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-blue-light">
-                                                            <p class="text-blue text-sm font-semibold">{{ delivery.status }}</p>
+                                                            <p class="text-blue text-sm font-semibold">In Transit</p>
                                                         </div>
                                                     </div>
-                                                    <div v-else-if="delivery.status == 'To Deliver'">
+                                                    <div v-else-if="delivery.status == 3">
                                                         <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-orange-light">
-                                                            <p class="text-orange text-sm font-semibold">{{ delivery.status }}</p>
+                                                            <p class="text-orange text-sm font-semibold">To Deliver</p>
                                                         </div>
                                                     </div>
-                                                    <div v-if="delivery.status == 'Delivered'">
+                                                    <div v-if="delivery.status == 1">
                                                         <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-green-light">
-                                                            <p class="text-green text-sm font-semibold">{{ delivery.status }}</p>
+                                                            <p class="text-green text-sm font-semibold">Delivered</p>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -126,44 +126,29 @@
                                                 </td>
                                             </tr>
                                         </tbody>
+                                        <tbody  class="relative h-32" v-else>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <h3>No matching records found</h3>
+                                            </div> 
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-3">
-                        <p>Showing <span>1</span> to <span>10</span> of <span>57</span> entries</p>
+                    <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-3" v-if="deliveries.data !=''" >
+                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span v-if="deliveries !=''">{{ deliveries.data.length }}</span> entries</p>
                         <div>
                             <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                 <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-grey-light hover:bg-grey-light hover:bg-opacity-50 bg-white text-sm">
                                     <span class="sr-only">Previous</span>
                                     <ChevronLeftIcon class="h-5 w-5"/>
                                 </a>
-                                <a href="#" aria-current="page" class="z-10 bg-blue-light border-blue-light text-white relative inline-flex items-center px-4 py-2 border text-sm">
-                                    1
-                                </a>
-                                <a href="#" class="bg-white border-grey-light hover:bg-grey-light hover:bg-opacity-50 relative inline-flex items-center px-4 py-2 border text-sm">
-                                    2
-                                </a>
-                                <a href="#" class="bg-white border-grey-light hover:bg-grey-light hover:bg-opacity-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm">
-                                    3
-                                </a>
-                                <span class="relative inline-flex items-center px-4 py-2 border border-grey-light bg-white text-sm text-gray-700">
-                                    ...
-                                </span>
-                                <a href="#" class="bg-white border-grey-light hover:bg-grey-light hover:bg-opacity-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm">
-                                    8
-                                </a>
-                                <a href="#" class="bg-white border-grey-light hover:bg-grey-light hover:bg-opacity-50 relative inline-flex items-center px-4 py-2 border text-sm">
-                                    9
-                                </a>
-                                <a href="#" class="bg-white border-grey-light hover:bg-grey-light hover:bg-opacity-50 relative inline-flex items-center px-4 py-2 border text-sm">
-                                    10
-                                </a>
+                                <!-- <pagination :data="deliveries.data" @pagination-change-page="getDeliveries"></pagination> -->
                                 <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-grey-light hover:bg-grey-light hover:bg-opacity-50 bg-white text-sm">
                                     <span class="sr-only">Next</span>
-                                    <ChevronRightIcon class="h-5 w-5" />
+                                    <ChevronRightIcon class="h-5 w-5" />    
                                 </a>
                             </nav>
                         </div>
@@ -171,7 +156,7 @@
                 </div>
                 <!-- /Table -->
 
-                <div v-for="delivery in deliveries" :key="delivery.id" class="bg-white shadow md:hidden flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
+                <div v-for="delivery in deliveries.data" :key="delivery.id" class="bg-white shadow md:hidden flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
                     <div class="flex items-center justify-between">
                         <p class="font-semibold">{{ delivery.id }}</p>
                         <p class="font-bold">{{ delivery.cost }}</p>
@@ -208,56 +193,70 @@
 
 <script>
     import { ref } from 'vue'
+    import axios from 'axios';
+    import _ from "lodash";
     import UserMenu from "../../components/UserMenu"
     import SidebarDesktop from "../../components/SidebarDesktop"
     import SidebarMobile from "../../components/SidebarMobile"
     import { MenuAlt1Icon, TagIcon, FilterIcon, CheckIcon, TruckIcon, RefreshIcon, CubeIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
     import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
-
-    const deliveries = [
-        {
-            date: 'Jan 06, 2022',
-            id: 'AL-00003',
-            origin: 'Bitano, Legazpi City',
-            destination: 'Nabua, Camarines Sur',
-            description: 'Two (2) sacks of carrots',
-            weight: '50 kgs',
-            cost: 'P 3,500.00',
-            status: 'To Deliver'
-        },
-        {
-            date: 'Jan 04, 2022',
-            id: 'AL-00002',
-            origin: 'Bitan-o, Sorsogon City',
-            destination: 'San Rapael, Sto. Domingo',
-            description: 'Ten (10) sacks of rice',
-            weight: '250 kgs',
-            cost: 'P 5,500.00',
-            status: 'In Transit'
-        },
-        {
-            date: 'Jan 02, 2022',
-            id: 'AL-00001',
-            origin: 'Placer, Masbate City',
-            destination: 'Virac, Catanduanes',
-            description: 'Mixed Vegetables',
-            weight: '25 kgs',
-            cost: 'P 2,500.00',
-            status: 'Delivered'
-        }
-    ]
+    
 
     export default {
+        data() {
+            return {
+                deliveries:[],
+                search: '',
+                show_entries: '10',
+            }
+        },
+        mounted(){
+            this.fetchAllDeliveries()
+        },
         setup() {
             const isOpen = ref(true)
             
             return {
-                isOpen,
-                deliveries
+                isOpen
             }
         },
         components: {
             MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, FilterIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, UserMenu, SidebarDesktop, SidebarMobile
-        }
+        },
+        methods: {
+            fetchAllDeliveries() {
+                axios.get(process.env.VUE_APP_API + 'deliveries')
+                .then(response => {
+                    this.deliveries = response.data
+                })
+                .catch(response => {
+                    console.error(response)
+                })
+            },
+
+            getDeliveries(page = 1){
+                axios.get(process.env.VUE_APP_API + `deliveries/show?page=${page}`)
+                .then(response => {
+                    this.deliveries = response.data
+                })
+                .catch(response => {
+                    console.error(response)
+                })
+            },
+            
+            searchDelivery:_.debounce(function(){
+                axios.get(process.env.VUE_APP_API + 'deliveries/search?q=' + this.search)
+                .then((response) => {
+                    this.deliveries.data = response.data.delivery
+                })
+            }),
+
+            showEntries(event){
+                axios.get(process.env.VUE_APP_API + 'deliveries/show?entries=' + event.target.value)
+                .then((response) => {
+                    this.deliveries = response.data
+                })
+            },
+        },
     }
 </script>

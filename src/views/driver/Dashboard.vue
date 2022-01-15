@@ -1,73 +1,63 @@
 <template>
-    <div class="flex">
-        <aside class="flex-none w-64 min-h-screen px-6 py-2 bg-blue-light">
-            <img class="w-full -ml-1" src="../../../public/img/agrabah-logo.png" alt="">
+    <div class="flex min-h-screen">
 
-            <hr class="my-4 border-blue-400">
-
-            <ul class="mt-6">
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <router-link to="/dashboard" class="flex items-center space-x-2 w-full p-2">
-                        <ViewGridIcon class="h-5 w-5"/>
-                        <span>Dashboard</span>
-                    </router-link>
-                </li>
-                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                    <router-link to="/transactions" class="flex items-center space-x-2 w-full p-2">
-                        <RefreshIcon class="h-5 w-5"/>
-                        <span>Transactions</span>
-                    </router-link>
-                </li>
-            </ul>
-        </aside>
+        <SidebarMobile ref="sidebar"/>
+        <SidebarDesktop />
 
         <main class="flex-1">
-            <nav class="flex justify-between items-center h-16 border border-b pl-4">
-                <div class="flex">Search</div>
-                <div class="h-full">
-                    <a href="#" class="h-full flex items-center justify-end space-x-2 px-4">
-                        <img src="../../../public/img/login-image.png" alt="" class="h-10 w-10 bg-grey rounded-full border-2">
-                        <span class="text-sm font-semibold text-grey-dark">
-                            John Doe
-                        </span>
-                        <ChevronDownIcon class="h-4 w-4 text-grey-dark" />
-                    </a>
-                    <div class="relative mt-1 right-3">
-                        <div class="w-48 border rounded-md p-2 bg-white shadow-md">
-                            <ul>
-                                <li>
-                                    <a href="" class="flex items-center space-x-2 w-full p-2 text-grey-dark rounded-md hover:text-white hover:bg-blue-light">
-                                        <UserCircleIcon class="h-5 w-5" />
-                                        <span>Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" class="flex items-center space-x-2 w-full p-2 text-grey-dark rounded-md hover:text-white hover:bg-blue-light">
-                                        <LogoutIcon class="h-5 w-5" />
-                                        <span>Logout</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            <nav class="hidden md:flex justify-between md:justify-end items-center space-x-2 border-b p-3">
+                <UserMenu />
+            </nav>
+
+            <nav v-if="$route.path==='/dashboard'" class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
+                <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
+                    <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
+                </button>
+                
+                <img class="w-32 -ml-1 md:sr-only" src="../../../public/img/agrabah-logo.png" alt="Agrabah Logo">
+                
+                <UserMenu />
+            </nav>
+
+            <nav v-else class="bg-white grid grid-cols-1 gap-y-7 border-b shadow px-6 pt-3 md:hidden">
+                <div class="flex items-center justify-start space-x-6">
+                    <router-link to="/dashboard">
+                        <ArrowLeftIcon class="h-5 w-5 text-blue" />
+                    </router-link>
+                    <h6 class="font-bold tracking-wide">Transactions</h6>
+                </div>
+                <div class="flex items-center justify-between">
+                    <h6 class="text-sm font-semibold pb-2 border-b-4 border-blue text-blue rounded-b">To Deliver</h6>
+                    <h6 class="text-sm font-semibold pb-2 border-b-4 border-white">In Transit</h6>
+                    <h6 class="text-sm font-semibold pb-2 border-b-4 border-white">Delivered</h6>
                 </div>
             </nav>
+
+            <section class="px-3 py-6 md:p-6">
+
+            </section>
         </main>
     </div>
 </template>
 
 <script>
-    import { ViewGridIcon, CogIcon, QuestionMarkCircleIcon, RefreshIcon, LogoutIcon, UserCircleIcon, ChevronDownIcon } from '@heroicons/vue/outline'
+    import { ref } from 'vue'
+    import UserMenu from "../../components/UserMenu"
+    import SidebarDesktop from "../../components/SidebarDesktop"
+    import SidebarMobile from "../../components/SidebarMobile"
+    import { MenuAlt1Icon, TagIcon, RefreshIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
+    import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
 
     export default {
-        components: { 
-            ViewGridIcon,
-            CogIcon,
-            QuestionMarkCircleIcon,
-            ChevronDownIcon,
-            RefreshIcon,
-            LogoutIcon,
-            UserCircleIcon
+        setup() {
+            const isOpen = ref(true)
+            
+            return {
+                isOpen,
+            }
+        },
+        components: {
+            MenuAlt1Icon, TagIcon, RefreshIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, UserMenu, SidebarDesktop, SidebarMobile
         }
     }
 </script>

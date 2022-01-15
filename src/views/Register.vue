@@ -52,18 +52,18 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm font-semibold">Re-type Password</label>
+                        <label class="block text-sm font-semibold">Confirm Password</label>
                         <Field 
-                            v-model="state.retype_password"
+                            v-model="state.confirm_password"
                             type="password"
                             as="input"
-                            id="retype-password"
-                            name="retype_password"
+                            id="confirm-password"
+                            name="confirm_password"
                             label="Re-type Password" 
                             class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm"
-                            :class="errors['retype_password'] ? 'border border-purple' : 'border border-grey'"
+                            :class="errors['confirm_password'] ? 'border border-purple' : 'border border-grey'"
                         />
-                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="retype_password" />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="confirm_password" />
                     </div>
 
                     <div class="mb-4">
@@ -122,7 +122,7 @@
             const state = reactive({
                 phone_number: '',
                 password: '',
-                retype_password: '',
+                confirm_password: '',
                 register_as: '1',
             });
 
@@ -137,8 +137,8 @@
             password: yup
                 .string()
                 .min(8, 'Password must be at least 6 characters').required("Password is required"),
-            retype_password: yup.string()
-                .oneOf([yup.ref('password'), null], 'Passwords must match'),
+            confirm_password: yup.string()
+                .oneOf([yup.ref('password'), null], 'Password does not must match'),
             });
             //some other function
             return {

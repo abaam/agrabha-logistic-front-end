@@ -5,7 +5,10 @@
         <SidebarDesktop />
 
         <main class="flex-1">
-            <!-- Show if current route is /dashboard -->
+            <nav class="hidden md:flex justify-between md:justify-end items-center space-x-2 border-b p-3">
+                <UserMenu />
+            </nav>
+
             <nav v-if="$route.path==='/dashboard'" class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
                 <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
                     <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
@@ -15,27 +18,22 @@
                 
                 <UserMenu />
             </nav>
-            <!-- /Show if current route is /dashboard -->
 
-            <!-- Else -->
-            <nav v-else class="bg-white grid grid-cols-1 gap-y-7 border-b shadow px-6 pt-3">
-                <div class="flex items-center justify-start space-x-6">
+            <nav v-else class="bg-white grid grid-cols-1 gap-y-7 border-b shadow pt-3 md:hidden">
+                <div class="flex items-center justify-start space-x-6 px-6">
                     <router-link to="/dashboard">
                         <ArrowLeftIcon class="h-5 w-5 text-blue" />
                     </router-link>
                     <h6 class="font-bold tracking-wide">Transactions</h6>
                 </div>
                 <div class="flex items-center justify-between">
-                    <h6 class="text-sm font-semibold pb-2 border-b-4 border-blue text-blue rounded-b">To Deliver</h6>
-                    <h6 class="text-sm font-semibold pb-2 border-b-4 border-white">In Transit</h6>
-                    <h6 class="text-sm font-semibold pb-2 border-b-4 border-white">Delivered</h6>
+                    <button class="w-full text-sm font-semibold pb-2 border-b-4 border-blue text-blue rounded-b">To Deliver</button>
+                    <button class="w-full text-sm font-semibold pb-2 border-b-4 border-white">In Transit</button>
+                    <button class="w-full text-sm font-semibold pb-2 border-b-4 border-white">Delivered</button>
                 </div>
             </nav>
-            <!-- /Else -->
 
             <section class="px-3 py-6 md:p-6">
-                
-
                 <!-- Table -->
                 <div class="hidden md:flex flex-col">
                     <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-4 mb-3">
@@ -87,7 +85,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody class="bg-white divide-y divide-grey-light" v-if="deliveries.data !=''" >
+                                        <tbody v-if="deliveries.data != ''" class="bg-white divide-y divide-grey-light">
                                             <tr v-for="delivery in deliveries.data" :key="delivery.id">
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm">{{ delivery.delivery_date }}</div>
@@ -126,10 +124,13 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <tbody  class="relative h-32" v-else>
-                                            <div class="absolute inset-0 flex items-center justify-center">
-                                                <h3>No matching records found</h3>
-                                            </div> 
+                                        <tbody v-else>
+                                            <tr>
+                                                <td colspan="7" class="p-6">
+                                                    <img class="mx-auto w-24" src="../../../public/svg/no_data.svg" alt="No records found">
+                                                    <p class="mt-4 block text-center">No records found.</p>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -203,16 +204,6 @@
     
 
     export default {
-        data() {
-            return {
-                deliveries:[],
-                search: '',
-                show_entries: '10',
-            }
-        },
-        mounted(){
-            this.fetchAllDeliveries()
-        },
         setup() {
             const isOpen = ref(true)
             
@@ -222,6 +213,16 @@
         },
         components: {
             MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, FilterIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, UserMenu, SidebarDesktop, SidebarMobile
+        },
+        data() {
+            return {
+                deliveries:[],
+                search: '',
+                show_entries: '10',
+            }
+        },
+        mounted(){
+            this.fetchAllDeliveries()
         },
         methods: {
             fetchAllDeliveries() {

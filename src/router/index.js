@@ -1,9 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import Dashboard from '../views/driver/Dashboard.vue'
-import Transaction from '../views/driver/Transaction.vue'
 
 const routes = [
   {
@@ -12,9 +8,14 @@ const routes = [
     component: Home
   },
   {
+    path: '/tracking',
+    name: 'Tracking',
+    component: () => import ('../views/Tracking.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: () => import ('../views/Login.vue')
   },
   {
     path: '/register',
@@ -25,15 +26,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
   },
   {
-    path: '/transactions',
-    name: 'Transaction',
-    component: Transaction
-  },
-
-  {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: () => import ('../views/driver/Dashboard.vue')
+  },
+  {
+    path: '/transactions',
+    name: 'Transaction',
+    component: () => import ('../views/driver/Transaction.vue')
   }
 ]
 

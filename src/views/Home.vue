@@ -1,6 +1,6 @@
 <template>
     <main class="container mx-auto">
-        <Navbar />
+        <Navigation />
 
         <div class="grid place-items-center py-48 px-8 md:px-12 lg:px-16 text-center">
             <h4 class="text-xl uppercase tracking-widest mb-2 text-grey-dark font-sans">Welcome to</h4>
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-    import Navbar from '../components/Navbar.vue'
+    import Navigation from '../components/Navigation.vue'
 
     export default {
         components: {
-            Navbar
+            Navigation
         }
     }
 </script>

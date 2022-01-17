@@ -1,23 +1,31 @@
 <template>
-    <nav class="flex justify-start items-center space-x-12 py-2 px-6 md:px-12 lg:px-16 border-b mb-8">
-        <router-link to="/">
-            <img class="w-64 mr-6" src="../../public/img/agrabah-logo.png" alt="Agrabah">
-        </router-link>
+    <header>
+        <nav class="flex justify-start md:justify-end items-center space-x-2 md:border-b p-3">
+            <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 mr-3 focus:outline-none focus:ring-2 focus:ring-blue">
+                <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
+            </button>
             
-        <div class="flex-1 items-center justify-evenly space-x-8">
-            <router-link to="'/tracking" class="uppercase block tracking-wide font-semibold hover:text-blue">Tracking</router-link>
-        </div>
+            <h6 class="md:sr-only flex-1 font-bold text-lg">{{ name }}</h6>
 
-        <router-link to="/login" class="flex justify-center py-2 px-4 border border-blue-light text-sm font-medium rounded-md bg-white text-blue-light hover:bg-blue hover:text-white focus:outline-none">Login</router-link>
-    </nav>
+            <UserMenu />
+        </nav>
+    </header>
 </template>
 
 <script>
-    import ButtonOutlineBlue from "./buttons/ButtonOutlineBlue.vue"
-    
+    import { ref } from 'vue'
+    import { MenuAlt1Icon } from '@heroicons/vue/outline'
+
     export default {
-        components: {
-            ButtonOutlineBlue
-        }
+        name: 'Navbar',
+        setup() {
+            const isOpen = ref(true)
+            
+            return {
+                isOpen,
+                name: 'Account Settings'
+            }
+        },
+        components: { MenuAlt1Icon }
     }
 </script>

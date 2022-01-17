@@ -3,7 +3,7 @@
         <div class="w-0 lg:w-1/3">
             <img class="min-h-screen object-cover z-0" src="img/login-image.png" alt="">
         </div>
-        <div class="w-full lg:w-2/3 px-6 md:px-12 lg:px-16">
+        <div class="w-full lg:w-2/3 px-4 md:px-8 lg:px-12">
             <img src="img/agrabah-logo.png" class="h-20 mb-8" alt="">
 
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Registration</h1>

@@ -1,8 +1,8 @@
 <template>
-    <Navbar />
+    <Navigation />
     <main class="container mx-auto">
-        <section class="grid place-items-center px-3">
-            <div class="w-full md:w-3/4 lg:w-1/2 bg-blue-light rounded py-6 px-6 md:px-12 mb-8">
+        <section class="grid place-items-center px-4 md:px-8 lg:px-12">
+            <div class="w-full md:w-3/4 lg:w-1/2 bg-blue-light rounded py-4 px-4 md:px-8 lg:px-12 mb-8">
                 <!-- Use the 'prevent' modifier in form @submit.prevent="" -->
                 <form class="flex md:flex-row flex-col space-y-2 md:space-y-0 items-center justify-between md:space-x-2">
                     <div class="w-full md:flex-1">
@@ -53,14 +53,14 @@
 </template>
 
 <script>
-    import Navbar from '../components/Navbar.vue'
+    import Navigation from '../components/Navigation.vue'
     import Input from '../components/Input.vue'
     import ButtonSolidGreen from '../components/buttons/ButtonSolidGreen.vue'
 
     export default {
         name: 'Tracking',
         components: {
-            Navbar,
+            Navigation,
             Input,
             ButtonSolidGreen
         }

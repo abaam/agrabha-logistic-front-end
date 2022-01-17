@@ -1,11 +1,11 @@
 <template>
-    <Navbar />
+    <Navigation />
     <main class="container mx-auto">
         <section class="grid place-items-center px-4 md:px-8 lg:px-12">
             <div class="text-center">
                 <img class="w-32 md:w-40 lg:w-48 mx-auto mb-8" src="../../public/svg/verification.svg" alt="Account Verification">
 
-                <h2 class="block font-bold text-lg md:text-2xl lg:text-4xl leading-6 my-4">One-Time Password Verification</h2>
+                <H2>One-Time Password Verification</H2>
                 
                 <p class="block leading-5 my-3">To know you're real. Please confirm your account by entering the One-Time Code sent to <span class="font-semibold">*******5285</span>.</p>
                 
@@ -27,10 +27,11 @@
 </template>
 
 <script>
-    import Navbar from "../components/Navbar.vue";
+    import Navigation from "../components/Navigation.vue";
     import ButtonSolidBlue from "../components/buttons/ButtonSolidBlue.vue";
+    import H2 from "../components/typography/H2.vue";
 
     export default {
-        components: { Navbar, ButtonSolidBlue }
+        components: { Navigation, ButtonSolidBlue, H2 }
     }
 </script>

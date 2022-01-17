@@ -9,9 +9,16 @@
                 leave-from="translate-x-0"
                 leave-to="-translate-x-full"
                 >
-                <aside class="flex flex-col md:hidden relative z-10 h-full w-64 p-3 bg-blue-light">
-                    <div class="flex justify-between items-center pl-2">
-                        <img class="w-40 -ml-1" src="../../public/img/agrabah-logo-white.png" alt="Agrabah Logo">
+                <aside class="flex flex-col md:hidden relative z-10 h-full w-5/6 sm:w-1/2 p-3 bg-blue-light">
+                    <div class="flex justify-between items-center">
+                        <!-- <img class="w-40 -ml-1" src="../../public/img/agrabah-logo-white.png" alt="Agrabah Logo"> -->
+                        <div class="flex items-center justify-start">
+                            <img class="rounded-full bg-grey w-10 h-10 flex-none mr-3" src="https://picsum.photos/200" alt="">
+                            <div class="flex flex-col text-left flex-1">
+                                <span class="text-white font-semibold">Charles Marnie</span>
+                                <router-link to="/profile" class="text-sm text-grey-light cursor-pointer">View Profile</router-link>
+                            </div>
+                        </div>
                         <button @click="isOpen = false" type="button" class="bg-blue rounded p-1 focus:outline-none">
                             <ArrowLeftIcon class="h-5 w-5 text-white cursor-pointer" />
                         </button>
@@ -20,10 +27,21 @@
 
                     <div class="mt-8 overflow-y-auto flex-1">
                         <ul>
-                            <li v-for="menu in sidebarMenus" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                            <li v-for="menu in sidebarMenus" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded">
                                 <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
                                     <component :is="menu.icon" class="h-5 w-5"/>
                                     <span>{{ menu.label }}</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                    <div class="absolute bottom-0 right-0 left-0 z-10 p-3 flex items-center w-full">
+                        <ul class="w-full">
+                            <li class="flex justify-center font-medium rounded text-white bg-green-light hover:bg-green focus:outline-none focus:bg-green-light">
+                                <router-link to="/logout" active-class="bg-blue rounded" class="flex items-center justify-center w-full py-2 px-4">
+                                    <span class="uppercase font-semibold">LOGOUT</span>
                                 </router-link>
                             </li>
                         </ul>

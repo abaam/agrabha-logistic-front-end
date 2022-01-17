@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/transactions',
     name: 'Transaction',
-    component: () => import ('../views/driver/Transaction.vue')
+    component: () => import ('../views/driver/Transactions.vue')
   }
 ]
 

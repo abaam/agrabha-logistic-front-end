@@ -5,37 +5,20 @@
         <SidebarDesktop />
 
         <main class="flex-1">
-            <nav class="hidden md:flex justify-between md:justify-end items-center space-x-2 border-b p-3">
-                <UserMenu />
-            </nav>
-
-            <nav v-if="$route.path==='/dashboard'" class="flex justify-between md:justify-end items-center space-x-2 border-b p-3">
-                <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 focus:outline-none focus:ring-2 focus:ring-blue">
+            <nav class="flex justify-start md:justify-end items-center space-x-2 md:border-b p-3">
+                <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 mr-3 focus:outline-none focus:ring-2 focus:ring-blue">
                     <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
                 </button>
                 
-                <img class="w-32 -ml-1 md:sr-only" src="../../../public/img/agrabah-logo.png" alt="Agrabah Logo">
-                
+                <h1 class="md:sr-only flex-1 font-bold text-lg">{{ name }}</h1>
+
                 <UserMenu />
             </nav>
 
-            <nav v-else class="bg-white grid grid-cols-1 gap-y-7 border-b shadow pt-3 md:hidden">
-                <div class="flex items-center justify-start space-x-6 px-6">
-                    <router-link to="/dashboard">
-                        <ArrowLeftIcon class="h-5 w-5 text-blue" />
-                    </router-link>
-                    <h6 class="font-bold tracking-wide">Transactions</h6>
-                </div>
-                <div class="flex items-center justify-between">
-                    <button class="w-full text-sm font-semibold pb-2 border-b-4 border-blue text-blue rounded-b">To Deliver</button>
-                    <button class="w-full text-sm font-semibold pb-2 border-b-4 border-white">In Transit</button>
-                    <button class="w-full text-sm font-semibold pb-2 border-b-4 border-white">Delivered</button>
-                </div>
-            </nav>
-
-            <section class="px-3 py-6 md:p-6">
+            <section class="hidden md:block px-3 py-6 md:p-6">
                 <!-- Table -->
                 <div class="hidden md:flex flex-col">
+                    <h1 class="block font-bold text-2xl lg:text-3xl mb-3 text-blue">Transactions</h1>
                     <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-4 mb-3">
                         <!-- Filter -->
                         <div class="flex items-center space-x-2">
@@ -156,37 +139,90 @@
                     </div>
                 </div>
                 <!-- /Table -->
+            </section>
 
-                <div v-for="delivery in deliveries.data" :key="delivery.id" class="bg-white shadow md:hidden flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
-                    <div class="flex items-center justify-between">
-                        <p class="font-semibold">{{ delivery.id }}</p>
-                        <p class="font-bold">{{ delivery.cost }}</p>
-                    </div>
+            <section class="md:hidden grid">
+                <TabGroup>
+                    <TabList class="flex justify-evenly">
+                        <Tab v-slot="{ selected }" as="template">
+                            <button
+                            :class="[selected ? 'border-blue text-blue rounded-b' : 'bg-white']" class="w-full text-sm font-semibold py-2 border-b-4 border-white focus:bg-transparent text-center cursor-pointer">
+                                To Deliver
+                            </button>
+                        </Tab>
+                        <Tab v-slot="{ selected }" as="template">
+                            <button
+                            :class="[selected ? 'border-blue text-blue rounded-b' : 'bg-white']" class="w-full text-sm font-semibold py-2 border-b-4 border-white focus:bg-transparent text-center cursor-pointer">
+                                In Transit
+                            </button>
+                        </Tab>
+                        <Tab v-slot="{ selected }" as="template">
+                            <button
+                            :class="[selected ? 'border-blue text-blue rounded-b' : 'bg-white']" class="w-full text-sm font-semibold py-2 border-b-4 border-white focus:bg-transparent text-center cursor-pointer">
+                                Delivered
+                            </button>
+                        </Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel>
+                            <div class="px-3 grid gap-1 place-items-center h-96 my-20">
+                                <div class="px-3 py-6 text-center">
+                                    <img class="w-48 mx-auto" src="../../../public/svg/no_delivery.svg" alt="">
+                                    <h6 class="block font-semibold text-xl mt-8">No deliveries yet?</h6>
+                                    <p class="block text-grey-dark leading-6">You'll see all your deliveries to be delivered here.</p>
+                                </div>
+                            </div>
+                            <div v-for="delivery in deliveries.data" :key="delivery.id" class="bg-white shadow md:hidden flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-semibold">{{ delivery.id }}</p>
+                                    <p class="font-bold">{{ delivery.cost }}</p>
+                                </div>
 
-                    <div class="block">
-                        <p>{{ delivery.description }}</p>
-                        <p class="text-sm text-grey">Weight: <span>{{ delivery.weight }}</span></p>
-                    </div>
+                                <div class="block">
+                                    <p>{{ delivery.description }}</p>
+                                    <p class="text-sm text-grey">Weight: <span>{{ delivery.weight }}</span></p>
+                                </div>
 
-                    <div v-if="delivery.status == 'In Transit'" class="flex items-center text-blue space-x-1">
-                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-blue-light">
-                            <TruckIcon class="h-3 w-3 text-blue" />
-                        </div>
-                        <p class="text-blue text-sm font-semibold">{{ delivery.status }}</p>
-                    </div>
-                    <div v-else-if="delivery.status == 'To Deliver'" class="flex items-center text-orange space-x-1">
-                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-orange-light">
-                            <CubeIcon class="h-3 w-3 text-orange" />
-                        </div>
-                        <p class="text-orange text-sm font-semibold">{{ delivery.status }}</p>
-                    </div>
-                    <div v-else class="flex items-center text-green space-x-1">
-                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-green-light">
-                            <CheckIcon class="h-3 w-3 text-green" />
-                        </div>
-                        <p class="text-green text-sm font-semibold">{{ delivery.status }}</p>
-                    </div>
-                </div>
+                                <div v-if="delivery.status == 'In Transit'" class="flex items-center text-blue space-x-1">
+                                    <div class="flex items-center justify-center rounded-full h-5 w-5 bg-blue-light">
+                                        <TruckIcon class="h-3 w-3 text-blue" />
+                                    </div>
+                                    <p class="text-blue text-sm font-semibold">{{ delivery.status }}</p>
+                                </div>
+                                <div v-else-if="delivery.status == 'To Deliver'" class="flex items-center text-orange space-x-1">
+                                    <div class="flex items-center justify-center rounded-full h-5 w-5 bg-orange-light">
+                                        <CubeIcon class="h-3 w-3 text-orange" />
+                                    </div>
+                                    <p class="text-orange text-sm font-semibold">{{ delivery.status }}</p>
+                                </div>
+                                <div v-else class="flex items-center text-green space-x-1">
+                                    <div class="flex items-center justify-center rounded-full h-5 w-5 bg-green-light">
+                                        <CheckIcon class="h-3 w-3 text-green" />
+                                    </div>
+                                    <p class="text-green text-sm font-semibold">{{ delivery.status }}</p>
+                                </div>
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div class="px-3 grid gap-1 place-items-center h-96 my-20">
+                                <div class="px-3 py-6 text-center">
+                                    <img class="w-48 mx-auto" src="../../../public/svg/no_delivery.svg" alt="">
+                                    <h6 class="block font-semibold text-xl mt-8">No deliveries yet?</h6>
+                                    <p class="block text-grey-dark leading-6">You'll see all your deliveries in transit here.</p>
+                                </div>
+                            </div>
+                        </TabPanel>
+                        <TabPanel>
+                            <div class="px-3 grid gap-1 place-items-center h-96 my-20">
+                                <div class="px-3 py-6 text-center">
+                                    <img class="w-48 mx-auto" src="../../../public/svg/no_delivery.svg" alt="">
+                                    <h6 class="block font-semibold text-xl mt-8">No deliveries yet?</h6>
+                                    <p class="block text-grey-dark leading-6">You'll see all your delivered deliveries here.</p>
+                                </div>
+                            </div>
+                        </TabPanel>
+                    </TabPanels>
+                </TabGroup>
             </section>
         </main>
     </div>
@@ -199,8 +235,9 @@
     import UserMenu from "../../components/UserMenu"
     import SidebarDesktop from "../../components/SidebarDesktop"
     import SidebarMobile from "../../components/SidebarMobile"
-    import { MenuAlt1Icon, TagIcon, FilterIcon, CheckIcon, TruckIcon, RefreshIcon, CubeIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
+    import { MenuAlt1Icon, TagIcon, CheckIcon, TruckIcon, RefreshIcon, CubeIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
     import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
+    import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
     
 
     export default {
@@ -208,11 +245,12 @@
             const isOpen = ref(true)
             
             return {
-                isOpen
+                isOpen,
+                name: 'Transactions'
             }
         },
         components: {
-            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, FilterIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, UserMenu, SidebarDesktop, SidebarMobile
+            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, UserMenu, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel
         },
         data() {
             return {

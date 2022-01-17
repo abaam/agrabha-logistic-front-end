@@ -1,6 +1,6 @@
 <template>
     <!-- User Menu -->
-    <Menu as="div" class="flex items-center relative z-40">
+    <Menu as="div" class="hidden md:flex items-center relative z-40">
         <MenuButton>
             <button class="flex space-x-4 items-center">
                 <img class="rounded-full bg-grey w-10 h-10" src="https://picsum.photos/200" alt="">

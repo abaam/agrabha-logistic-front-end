@@ -156,7 +156,7 @@
                     register_as: this.state.register_as
                 })
                 .then(() => {
-                    this.$router.push("/dashboard");
+                    this.$router.push("/verification");
                 })
                 .catch(function (error) {
                     if (error.response) {

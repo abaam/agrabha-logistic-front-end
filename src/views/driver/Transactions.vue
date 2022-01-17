@@ -5,15 +5,7 @@
         <SidebarDesktop />
 
         <main class="flex-1">
-            <nav class="flex justify-start md:justify-end items-center space-x-2 md:border-b p-3">
-                <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 mr-3 focus:outline-none focus:ring-2 focus:ring-blue">
-                    <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
-                </button>
-                
-                <h1 class="md:sr-only flex-1 font-bold text-lg">{{ name }}</h1>
-
-                <UserMenu />
-            </nav>
+            <Navbar @show-sidebar="$refs.sidebar.show()"/>
 
             <section class="hidden md:block px-3 py-6 md:p-6">
                 <!-- Table -->
@@ -232,7 +224,7 @@
     import { ref } from 'vue'
     import axios from 'axios';
     import _ from "lodash";
-    import UserMenu from "../../components/UserMenu"
+    import Navbar from "../../components/Navbar"
     import SidebarDesktop from "../../components/SidebarDesktop"
     import SidebarMobile from "../../components/SidebarMobile"
     import { MenuAlt1Icon, TagIcon, CheckIcon, TruckIcon, RefreshIcon, CubeIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
@@ -250,7 +242,7 @@
             }
         },
         components: {
-            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, UserMenu, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel
+            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, Navbar, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel
         },
         data() {
             return {
@@ -295,7 +287,7 @@
                 .then((response) => {
                     this.deliveries = response.data
                 })
-            },
+            }
         },
     }
 </script>

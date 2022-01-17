@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav class="flex justify-start md:justify-end items-center space-x-2 md:border-b p-3">
-            <button @click="$refs.sidebar.show()" type="button" class="md:hidden rounded p-1 mr-3 focus:outline-none focus:ring-2 focus:ring-blue">
+            <button @click="$emit('showSidebar')" type="button" class="md:hidden rounded p-1 mr-3 focus:outline-none focus:ring-2 focus:ring-blue">
                 <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
             </button>
             
@@ -14,6 +14,7 @@
 
 <script>
     import { ref } from 'vue'
+    import UserMenu from "../components/UserMenu"
     import { MenuAlt1Icon } from '@heroicons/vue/outline'
 
     export default {
@@ -26,6 +27,6 @@
                 name: 'Account Settings'
             }
         },
-        components: { MenuAlt1Icon }
+        components: { MenuAlt1Icon, UserMenu }
     }
 </script>

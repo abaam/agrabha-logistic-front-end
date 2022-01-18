@@ -78,7 +78,12 @@
                                                     <div class="text-sm">{{ delivery.cost }}</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
-                                                    <div v-if="delivery.status == 2">
+                                                    <div v-if="delivery.status == 1">
+                                                        <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-green-light">
+                                                            <p class="text-green text-sm font-semibold">Delivered</p>
+                                                        </div>
+                                                    </div>
+                                                    <div v-else-if="delivery.status == 2">
                                                         <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-blue-light">
                                                             <p class="text-blue text-sm font-semibold">In Transit</p>
                                                         </div>
@@ -86,11 +91,6 @@
                                                     <div v-else-if="delivery.status == 3">
                                                         <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-orange-light">
                                                             <p class="text-orange text-sm font-semibold">To Deliver</p>
-                                                        </div>
-                                                    </div>
-                                                    <div v-if="delivery.status == 1">
-                                                        <div class="flex items-center justify-center rounded-full w-auto py-0.5 px-1 bg-green-light">
-                                                            <p class="text-green text-sm font-semibold">Delivered</p>
                                                         </div>
                                                     </div>
                                                 </td>

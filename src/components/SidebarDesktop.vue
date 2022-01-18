@@ -1,10 +1,10 @@
 <template>
-   <div>
+   <div class="h-screen sticky top-0">
        <aside class="hidden md:flex md:flex-col relative h-full w-64 p-3 bg-blue-light">
             <div class="flex justify-between items-center px-3">
-                <img class="w-40 -ml-1" src="../../public/img/agrabah-logo-white.png" alt="Agrabah Logo">
+                <img class="w-32" src="../../public/img/agrabah-logistics-logo.png" alt="Agrabah Logistics">
             </div>
-            <hr class="mt-2.5 border-blue opacity-25">
+            <hr class="mt-2 border-blue opacity-25">
 
             <div class="mt-8">
                 <ul>

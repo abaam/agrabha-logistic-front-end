@@ -5,17 +5,18 @@
         <SidebarDesktop />
 
         <main class="flex-1">
-            <Navbar @show-sidebar="$refs.sidebar.show()"/>
+            <Navbar @show-sidebar="$refs.sidebar.show()" >Transactions</Navbar>
 
             <section class="hidden md:block px-3 py-6 md:p-6">
                 <!-- Table -->
                 <div class="hidden md:flex flex-col">
-                    <h1 class="block font-bold text-2xl lg:text-3xl mb-3 text-blue">Transactions</h1>
+                    <H2>Transactions</H2>
                     <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-4 mb-3">
                         <!-- Filter -->
                         <div class="flex items-center space-x-2">
                             <p>Show</p>
                             <select v-model="show_entries" @change="showEntries($event)" class="appearance-none rounded relative block w-20 px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
+                                <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="100">100</option>
@@ -214,10 +215,12 @@
     import { ref } from 'vue'
     import axios from 'axios';
     import _ from "lodash";
-    import Pagination from "../../components/Pagination"
     import Navbar from "../../components/Navbar"
     import SidebarDesktop from "../../components/SidebarDesktop"
     import SidebarMobile from "../../components/SidebarMobile"
+    import H2 from '../../components/typography/H2'
+    import Pagination from "../../components/Pagination"
+    import { TruckIcon, CubeIcon, CheckIcon } from '@heroicons/vue/outline'
     import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 
     export default {
@@ -225,12 +228,8 @@
             const isOpen = ref(true)
             
             return {
-                isOpen,
-                name: 'Transactions'
+                isOpen
             }
-        },
-        components: {
-            Navbar, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel, pagination : Pagination,
         },
         data() {
             return {
@@ -238,7 +237,7 @@
                 pagination:{},
                 deliveries:[],
                 search: '',
-                show_entries: '10',
+                show_entries: '5',
             }
         },
         created(){
@@ -274,6 +273,9 @@
                     this.show_entries = event.target.value
                 })
             }
+        },
+        components: {
+            Navbar, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel, pagination : Pagination, H2, TruckIcon, CubeIcon, CheckIcon
         },
     }
 </script>

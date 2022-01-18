@@ -24,11 +24,11 @@
 </template>
 
 <script>
-    import { MenuAlt1Icon, TagIcon, CheckIcon, TruckIcon, RefreshIcon, CubeIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
     import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
+
     export default {
         components: {
-            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon,
+            ChevronRightIcon, ChevronLeftIcon
         },
         props: {
             pagination: {

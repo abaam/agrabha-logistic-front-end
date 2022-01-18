@@ -1,7 +1,7 @@
 <template>
     <nav class="flex justify-start items-center space-x-12 py-2 px-6 md:px-12 lg:px-16 border-b mb-8">
         <router-link to="/">
-            <img class="w-64 mr-6" src="../../public/img/agrabah-logo.png" alt="Agrabah">
+            <img class="w-48 mr-6" src="../../public/img/agrabah-logistics-logo.png" alt="Agrabah Logistics">
         </router-link>
             
         <div class="flex-1 items-center justify-evenly space-x-8">

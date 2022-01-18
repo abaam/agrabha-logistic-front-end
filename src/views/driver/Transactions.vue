@@ -60,8 +60,8 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody v-if="deliveries.data != ''" class="bg-white divide-y divide-grey-light">
-                                            <tr v-for="delivery in deliveries.data" :key="delivery.id">
+                                        <tbody v-if="deliveries != ''" class="bg-white divide-y divide-grey-light">
+                                            <tr v-for="delivery in deliveries" :key="delivery.id">
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm">{{ delivery.delivery_date }}</div>
                                                 </td>
@@ -113,20 +113,10 @@
                         </div>
                     </section>
 
-                    <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-3" v-if="deliveries.data !=''" >
-                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span v-if="deliveries !=''">{{ deliveries.data.length }}</span> entries</p>
+                    <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-3" v-if="deliveries !=''" >
+                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span>{{ pagination.total }}</span> entries</p>
                         <div>
-                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-grey-light hover:bg-grey-light hover:bg-opacity-50 bg-white text-sm">
-                                    <span class="sr-only">Previous</span>
-                                    <ChevronLeftIcon class="h-5 w-5"/>
-                                </a>
-                                <!-- <pagination :data="deliveries.data" @pagination-change-page="getDeliveries"></pagination> -->
-                                <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-grey-light hover:bg-grey-light hover:bg-opacity-50 bg-white text-sm">
-                                    <span class="sr-only">Next</span>
-                                    <ChevronRightIcon class="h-5 w-5" />    
-                                </a>
-                            </nav>
+                            <pagination :pagination="pagination" @paginate="fetchDeliveries" />
                         </div>
                     </div>
                 </div>
@@ -224,13 +214,11 @@
     import { ref } from 'vue'
     import axios from 'axios';
     import _ from "lodash";
+    import Pagination from "../../components/Pagination"
     import Navbar from "../../components/Navbar"
     import SidebarDesktop from "../../components/SidebarDesktop"
     import SidebarMobile from "../../components/SidebarMobile"
-    import { MenuAlt1Icon, TagIcon, CheckIcon, TruckIcon, RefreshIcon, CubeIcon, ArrowLeftIcon } from '@heroicons/vue/outline'
-    import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/vue/solid'
     import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
-    
 
     export default {
         setup() {
@@ -242,33 +230,29 @@
             }
         },
         components: {
-            MenuAlt1Icon, CheckIcon, TruckIcon, TagIcon, RefreshIcon, CubeIcon, ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, Navbar, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel
+            Navbar, SidebarDesktop, SidebarMobile, TabGroup, TabList, Tab, TabPanels, TabPanel, pagination : Pagination,
         },
         data() {
             return {
+                offset: 4,
+                pagination:{},
                 deliveries:[],
                 search: '',
                 show_entries: '10',
             }
         },
-        mounted(){
-            this.fetchAllDeliveries()
+        created(){
+            this.fetchDeliveries()
         },
         methods: {
-            fetchAllDeliveries() {
-                axios.get(process.env.VUE_APP_API + 'deliveries')
+            fetchDeliveries() {
+                let current_page = this.pagination.current_page;
+                let pageNum = current_page ? current_page : 1;
+                
+                axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
                 .then(response => {
-                    this.deliveries = response.data
-                })
-                .catch(response => {
-                    console.error(response)
-                })
-            },
-
-            getDeliveries(page = 1){
-                axios.get(process.env.VUE_APP_API + `deliveries/show?page=${page}`)
-                .then(response => {
-                    this.deliveries = response.data
+                    this.pagination = response.data.pagination
+                    this.deliveries = response.data.deliveries
                 })
                 .catch(response => {
                     console.error(response)
@@ -278,14 +262,16 @@
             searchDelivery:_.debounce(function(){
                 axios.get(process.env.VUE_APP_API + 'deliveries/search?q=' + this.search)
                 .then((response) => {
-                    this.deliveries.data = response.data.delivery
+                    this.deliveries = response.data.delivery
                 })
             }),
 
             showEntries(event){
-                axios.get(process.env.VUE_APP_API + 'deliveries/show?entries=' + event.target.value)
+                axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
                 .then((response) => {
-                    this.deliveries = response.data
+                    this.pagination = response.data.pagination
+                    this.deliveries = response.data.deliveries
+                    this.show_entries = event.target.value
                 })
             }
         },

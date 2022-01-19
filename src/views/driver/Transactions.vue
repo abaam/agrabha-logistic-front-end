@@ -27,7 +27,7 @@
                         <!-- Search -->
                         <div class="flex items-center space-x-1">
                             <p>Search:</p>
-                            <input type="text" @keyup="searchDelivery" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
+                            <input type="text" @keyup="searchDelivery" @keyup.enter="fetchDeliveries" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
                         </div>
                     </div>
 
@@ -248,30 +248,46 @@
                 let current_page = this.pagination.current_page;
                 let pageNum = current_page ? current_page : 1;
                 
-                axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
-                .then(response => {
-                    this.pagination = response.data.pagination
-                    this.deliveries = response.data.deliveries
-                })
-                .catch(response => {
-                    console.error(response)
-                })
+                if(this.search == ""){
+                    axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
+                    .then(response => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                } else {
+                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                }
             },
             
             searchDelivery:_.debounce(function(){
-                axios.get(process.env.VUE_APP_API + 'deliveries/search?q=' + this.search)
-                .then((response) => {
-                    this.deliveries = response.data.delivery
-                })
+                if(this.search != ""){
+                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                }
             }),
 
             showEntries(event){
-                axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
-                .then((response) => {
-                    this.pagination = response.data.pagination
-                    this.deliveries = response.data.deliveries
-                    this.show_entries = event.target.value
-                })
+                if(this.search == ""){
+                    axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                        this.show_entries = event.target.value
+                    })
+                } else {
+                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                }
             }
         },
         components: {

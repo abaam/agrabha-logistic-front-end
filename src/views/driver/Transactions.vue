@@ -27,7 +27,7 @@
                         <!-- Search -->
                         <div class="flex items-center space-x-1">
                             <p>Search:</p>
-                            <input type="text" @keyup="searchDelivery" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
+                            <input type="text" @keyup="searchDelivery" @keyup.enter="fetchDeliveries" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
                         </div>
                     </div>
 
@@ -148,46 +148,80 @@
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <div class="px-3 grid gap-1 place-items-center h-96 my-20">
+                            <div v-if="to_deliver != ''">
+                                <div v-for="delivery in to_deliver" :key="delivery.id" class="bg-white shadow flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
+                                    <div class="flex items-center justify-between">
+                                        <p class="font-semibold">{{ delivery.delivery_id }}</p>
+                                        <p class="font-bold">{{ delivery.cost }}</p>
+                                    </div>
+
+                                    <div class="block">
+                                        <p>{{ delivery.description }}</p>
+                                        <p class="text-sm text-grey">Weight: <span>{{ delivery.weight }}</span></p>
+                                    </div>
+
+                                    <div v-if="delivery.status == 2" class="flex items-center text-blue space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-blue-light">
+                                            <TruckIcon class="h-3 w-3 text-blue" />
+                                        </div>
+                                        <p class="text-blue text-sm font-semibold">In Transit</p>
+                                    </div>
+                                    <div v-else-if="delivery.status == 3" class="flex items-center text-orange space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-orange-light">
+                                            <CubeIcon class="h-3 w-3 text-orange" />
+                                        </div>
+                                        <p class="text-orange text-sm font-semibold">To Deliver</p>
+                                    </div>
+                                    <div v-else class="flex items-center text-green space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-green-light">
+                                            <CheckIcon class="h-3 w-3 text-green" />
+                                        </div>
+                                        <p class="text-green text-sm font-semibold">Delivered</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="px-3 grid gap-1 place-items-center h-96 my-20">
                                 <div class="px-3 py-6 text-center">
                                     <img class="w-48 mx-auto" src="../../../public/svg/no_delivery.svg" alt="">
                                     <h6 class="block font-semibold text-xl mt-8">No deliveries yet?</h6>
                                     <p class="block text-grey-dark leading-6">You'll see all your deliveries to be delivered here.</p>
                                 </div>
                             </div>
-                            <div v-for="delivery in deliveries.data" :key="delivery.id" class="bg-white shadow md:hidden flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
-                                <div class="flex items-center justify-between">
-                                    <p class="font-semibold">{{ delivery.id }}</p>
-                                    <p class="font-bold">{{ delivery.cost }}</p>
-                                </div>
-
-                                <div class="block">
-                                    <p>{{ delivery.description }}</p>
-                                    <p class="text-sm text-grey">Weight: <span>{{ delivery.weight }}</span></p>
-                                </div>
-
-                                <div v-if="delivery.status == 'In Transit'" class="flex items-center text-blue space-x-1">
-                                    <div class="flex items-center justify-center rounded-full h-5 w-5 bg-blue-light">
-                                        <TruckIcon class="h-3 w-3 text-blue" />
-                                    </div>
-                                    <p class="text-blue text-sm font-semibold">{{ delivery.status }}</p>
-                                </div>
-                                <div v-else-if="delivery.status == 'To Deliver'" class="flex items-center text-orange space-x-1">
-                                    <div class="flex items-center justify-center rounded-full h-5 w-5 bg-orange-light">
-                                        <CubeIcon class="h-3 w-3 text-orange" />
-                                    </div>
-                                    <p class="text-orange text-sm font-semibold">{{ delivery.status }}</p>
-                                </div>
-                                <div v-else class="flex items-center text-green space-x-1">
-                                    <div class="flex items-center justify-center rounded-full h-5 w-5 bg-green-light">
-                                        <CheckIcon class="h-3 w-3 text-green" />
-                                    </div>
-                                    <p class="text-green text-sm font-semibold">{{ delivery.status }}</p>
-                                </div>
-                            </div>
                         </TabPanel>
                         <TabPanel>
-                            <div class="px-3 grid gap-1 place-items-center h-96 my-20">
+                            <div v-if="in_transit != ''">
+                                <div v-for="delivery in in_transit" :key="delivery.id" class="bg-white shadow flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
+                                    <div class="flex items-center justify-between">
+                                        <p class="font-semibold">{{ delivery.delivery_id }}</p>
+                                        <p class="font-bold">{{ delivery.cost }}</p>
+                                    </div>
+
+                                    <div class="block">
+                                        <p>{{ delivery.description }}</p>
+                                        <p class="text-sm text-grey">Weight: <span>{{ delivery.weight }}</span></p>
+                                    </div>
+
+                                    <div v-if="delivery.status == 2" class="flex items-center text-blue space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-blue-light">
+                                            <TruckIcon class="h-3 w-3 text-blue" />
+                                        </div>
+                                        <p class="text-blue text-sm font-semibold">In Transit</p>
+                                    </div>
+                                    <div v-else-if="delivery.status == 3" class="flex items-center text-orange space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-orange-light">
+                                            <CubeIcon class="h-3 w-3 text-orange" />
+                                        </div>
+                                        <p class="text-orange text-sm font-semibold">To Deliver</p>
+                                    </div>
+                                    <div v-else class="flex items-center text-green space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-green-light">
+                                            <CheckIcon class="h-3 w-3 text-green" />
+                                        </div>
+                                        <p class="text-green text-sm font-semibold">Delivered</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="px-3 grid gap-1 place-items-center h-96 my-20">
                                 <div class="px-3 py-6 text-center">
                                     <img class="w-48 mx-auto" src="../../../public/svg/no_delivery.svg" alt="">
                                     <h6 class="block font-semibold text-xl mt-8">No deliveries yet?</h6>
@@ -196,7 +230,39 @@
                             </div>
                         </TabPanel>
                         <TabPanel>
-                            <div class="px-3 grid gap-1 place-items-center h-96 my-20">
+                            <div v-if="delivered != ''">
+                                <div v-for="delivery in delivered" :key="delivery.id" class="bg-white shadow flex flex-col space-y-2 rounded border border-grey-light px-3 py-2 mb-2">
+                                    <div class="flex items-center justify-between">
+                                        <p class="font-semibold">{{ delivery.delivery_id }}</p>
+                                        <p class="font-bold">{{ delivery.cost }}</p>
+                                    </div>
+
+                                    <div class="block">
+                                        <p>{{ delivery.description }}</p>
+                                        <p class="text-sm text-grey">Weight: <span>{{ delivery.weight }}</span></p>
+                                    </div>
+
+                                    <div v-if="delivery.status == 2" class="flex items-center text-blue space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-blue-light">
+                                            <TruckIcon class="h-3 w-3 text-blue" />
+                                        </div>
+                                        <p class="text-blue text-sm font-semibold">In Transit</p>
+                                    </div>
+                                    <div v-else-if="delivery.status == 3" class="flex items-center text-orange space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-orange-light">
+                                            <CubeIcon class="h-3 w-3 text-orange" />
+                                        </div>
+                                        <p class="text-orange text-sm font-semibold">To Deliver</p>
+                                    </div>
+                                    <div v-else class="flex items-center text-green space-x-1">
+                                        <div class="flex items-center justify-center rounded-full h-5 w-5 bg-green-light">
+                                            <CheckIcon class="h-3 w-3 text-green" />
+                                        </div>
+                                        <p class="text-green text-sm font-semibold">Delivered</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="px-3 grid gap-1 place-items-center h-96 my-20">
                                 <div class="px-3 py-6 text-center">
                                     <img class="w-48 mx-auto" src="../../../public/svg/no_delivery.svg" alt="">
                                     <h6 class="block font-semibold text-xl mt-8">No deliveries yet?</h6>
@@ -236,41 +302,84 @@
                 offset: 4,
                 pagination:{},
                 deliveries:[],
+                to_deliver:[],
+                in_transit:[],
+                delivered:[],
                 search: '',
                 show_entries: '5',
             }
         },
         created(){
-            this.fetchDeliveries()
+            this.fetchDeliveries(),
+            this.fetchToDeliver(),
+            this.fetchInTransit(),
+            this.fetchDelivered()
         },
         methods: {
             fetchDeliveries() {
                 let current_page = this.pagination.current_page;
                 let pageNum = current_page ? current_page : 1;
                 
-                axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
-                .then(response => {
-                    this.pagination = response.data.pagination
-                    this.deliveries = response.data.deliveries
-                })
-                .catch(response => {
-                    console.error(response)
-                })
+                if(this.search == ""){
+                    axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
+                    .then(response => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                } else {
+                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                }
             },
             
             searchDelivery:_.debounce(function(){
-                axios.get(process.env.VUE_APP_API + 'deliveries/search?q=' + this.search)
-                .then((response) => {
-                    this.deliveries = response.data.delivery
-                })
+                if(this.search != ""){
+                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                }
             }),
 
             showEntries(event){
-                axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
-                .then((response) => {
-                    this.pagination = response.data.pagination
-                    this.deliveries = response.data.deliveries
-                    this.show_entries = event.target.value
+                if(this.search == ""){
+                    axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                        this.show_entries = event.target.value
+                    })
+                } else {
+                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
+                    .then((response) => {
+                        this.pagination = response.data.pagination
+                        this.deliveries = response.data.deliveries
+                    })
+                }
+            },
+
+            fetchToDeliver(){
+                axios.get(process.env.VUE_APP_API + `deliveries`)
+                .then(response => {
+                    this.to_deliver = response.data.to_deliver
+                })
+            }, 
+
+            fetchInTransit(){
+                axios.get(process.env.VUE_APP_API + `deliveries`)
+                .then(response => {
+                    this.in_transit = response.data.in_transit
+                })
+            },
+
+            fetchDelivered(){
+                axios.get(process.env.VUE_APP_API + `deliveries`)
+                .then(response => {
+                    this.delivered = response.data.delivered
                 })
             }
         },

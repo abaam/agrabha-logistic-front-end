@@ -115,7 +115,7 @@
                     </section>
 
                     <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-3" v-if="deliveries !=''" >
-                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span>{{ deliveries.collection }}</span> entries</p>
+                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span>{{ pagination.total }}</span> entries</p>
                         <div>
                             <pagination :pagination="pagination" @paginate="fetchDeliveries" />
                         </div>

@@ -27,7 +27,7 @@
                         <!-- Search -->
                         <div class="flex items-center space-x-1">
                             <p>Search:</p>
-                            <input type="text" @keyup="searchDelivery" @keyup.enter="fetchDeliveries" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
+                            <input type="text" @keyup="searchDelivery" v-model="search" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey text-gray-900 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10">
                         </div>
                     </div>
 
@@ -126,7 +126,7 @@
 
             <section class="md:hidden grid">
                 <TabGroup>
-                    <TabList class="flex justify-evenly">
+                    <TabList class="flex justify-evenly sticky top-14 z-40 bg-white border-b border-grey-light">
                         <Tab v-slot="{ selected }" as="template">
                             <button
                             :class="[selected ? 'border-blue text-blue rounded-b' : 'bg-white']" class="w-full text-sm font-semibold py-2 border-b-4 border-white focus:bg-transparent text-center cursor-pointer">
@@ -248,46 +248,30 @@
                 let current_page = this.pagination.current_page;
                 let pageNum = current_page ? current_page : 1;
                 
-                if(this.search == ""){
-                    axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
-                    .then(response => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
-                    })
-                } else {
-                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`)
-                    .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
-                    })
-                }
+                axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
+                .then(response => {
+                    this.pagination = response.data.pagination
+                    this.deliveries = response.data.deliveries
+                })
+                .catch(response => {
+                    console.error(response)
+                })
             },
             
             searchDelivery:_.debounce(function(){
-                if(this.search != ""){
-                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
-                    .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
-                    })
-                }
+                axios.get(process.env.VUE_APP_API + 'deliveries/search?q=' + this.search)
+                .then((response) => {
+                    this.deliveries = response.data.delivery
+                })
             }),
 
             showEntries(event){
-                if(this.search == ""){
-                    axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
-                    .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
-                        this.show_entries = event.target.value
-                    })
-                } else {
-                    axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
-                    .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
-                    })
-                }
+                axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
+                .then((response) => {
+                    this.pagination = response.data.pagination
+                    this.deliveries = response.data.deliveries
+                    this.show_entries = event.target.value
+                })
             }
         },
         components: {

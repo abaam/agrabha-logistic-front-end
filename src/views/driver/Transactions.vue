@@ -115,7 +115,7 @@
                     </section>
 
                     <div class="flex items-center justify-between md:flex-col md:space-y-2 lg:flex-row mt-3" v-if="deliveries !=''" >
-                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span>{{ pagination.total }}</span> entries</p>
+                        <p>Showing <span>1</span> to <span>{{ show_entries }}</span> of <span>{{ deliveries.collection }}</span> entries</p>
                         <div>
                             <pagination :pagination="pagination" @paginate="fetchDeliveries" />
                         </div>
@@ -323,14 +323,14 @@
                 if(this.search == ""){
                     axios.get(process.env.VUE_APP_API + `deliveries?page=${pageNum}&entries=${this.show_entries}`)
                     .then(response => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
+                        this.pagination = response.data.deliveries.pagination
+                        this.deliveries = response.data.deliveries.collection
                     })
                 } else {
                     axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`)
                     .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
+                        this.pagination = response.data.deliveries.pagination
+                        this.deliveries = response.data.deliveries.collection
                     })
                 }
             },
@@ -339,8 +339,8 @@
                 if(this.search != ""){
                     axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
                     .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
+                        this.pagination = response.data.deliveries.pagination
+                        this.deliveries = response.data.deliveries.collection
                     })
                 }
             }),
@@ -349,15 +349,15 @@
                 if(this.search == ""){
                     axios.get(process.env.VUE_APP_API + 'deliveries?entries=' + event.target.value)
                     .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
+                        this.pagination = response.data.deliveries.pagination
+                        this.deliveries = response.data.deliveries.collection
                         this.show_entries = event.target.value
                     })
                 } else {
                     axios.get(process.env.VUE_APP_API + `deliveries/search?q=${this.search}&entries=${this.show_entries}`)
                     .then((response) => {
-                        this.pagination = response.data.pagination
-                        this.deliveries = response.data.deliveries
+                        this.pagination = response.data.deliveries.pagination
+                        this.deliveries = response.data.deliveries.collection
                     })
                 }
             },

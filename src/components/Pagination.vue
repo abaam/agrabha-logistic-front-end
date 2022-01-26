@@ -8,7 +8,7 @@
         </a>
 
         <a href="#" aria-current="page" class="md:inline-flex relative items-center px-4 py-2 text-sm font-medium"
-        @click.stop="change(page)"
+        @click.prevent="change(page)"
         v-for="page in pages" :key="page"
         :class="[page == pagination.current_page ? 'text-white bg-blue-light border border-blue-light':'hover:text-white hover:bg-blue-light text-black border border-grey-light']">
             {{ page }}

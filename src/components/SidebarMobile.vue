@@ -41,7 +41,7 @@
                         <ul class="w-full">
                             <li class="flex justify-center font-medium rounded text-white bg-green-light hover:bg-green focus:outline-none focus:bg-green-light">
                                 <router-link to="/logout" active-class="bg-blue rounded" class="flex items-center justify-center w-full py-2 px-4">
-                                    <span class="uppercase font-semibold">LOGOUT</span>
+                                    <span class="uppercase font-semibold">Sign Out</span>
                                 </router-link>
                             </li>
                         </ul>

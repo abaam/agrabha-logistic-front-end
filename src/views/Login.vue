@@ -5,7 +5,7 @@
         </div>
         <div class="w-full lg:w-2/3 px-4 md:px-8 lg:px-12">
             <router-link to="/">
-                <img src="img/agrabah-logistics-logo.png" class="w-64 mb-8" alt="Agrabah Logistics">
+                <img src="img/agrabah-logistics-logo.png" class="w-48 mb-8" alt="Agrabah Logistics">
             </router-link>
 
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Login</h1>
@@ -65,14 +65,14 @@
                         </div>
                     </div>
                     
-                    <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Sign In" />
+                    <ButtonSolidBlue class="w-full mb-4">Sign In</ButtonSolidBlue>
                     
                 </div>
             </Form>
 
             <div class="text-sm">
-                Not registered yet? 
-                <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Create an account?</router-link>
+                Don't have an account? 
+                <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Sign Up</router-link>
             </div>
         </div>
     </div>

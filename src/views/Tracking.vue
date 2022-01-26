@@ -9,7 +9,7 @@
                         <label for="phone-number" class="block text-sm font-semibold sr-only">Tracking number</label>
                         <input class="appearance-none rounded relative block w-full px-3 py-2 border border-grey placeholder-grey text-gray-800 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm" placeholder="Tracking ID" />
                     </div>
-                    <ButtonSolidGreen type="submit" class="md:w-auto w-full uppercase tracking-wide font-semibold" buttonText="Track Delivery" />
+                    <ButtonSolidGreen class="md:w-auto w-full uppercase tracking-wide font-semibold">Track Delivery</ButtonSolidGreen>
                 </form>
             </div>
 
@@ -59,10 +59,6 @@
 
     export default {
         name: 'Tracking',
-        components: {
-            Navigation,
-            Input,
-            ButtonSolidGreen
-        }
+        components: { Navigation, Input, ButtonSolidGreen }
     }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <Navigation />
-    <main class="container mx-auto">
+    <main class="container mx-auto max-w-2xl">
         <section class="grid place-items-center px-4 md:px-8 lg:px-12">
             <div class="text-center">
                 <img class="w-32 md:w-40 lg:w-48 mx-auto mb-8" src="../../public/svg/verification.svg" alt="Account Verification">

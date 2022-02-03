@@ -1,6 +1,16 @@
 # Agrabah Logistics
 
-## Project setup
+## Clone Agrabah Logistics
+```
+git clone https://github.com/abaam/agrabha-logistic-front-end.git
+```
+
+### Navigate to project folder
+```
+cd agrabha-logistic-front-end
+```
+
+### Install project dependencies
 ```
 npm install
 ```

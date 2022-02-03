@@ -1,6 +1,6 @@
 # Agrabah Logistics
 
-## Clone Agrabah Logistics
+### Clone project repository
 ```
 git clone https://github.com/abaam/agrabha-logistic-front-end.git
 ```

@@ -1,41 +1,36 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   darkMode: false, // or 'media' or 'class'
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
         sans: ["'Source Sans Pro'", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        "green": {
+        green: {
           light: "#9ed35a",
           DEFAULT: "#548714",
         },
-        "blue": {
+        blue: {
           light: "#3a8cdd",
           DEFAULT: "#094e9d",
         },
-        "orange": {
+        orange: {
           light: "#f6be47",
           DEFAULT: "#e15c21",
         },
-        "purple": {
+        purple: {
           DEFAULT: "#a7165e",
         },
-        "grey": {
+        grey: {
           light: "#e4e8ed",
           DEFAULT: "#c3cedb",
           dark: "#7f9bb5",
-        }
-      }
+        },
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
-}
+  plugins: [require("@tailwindcss/forms")],
+};

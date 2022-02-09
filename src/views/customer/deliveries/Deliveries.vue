@@ -1,11 +1,17 @@
 <template>
-  <DashboardLayout mobileTitle="Transactions">
+  <DashboardLayout navClass="border-b-0" mobileTitle="Deliveries">
     <section class="hidden px-3 py-6 md:block md:p-6">
-      <h2
-        class="mb-6 block text-xl font-bold leading-6 md:text-2xl lg:text-3xl"
-      >
-        Transactions
-      </h2>
+      <div class="mb-6 flex items-center justify-between">
+        <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
+          Deliveries
+        </h2>
+
+        <router-link
+          to="/deliveries/create"
+          class="focus:outline-none flex justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 text-sm font-medium text-white hover:bg-blue focus:bg-blue"
+          >Create delivery</router-link
+        >
+      </div>
 
       <!-- Table -->
       <div class="hidden gap-y-3 rounded-md bg-white py-6 shadow md:grid">
@@ -16,7 +22,7 @@
           <div class="flex items-center space-x-2">
             <p>Show</p>
             <select
-              v-model="show_entries"
+              v-model="showEntry"
               @change="showEntries($event)"
               class="focus:outline-none relative block w-20 appearance-none rounded border border-grey px-3 py-2 text-gray-900 focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             >
@@ -33,9 +39,9 @@
             <p>Search:</p>
             <input
               type="text"
+              v-model="search"
               @keyup="searchDelivery"
               @keyup.enter="fetchDeliveries"
-              v-model="search"
               class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-900 focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             />
           </div>
@@ -98,7 +104,7 @@
                         <div class="text-sm">{{ delivery.delivery_date }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.delivery_id }}</div>
+                        <div class="text-sm">{{ delivery.id }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ delivery.origin }}</div>
@@ -152,7 +158,7 @@
                       <td colspan="7" class="p-6">
                         <img
                           class="mx-auto w-24"
-                          src="../../../public/svg/no_data.svg"
+                          src="../../../../public/svg/no_data.svg"
                           alt="No records found"
                         />
                         <p class="mt-4 block text-center">No record found.</p>
@@ -170,7 +176,8 @@
           v-if="deliveries != ''"
         >
           <p>
-            Showing <span>1</span> to <span>{{ show_entries }}</span> of
+            Showing <span>{{ entries }}</span> to
+            <span>{{ showEntry }}</span> of
             <span>{{ pagination.total }}</span> entries
           </p>
           <div>
@@ -181,7 +188,7 @@
       <!-- /Table -->
     </section>
 
-    <section class="grid px-3 md:hidden md:p-6 md:py-6">
+    <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
           class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
@@ -213,9 +220,9 @@
         </TabList>
         <TabPanels>
           <TabPanel>
-            <div v-if="to_deliver != ''" class="my-3 grid gap-y-2">
+            <div v-if="toDeliver != ''" class="my-3 grid gap-y-2">
               <div
-                v-for="delivery in to_deliver"
+                v-for="delivery in toDeliver"
                 :key="delivery.id"
                 class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
@@ -245,7 +252,7 @@
               <div class="px-3 py-6 text-center">
                 <img
                   class="mx-auto w-48"
-                  src="../../../public/svg/no_delivery.svg"
+                  src="../../../../public/svg/no_delivery.svg"
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
@@ -258,9 +265,9 @@
             </div>
           </TabPanel>
           <TabPanel>
-            <div v-if="in_transit != ''" class="my-3 grid gap-y-2">
+            <div v-if="inTransit != ''" class="my-3 grid gap-y-2">
               <div
-                v-for="delivery in in_transit"
+                v-for="delivery in inTransit"
                 :key="delivery.id"
                 class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
@@ -290,7 +297,7 @@
               <div class="px-3 py-6 text-center">
                 <img
                   class="mx-auto w-48"
-                  src="../../../public/svg/no_delivery.svg"
+                  src="../../../../public/svg/no_delivery.svg"
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
@@ -335,7 +342,7 @@
               <div class="px-3 py-6 text-center">
                 <img
                   class="mx-auto w-48"
-                  src="../../../public/svg/no_delivery.svg"
+                  src="../../../../public/svg/no_delivery.svg"
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
@@ -349,132 +356,154 @@
           </TabPanel>
         </TabPanels>
       </TabGroup>
+
+      <router-link
+        to="/deliveries/create"
+        class="focus:outline-none fixed bottom-3 right-3 z-40 flex justify-center rounded-full border border-transparent bg-blue-light p-3 font-medium text-white hover:bg-blue focus:bg-blue"
+        ><PlusIcon class="h-5 w-5"></PlusIcon
+      ></router-link>
     </section>
   </DashboardLayout>
 </template>
 
 <script>
+import { onMounted, ref } from "vue";
 import axios from "axios";
 import _ from "lodash";
 import DashboardLayout from "@/views/DashboardLayout.vue";
-import Pagination from "@/components/Pagination";
-import { TruckIcon, CubeIcon, CheckIcon } from "@heroicons/vue/outline";
+import Pagination from "@/components/Pagination.vue";
+import {
+  TruckIcon,
+  CubeIcon,
+  CheckIcon,
+  PlusIcon,
+} from "@heroicons/vue/outline";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 
 export default {
-  data() {
-    return {
-      offset: 4,
-      pagination: {},
-      deliveries: [],
-      to_deliver: [],
-      in_transit: [],
-      delivered: [],
-      search: "",
-      show_entries: "5",
-    };
-  },
-  created() {
-    this.fetchDeliveries(),
-      this.fetchToDeliver(),
-      this.fetchInTransit(),
-      this.fetchDelivered();
-  },
-  methods: {
-    fetchDeliveries() {
-      let current_page = this.pagination.current_page;
-      let pageNum = current_page ? current_page : 1;
+  setup() {
+    const toDeliver = ref([]),
+      inTransit = ref([]),
+      delivered = ref([]),
+      deliveries = ref([]),
+      showEntry = ref(5),
+      entries = ref(5),
+      search = ref(null),
+      pagination = ref({});
 
-      if (this.search == "") {
+    // Fetch all deliveries
+    onMounted(() => {
+      fetchDeliveries();
+      searchDelivery();
+    });
+
+    // Fetch data
+    axios
+      .get(process.env.VUE_APP_API + `deliveries`)
+      .then((response) => {
+        toDeliver.value = response.data.to_deliver;
+        inTransit.value = response.data.in_transit;
+        delivered.value = response.data.delivered;
+      })
+      .catch((error) => console.log(error));
+
+    const fetchDeliveries = () => {
+      let currentPage = pagination.value.current_page;
+      let pageNum = currentPage ? currentPage : 1;
+
+      if (search.value == null) {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries?page=${pageNum}&entries=${this.show_entries}`
+              `deliveries?page=${pageNum}&entries=${entries.value}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
-          });
+            pagination.value = response.data.deliveries.pagination;
+            deliveries.value = response.data.deliveries.collection;
+          })
+          .catch((error) => console.log(error));
       } else {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`
+              `deliveries/search?q=${search.value}&page=${pageNum}&entries=${entries.value}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
-          });
+            pagination.value = response.data.deliveries.pagination;
+            deliveries.value = response.data.deliveries.collection;
+          })
+          .catch((error) => console.log(error));
       }
-    },
+    };
 
-    searchDelivery: _.debounce(function () {
-      if (this.search != "") {
+    // Search
+    const searchDelivery = _.debounce(function (search) {
+      if (search.target.value != null) {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries/search?q=${this.search}&entries=${this.show_entries}`
+              `deliveries/search?q=${search.target.value}&entries=${entries.value}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
-          });
+            pagination.value = response.data.deliveries.pagination;
+            deliveries.value = response.data.deliveries.collection;
+            entries.value = response.data.deliveries.collection.length;
+          })
+          .catch((error) => console.log(error));
       }
-    }),
+    });
 
-    showEntries(event) {
-      if (this.search == "") {
+    // Filter entries
+    const showEntries = (event) => {
+      if (search.value == null) {
         axios
           .get(
             process.env.VUE_APP_API + "deliveries?entries=" + event.target.value
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
-            this.show_entries = event.target.value;
-          });
+            pagination.value = response.data.deliveries.pagination;
+            deliveries.value = response.data.deliveries.collection;
+            entries.value = event.target.value;
+          })
+          .catch((error) => console.log(error));
       } else {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries/search?q=${this.search}&entries=${this.show_entries}`
+              `deliveries/search?q=${search.value}&entries=${entries.value}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
-          });
+            pagination.value = response.data.deliveries.pagination;
+            deliveries.value = response.data.deliveries.collection;
+          })
+          .catch((error) => console.log(error));
       }
-    },
+    };
 
-    fetchToDeliver() {
-      axios.get(process.env.VUE_APP_API + `deliveries`).then((response) => {
-        this.to_deliver = response.data.to_deliver;
-      });
-    },
-
-    fetchInTransit() {
-      axios.get(process.env.VUE_APP_API + `deliveries`).then((response) => {
-        this.in_transit = response.data.in_transit;
-      });
-    },
-
-    fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `deliveries`).then((response) => {
-        this.delivered = response.data.delivered;
-      });
-    },
+    return {
+      toDeliver,
+      inTransit,
+      delivered,
+      deliveries,
+      entries,
+      showEntry,
+      showEntries,
+      fetchDeliveries,
+      pagination: Pagination,
+      searchDelivery,
+    };
   },
   components: {
+    DashboardLayout,
+    TruckIcon,
+    CubeIcon,
+    CheckIcon,
+    PlusIcon,
     TabGroup,
     TabList,
     Tab,
     TabPanels,
     TabPanel,
-    pagination: Pagination,
-    TruckIcon,
-    CubeIcon,
-    CheckIcon,
-    DashboardLayout,
   },
 };
 </script>

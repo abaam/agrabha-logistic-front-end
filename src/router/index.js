@@ -44,8 +44,18 @@ const routes = [
   },
   {
     path: '/transactions',
-    name: 'Transaction',
+    name: 'Transactions',
     component: () => import ('../views/driver/Transactions.vue')
+  },
+  {
+    path: '/deliveries',
+    name: 'Deliveries',
+    component: () => import ('../views/customer/deliveries/Deliveries.vue')
+  },
+  {
+    path: '/deliveries/create',
+    name: 'CreateDelivery',
+    component: () => import ('../views/customer/deliveries/CreateDelivery.vue')
   }
 ]
 

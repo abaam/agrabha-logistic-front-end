@@ -1,35 +1,46 @@
 <template>
-    <header class="sticky top-0 z-40 bg-white">
-        <nav class="flex justify-start md:justify-end items-center space-x-2 md:border-b p-3">
-            <button @click="$emit('showSidebar')" type="button" class="md:hidden rounded p-1 mr-3 focus:outline-none focus:ring-2 focus:ring-blue">
-                <MenuAlt1Icon class="h-6 w-6 text-blue cursor-pointer" />
-            </button>
-            
-            <h6 class="md:sr-only flex-1 font-bold text-lg">
-                <slot></slot>
-            </h6>
+  <header class="sticky top-0 z-40 bg-white">
+    <nav
+      :class="navClass"
+      class="flex items-center justify-start space-x-2 p-3 md:justify-end md:border-b"
+    >
+      <button
+        @click="$emit('showSidebar')"
+        type="button"
+        class="focus:outline-none mr-3 rounded p-1 focus:ring-2 focus:ring-blue md:hidden"
+      >
+        <MenuAlt1Icon class="h-6 w-6 cursor-pointer text-blue" />
+      </button>
 
-            <UserMenu />
-        </nav>
-    </header>
+      <h6 class="flex-1 text-lg font-bold md:sr-only">
+        <slot></slot>
+      </h6>
+
+      <UserMenu />
+    </nav>
+  </header>
 </template>
 
 <script>
-    import { ref } from 'vue'
-    import UserMenu from "../components/UserMenu"
-    import { MenuAlt1Icon } from '@heroicons/vue/outline'
+import { ref } from "vue";
+import UserMenu from "../components/UserMenu";
+import { MenuAlt1Icon } from "@heroicons/vue/outline";
 
-    export default {
-        name: 'Navbar',
-        setup() {
-            const isOpen = ref(true)
-            
-            return {
-                isOpen,
-            }
-        },
-        components: { 
-            MenuAlt1Icon, UserMenu 
-        }
-    }
+export default {
+  name: "Navbar",
+  props: {
+    navClass: String,
+  },
+  setup() {
+    const isOpen = ref(true);
+
+    return {
+      isOpen,
+    };
+  },
+  components: {
+    MenuAlt1Icon,
+    UserMenu,
+  },
+};
 </script>

@@ -5,7 +5,7 @@
         <SidebarDesktop />
             
         <main class="flex-1 bg-gray-50">
-            <Navbar @show-sidebar="$refs.sidebar.show()" >Transactions</Navbar>
+            <Navbar :class="navClass" @show-sidebar="$refs.sidebar.show()" >{{ mobileTitle }}</Navbar>
             <slot></slot>
         </main>
     </div>
@@ -19,7 +19,11 @@
     
     export default {
         name: 'DashboardLayout',
-        setup() {
+        props: {
+            mobileTitle: String,
+            navClass: String
+        },
+        setup(props) {
             const isOpen = ref(true)
 
             return {

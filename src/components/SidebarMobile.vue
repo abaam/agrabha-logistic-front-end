@@ -64,7 +64,7 @@
 
 <script>
     import { ref } from 'vue'
-    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon } from '@heroicons/vue/outline'
+    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
     import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
     const sidebarMenus = [
@@ -75,13 +75,18 @@
         },
         {
             href: '/transactions',
-            label: 'Transaction',
+            label: 'Transactions',
             icon: 'RefreshIcon'
         },
         {
             href: '/bookings',
-            label: 'Booking',
+            label: 'Bookings',
             icon: 'TagIcon'
+        },
+        {
+            href: '/deliveries',
+            label: 'Deliveries',
+            icon: 'TruckIcon'
         }
     ]
 
@@ -95,7 +100,7 @@
             }
         },
         components: {
-            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay
+            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay
         },
         methods: {
             show() {

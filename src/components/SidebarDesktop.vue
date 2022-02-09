@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import { ViewGridIcon, RefreshIcon, TagIcon } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
 
     const sidebarMenus = [
         {
@@ -31,13 +31,18 @@
         },
         {
             href: '/transactions',
-            label: 'Transaction',
+            label: 'Transactions',
             icon: 'RefreshIcon'
         },
         {
             href: '/bookings',
             label: 'Booking',
             icon: 'TagIcon'
+        },
+        {
+            href: '/deliveries',
+            label: 'Deliveries',
+            icon: 'TruckIcon'
         }
     ]
 
@@ -48,7 +53,7 @@
             }
         },
         components: {
-            ViewGridIcon, RefreshIcon, TagIcon
+            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon
         }
     }
 </script>

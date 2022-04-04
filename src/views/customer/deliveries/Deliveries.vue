@@ -9,7 +9,7 @@
         <router-link
           to="/deliveries/create"
           class="focus:outline-none flex justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 text-sm font-medium text-white hover:bg-blue focus:bg-blue"
-          >Create delivery</router-link
+          >Create</router-link
         >
       </div>
 

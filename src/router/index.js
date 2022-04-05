@@ -15,12 +15,14 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: () => import ('../views/Login.vue')
+    component: () => import ('../views/Login.vue'),
+    meta: { guestOnly: true }
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
+    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+    meta: { guestOnly: true }
   },
   {
     path: '/verification',
@@ -35,27 +37,32 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import ('../views/Profile.vue')
+    component: () => import ('../views/Profile.vue'),
+    meta: { authOnly: true }
   },
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import ('../views/driver/Dashboard.vue')
+    component: () => import ('../views/driver/Dashboard.vue'),
+    meta: { authOnly: true }
   },
   {
     path: '/transactions',
     name: 'Transactions',
-    component: () => import ('../views/driver/Transactions.vue')
+    component: () => import ('../views/driver/Transactions.vue'),
+    meta: { authOnly: true, customer: true, role: 2 }
   },
   {
     path: '/deliveries',
     name: 'Deliveries',
-    component: () => import ('../views/customer/deliveries/Deliveries.vue')
+    component: () => import ('../views/customer/deliveries/Deliveries.vue'),
+    meta: { authOnly: true, driver: true, role: 1 }
   },
   {
     path: '/deliveries/create',
     name: 'CreateDelivery',
-    component: () => import ('../views/customer/deliveries/CreateDelivery.vue')
+    component: () => import ('../views/customer/deliveries/CreateDelivery.vue'),
+    meta: { authOnly: true, driver: true, role: 1 }
   }
 ]
 
@@ -63,5 +70,51 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+function isLoggedIn() {
+  return localStorage.getItem("auth");
+}
+
+function role() {
+  return localStorage.getItem("role");
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authOnly) && !isLoggedIn()) {
+    if (!isLoggedIn()) {
+      next({
+        path: "/login"
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.driver)) {
+    if (isLoggedIn() && role() != to.meta.role) {
+      next({
+        path: "/dashboard"
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.customer)) {
+    if (isLoggedIn() && role() != to.meta.role) {
+      next({
+        path: "/dashboard"
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.guestOnly)) {
+    if (isLoggedIn()) {
+      next({
+        path: "/dashboard"
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router

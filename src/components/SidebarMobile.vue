@@ -27,7 +27,14 @@
 
                     <div class="mt-8 overflow-y-auto flex-1">
                         <ul>
-                            <li v-for="menu in sidebarMenus" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded">
+                            <li v-show="role == 1" v-for="menu in sidebarMenusDriver" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded">
+                                <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                                    <component :is="menu.icon" class="h-5 w-5"/>
+                                    <span>{{ menu.label }}</span>
+                                </router-link>
+                            </li>
+
+                            <li v-show="role == 2" v-for="menu in sidebarMenusCustomer" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded">
                                 <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
                                     <component :is="menu.icon" class="h-5 w-5"/>
                                     <span>{{ menu.label }}</span>
@@ -40,7 +47,7 @@
                     <div class="absolute bottom-0 right-0 left-0 z-10 p-3 flex items-center w-full">
                         <ul class="w-full">
                             <li class="flex justify-center font-medium rounded text-white bg-green-light hover:bg-green focus:outline-none focus:bg-green-light">
-                                <router-link to="/logout" active-class="bg-blue rounded" class="flex items-center justify-center w-full py-2 px-4">
+                                <router-link to="" active-class="bg-blue rounded" class="flex items-center justify-center w-full py-2 px-4"  @click="logout">
                                     <span class="uppercase font-semibold">Sign Out</span>
                                 </router-link>
                             </li>
@@ -63,11 +70,30 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import { ref } from 'vue'
     import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
     import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
-    const sidebarMenus = [
+    const sidebarMenusDriver = [
+        {
+            href: '/dashboard',
+            label: 'Dashboard',
+            icon: 'ViewGridIcon'
+        },
+        {
+            href: '/bookings',
+            label: 'Booking',
+            icon: 'TagIcon'
+        },
+        {
+            href: '/deliveries',
+            label: 'Deliveries',
+            icon: 'TruckIcon'
+        }
+    ]
+
+    const sidebarMenusCustomer = [
         {
             href: '/dashboard',
             label: 'Dashboard',
@@ -80,13 +106,8 @@
         },
         {
             href: '/bookings',
-            label: 'Bookings',
+            label: 'Booking',
             icon: 'TagIcon'
-        },
-        {
-            href: '/deliveries',
-            label: 'Deliveries',
-            icon: 'TruckIcon'
         }
     ]
 
@@ -96,15 +117,38 @@
 
             return {
                 isOpen,
-                sidebarMenus
+                sidebarMenusDriver,
+                sidebarMenusCustomer
             }
         },
         components: {
             ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay
         },
+        data() {
+            return {
+                role: localStorage.getItem('role')
+            };
+        },
         methods: {
             show() {
                 this.isOpen = true;
+            },
+
+            logout() {
+                axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie").then(response => {
+                    axios.post(process.env.VUE_APP_API + "logout")
+                    .then(response => {
+                        if (response.data.success) {
+                            localStorage.clear();
+                            window.location.href = "/login"
+                        } else {
+                            console.log(response.data)
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+                })
             }
         }
     }

@@ -5,7 +5,7 @@
         </div>
         <div class="w-full lg:w-2/3 px-4 md:px-8 lg:px-12">
             <router-link to="/">
-                <img src="img/agrabah-logistics-logo.png" class="w-48 mb-8" alt="Agrabah Logistics">
+                <img src="img/agrabah-logistics-logo.png" class="w-64 mb-8" alt="Agrabah Logistics">
             </router-link>
 
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Login</h1>
@@ -65,22 +65,22 @@
                         </div>
                     </div>
                     
-                    <ButtonSolidBlue class="w-full mb-4">Sign In</ButtonSolidBlue>
+                    <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Sign In" />
                     
                 </div>
             </Form>
 
             <div class="text-sm">
-                Don't have an account? 
-                <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Sign Up</router-link>
+                Not registered yet? 
+                <router-link to="/register" class="font-semibold text-blue-light hover:text-blue">Create an account?</router-link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import User from "../api/user";
     import * as yup from "yup";
-    import axios from 'axios';
     import { reactive } from "vue";
     import { Form, Field, ErrorMessage } from "vee-validate";
     import { LockClosedIcon } from '@heroicons/vue/solid'
@@ -97,6 +97,7 @@
         data() {
             return {
                 invalidCredentials: '',
+                error: null
             };
         },
         setup() {
@@ -125,18 +126,27 @@
         methods: {
             login(){
                 let self = this
-                axios.post(process.env.VUE_APP_API + "login", {
-                    phone_number: this.state.phone_number,
-                    password: this.state.password
-                })
-                .then(() => {
-                    this.$router.push("/dashboard");
+                User.login({
+                        phone_number: this.state.phone_number,
+                        password: this.state.password
+                    })
+                .then((response) => {
+                    console.log(response);
+                    this.$root.$emit('login', true); 
+                    if(response.data.verified){
+                        localStorage.setItem('auth', 'true');
+                        localStorage.setItem('role', response.data.role);
+                        this.$router.push('/dashboard');
+                    } else {
+                        localStorage.setItem('Phone Number', response.data.phone_number);
+                        this.$router.push('/verification');
+                    }
                 })
                 .catch(function (error) {
                     if (error.response) {
                         self.invalidCredentials = error.response.data.message;
                     }
-                })
+                });
             }
         },
     }

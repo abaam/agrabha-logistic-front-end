@@ -19,7 +19,7 @@
             >
             <MenuItems class="absolute top-12 right-0 w-48 border rounded-md p-2 bg-white shadow-md">
                 <MenuItem v-for="userMenu in userMenus" :key="userMenu.label" v-slot="{ active }">
-                    <router-link :to="userMenu.href" :class="{ 'bg-blue-light text-white': active }" class="flex items-center space-x-2 w-full p-2 rounded-md">
+                    <router-link :to="userMenu.href" :class="{ 'bg-blue-light text-white': active }" class="flex items-center space-x-2 w-full p-2 rounded-md" @click="logout(userMenu.label)">
                         <component :is="userMenu.icon" class="h-5 w-5" />
                         <span>{{ userMenu.label }}</span>
                     </router-link>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import { UserCircleIcon, LogoutIcon, ChevronDownIcon } from '@heroicons/vue/outline'
     import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue"
 
@@ -41,7 +42,7 @@
             icon: 'UserCircleIcon'
         },
         {
-            href: '/logout',
+            href: '',
             label: 'Logout',
             icon: 'LogoutIcon'
         }
@@ -53,8 +54,30 @@
                 userMenus
             }
         },
+
         components: {
             Menu, MenuButton, MenuItems, MenuItem, UserCircleIcon, LogoutIcon, ChevronDownIcon
+        },
+
+        methods: {
+            logout(menu) {
+                if(menu == 'Logout'){
+                    axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie").then(response => {
+                        axios.post(process.env.VUE_APP_API + "logout")
+                        .then(response => {
+                            if (response.data.success) {
+                                localStorage.clear();
+                                window.location.href = "/login"
+                            } else {
+                                console.log(response.data)
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                    })
+                }
+            }
         }
     }
 </script>

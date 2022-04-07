@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     
-                    <ButtonSolidBlue type="submit" class="w-full mb-4" buttonText="Sign In" />
+                    <ButtonSolidBlue class="w-full mb-4">Sign In</ButtonSolidBlue>
                     
                 </div>
             </Form>
@@ -136,9 +136,11 @@
                     if(response.data.verified){
                         localStorage.setItem('auth', 'true');
                         localStorage.setItem('role', response.data.role);
+                        localStorage.setItem('user_id', response.data.id);
                         this.$router.push('/dashboard');
                     } else {
                         localStorage.setItem('Phone Number', response.data.phone_number);
+                        localStorage.setItem('user_id', response.data.id);
                         this.$router.push('/verification');
                     }
                 })

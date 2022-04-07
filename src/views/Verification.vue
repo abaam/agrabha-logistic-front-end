@@ -26,7 +26,7 @@
                         <input type="number" name="otp_code" v-model="state.otp_code" class="appearance-none rounded relative block w-full px-3 py-2 border border-grey placeholder-grey text-gray-800 focus:outline-none focus:ring-grey-dark focus:ring-0 focus:border-grey-dark focus:z-10 sm:text-sm" />
                     </div>
 
-                    <p class="block text-center leading-5 my-4">Didn't received the code? <a href="" class="font-semibold text-blue-light hover:text-blue">Resend Code</a></p>
+                    <p class="block text-center leading-5 my-4 ">Didn't received the code? <a href class="font-semibold text-blue-light hover:text-blue" v-on:click="resend()">Resend Code</a></p>
 
                     <ButtonSolidBlue class="w-full my-4 font-semibold">Verify</ButtonSolidBlue>
                 </Form>
@@ -83,6 +83,31 @@
                 .catch(function (error) {
                     if (error.response) {
                         self.invalidOTP = error.response.data.message;
+                    }
+                });
+            },
+
+            resend(){
+                event.preventDefault();
+
+                let self = this
+                axios.post(process.env.VUE_APP_API + 'resend', {
+                    user_id: localStorage.getItem('user_id'),
+                })
+                .then((response) => {
+                    if(response.data.success){
+                        // localStorage.clear();
+                        // localStorage.setItem('auth', 'true');
+                        // localStorage.setItem('role', response.data.role);
+                        // this.$router.push('/dashboard');
+                    }else{
+                        // self.invalidOTP = response.data.message;
+                        // self.alertOpen = true;
+                    }
+                })
+                .catch(function (error) {
+                    if (error.response) {
+                        // self.invalidOTP = error.response.data.message;
                     }
                 });
             },

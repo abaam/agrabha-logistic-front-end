@@ -49,19 +49,19 @@ const routes = [
   {
     path: '/transactions',
     name: 'Transactions',
-    component: () => import ('../views/driver/Transactions.vue'),
+    component: () => import ('../views/customer/Transactions.vue'),
     meta: { authOnly: true, customer: true, role: 2 }
   },
   {
     path: '/deliveries',
     name: 'Deliveries',
-    component: () => import ('../views/customer/deliveries/Deliveries.vue'),
+    component: () => import ('../views/driver/Deliveries.vue'),
     meta: { authOnly: true, driver: true, role: 1 }
   },
   {
-    path: '/deliveries/create',
-    name: 'CreateDelivery',
-    component: () => import ('../views/customer/deliveries/CreateDelivery.vue'),
+    path: '/bookings',
+    name: 'Bookings',
+    component: () => import ('../views/driver/Booking.vue'),
     meta: { authOnly: true, driver: true, role: 1 }
   }
 ]

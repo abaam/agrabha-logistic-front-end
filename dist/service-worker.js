@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.bc94ab4b5bd09d29fc624c37ccc868b2.js"
+  "/precache-manifest.5b777686cf5dc0af8f64a55286c743bf.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "agrabah"});

@@ -13,10 +13,9 @@
         >
       </div>
     </div>
-    <div class="mb-2 h-32 w-full rounded border border-grey-light">
-      Google map where drop off is located here...
+    <div class="mb-4 flex items-center gap-2">
+      <img src="../../../public/img/google-map.png" alt="Agrabah Logistics">
     </div>
-    <p class="block">16 Juan S. Estevez St Legazpi City</p>
   </div>
   <!-- /Delivery Address -->
 

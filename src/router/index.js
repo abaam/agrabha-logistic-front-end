@@ -63,6 +63,18 @@ const routes = [
     name: 'Bookings',
     component: () => import ('../views/Booking.vue'),
     meta: { authOnly: true }
+  },
+  {
+    path: '/bookings/create',
+    name: 'Create Booking',
+    component: () => import ('../views/CreateBooking.vue'),
+    meta: { authOnly: true }
+  },
+  {
+    path: '/payment-success',
+    name: 'Payment Success',
+    component: () => import ('../views/steps/PaymentSuccess.vue'),
+    meta: { authOnly: true }
   }
 ]
 

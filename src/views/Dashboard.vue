@@ -6,8 +6,6 @@
 
         <main class="flex-1">
             <Navbar @show-sidebar="$refs.sidebar.show()" >Dashboard</Navbar>
-
-            
             <div class="container max-w-3xl my-12 mx-auto px-4 md:px-12">
                 <div class="flex flex-wrap items-center justify-center -mx-1 lg:-mx-4">
 
@@ -57,16 +55,6 @@
 
                 </div>
             </div>
-            <!-- Driver -->
-            <section v-show="role == 1" class="px-3 py-6 md:p-6">
-
-            </section>
-
-            <!-- Customer -->
-            <section v-show="role == 2" class="px-3 py-6 md:p-6">
-
-            </section>
-
         </main>
     </div>
 </template>

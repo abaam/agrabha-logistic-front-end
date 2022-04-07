@@ -4,6 +4,9 @@
       <LocationMarkerIcon class="h-8 w-8 text-blue-light" />
       <h6 class="text-sm font-semibold uppercase">Location</h6>
     </div>
+    <div class="mb-4 flex items-center gap-2">
+      <img src="../../../public/img/google-map.png" alt="Agrabah Logistics">
+    </div>
     <div class="relative mb-4">
       <Field
         type="text"

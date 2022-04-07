@@ -71,9 +71,21 @@ const routes = [
     meta: { authOnly: true }
   },
   {
+    path: '/quick-search',
+    name: 'Quick Search',
+    component: () => import ('../views/QuickSearch.vue'),
+    meta: { authOnly: true }
+  },
+  {
     path: '/payment-success',
     name: 'Payment Success',
     component: () => import ('../views/steps/PaymentSuccess.vue'),
+    meta: { authOnly: true }
+  },
+  {
+    path: '/wallet',
+    name: 'Wallet',
+    component: () => import ('../views/Wallet.vue'),
     meta: { authOnly: true }
   }
 ]

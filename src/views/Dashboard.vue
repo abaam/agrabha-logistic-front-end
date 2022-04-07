@@ -18,7 +18,7 @@
                         <div class="overflow-hidden rounded-lg shadow-lg bg-blue-light text-white hover:bg-blue hover:text-grey-light">
                             <router-link :to="menu.href">
                             <!-- <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random"> -->
-                                <component :is="menu.icon" class="block h-36 w-full"/>
+                                <component :is="menu.icon" class="block h-32 w-full"/>
 
                                 <header class="flex items-center justify-center p-2 md:p-4">
                                     <h1 class="text-lg">

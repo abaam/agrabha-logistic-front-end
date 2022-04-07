@@ -43,7 +43,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    component: () => import ('../views/driver/Dashboard.vue'),
+    component: () => import ('../views/Dashboard.vue'),
     meta: { authOnly: true }
   },
   {
@@ -61,8 +61,8 @@ const routes = [
   {
     path: '/bookings',
     name: 'Bookings',
-    component: () => import ('../views/driver/Booking.vue'),
-    meta: { authOnly: true, driver: true, role: 1 }
+    component: () => import ('../views/Booking.vue'),
+    meta: { authOnly: true }
   }
 ]
 

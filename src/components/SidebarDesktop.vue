@@ -8,6 +8,7 @@
 
             <div class="mt-8">
                 <ul>
+                    <!-- Driver -->
                     <li v-show="role == 1" v-for="menu in sidebarMenusDriver" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded-md">
                         <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
                             <component :is="menu.icon" class="h-5 w-5"/>
@@ -15,6 +16,7 @@
                         </router-link>
                     </li>
 
+                    <!-- Customer -->
                     <li v-show="role == 2" v-for="menu in sidebarMenusCustomer" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded-md">
                         <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
                             <component :is="menu.icon" class="h-5 w-5"/>

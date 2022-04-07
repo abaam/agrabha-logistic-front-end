@@ -46,6 +46,18 @@
                     
                     <div class="absolute bottom-0 right-0 left-0 z-10 p-3 flex items-center w-full">
                         <ul class="w-full">
+                            <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                                <a href="#" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <UserCircleIcon class="h-5 w-5"/>
+                                <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="text-white hover:bg-blue hover:text-grey-light rounded-md mb-8">
+                                <a href="#" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <ShieldCheckIcon class="h-5 w-5"/>
+                                <span>Security</span>
+                                </a>
+                            </li>
                             <li class="flex justify-center font-medium rounded text-white bg-green-light hover:bg-green focus:outline-none focus:bg-green-light">
                                 <router-link to="" active-class="bg-blue rounded" class="flex items-center justify-center w-full py-2 px-4"  @click="logout">
                                     <span class="uppercase font-semibold">Sign Out</span>
@@ -72,7 +84,7 @@
 <script>
     import axios from 'axios';
     import { ref } from 'vue'
-    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
+    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon } from '@heroicons/vue/outline'
     import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
     const sidebarMenusDriver = [
@@ -122,7 +134,7 @@
             }
         },
         components: {
-            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay
+            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon
         },
         data() {
             return {

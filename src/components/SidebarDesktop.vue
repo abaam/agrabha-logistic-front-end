@@ -23,6 +23,21 @@
                             <span>{{ menu.label }}</span>
                         </router-link>
                     </li>
+                    
+                    <div class="absolute inset-x-4 bottom-5">
+                        <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                            <router-link to="/profile" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <UserCircleIcon class="h-5 w-5"/>
+                            <span>Profile</span>
+                            </router-link>
+                        </li>
+                        <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                            <router-link to="/profile" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <ShieldCheckIcon class="h-5 w-5"/>
+                            <span>Security</span>
+                            </router-link>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </aside>
@@ -30,7 +45,7 @@
 </template>
 
 <script>
-    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon  } from '@heroicons/vue/outline'
 
     const sidebarMenusDriver = [
         {
@@ -57,14 +72,14 @@
             icon: 'ViewGridIcon'
         },
         {
-            href: '/transactions',
-            label: 'Transactions',
-            icon: 'RefreshIcon'
-        },
-        {
             href: '/bookings',
             label: 'Booking',
             icon: 'TagIcon'
+        },
+        {
+            href: '/transactions',
+            label: 'Transactions',
+            icon: 'RefreshIcon'
         }
     ]
 
@@ -76,7 +91,7 @@
             }
         },
         components: {
-            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon
+            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon
         },
         data() {
             return {

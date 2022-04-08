@@ -1,18 +1,16 @@
 <template>
-  <DashboardLayout mobileTitle="Transactions">
+  <DashboardLayout navClass="border-b-0" mobileTitle="Transactions">
     <section class="hidden px-3 py-6 md:block md:p-6">
-      <h2
-        class="mb-6 block text-xl font-bold leading-6 md:text-2xl lg:text-3xl"
-      >
-        Transactions
-      </h2>
+      <div class="mb-6 flex items-center justify-between">
+        <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
+          Transactions
+        </h2>
+      </div>
 
-      <!-- Table -->
       <div class="hidden gap-y-3 rounded-md bg-white py-6 shadow md:grid">
         <div
           class="flex items-center justify-between px-6 md:flex-col md:space-y-2 lg:flex-row lg:space-y-0"
         >
-          <!-- Filter -->
           <div class="flex items-center space-x-2">
             <p>Show</p>
             <select
@@ -28,20 +26,282 @@
             <p>entries</p>
           </div>
 
-          <!-- Search -->
           <div class="flex items-center space-x-1">
             <p>Search:</p>
             <input
               type="text"
+              v-model="search"
               @keyup="searchDelivery"
               @keyup.enter="fetchDeliveries"
-              v-model="search"
               class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-900 focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             />
           </div>
         </div>
 
+        <!-- Dummy Data -->
         <section class="container mx-auto grid grid-cols-1">
+          <div class="-my-2 overflow-x-auto">
+            <div class="inline-block min-w-full py-2 align-middle">
+              <div class="overflow-hidden">
+                <table class="min-w-full divide-y divide-grey-light">
+                  <thead class="bg-grey-light bg-opacity-30">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Package Item
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Vehicle Type
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Drop Off
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Pick Up
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Date/Time
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Payment Method
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Status
+                      </th>
+                      <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-grey-light bg-white">
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-grey-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-black">
+                              Cancelled
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-grey-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-black">
+                              Cancelled
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="flex items-center justify-between px-6 md:flex-col md:space-y-2 lg:flex-row lg:space-y-0">
+          <p>
+            Showing <span>1</span> to
+            <span>5</span> of
+            <span>5</span> entries
+          </p>
+        </div>
+      </div>
+
+      <!-- Table
+      <section class="container mx-auto grid grid-cols-1">
           <div class="-my-2 overflow-x-auto">
             <div class="inline-block min-w-full py-2 align-middle">
               <div class="overflow-hidden">
@@ -98,7 +358,7 @@
                         <div class="text-sm">{{ delivery.delivery_date }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.delivery_id }}</div>
+                        <div class="text-sm">{{ delivery.id }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ delivery.origin }}</div>
@@ -170,7 +430,8 @@
           v-if="deliveries != ''"
         >
           <p>
-            Showing <span>1</span> to <span>{{ show_entries }}</span> of
+            Showing <span>{{ entries }}</span> to
+            <span>{{ show_entries }}</span> of
             <span>{{ pagination.total }}</span> entries
           </p>
           <div>
@@ -178,10 +439,10 @@
           </div>
         </div>
       </div>
-      <!-- /Table -->
+      /Table -->
     </section>
 
-    <section class="grid px-3 md:hidden md:p-6 md:py-6">
+    <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
           class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
@@ -213,9 +474,9 @@
         </TabList>
         <TabPanels>
           <TabPanel>
-            <div v-if="to_deliver != ''" class="my-3 grid gap-y-2">
+            <div v-if="toDeliver != ''" class="my-3 grid gap-y-2">
               <div
-                v-for="delivery in to_deliver"
+                v-for="delivery in toDeliver"
                 :key="delivery.id"
                 class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
@@ -258,9 +519,9 @@
             </div>
           </TabPanel>
           <TabPanel>
-            <div v-if="in_transit != ''" class="my-3 grid gap-y-2">
+            <div v-if="inTransit != ''" class="my-3 grid gap-y-2">
               <div
-                v-for="delivery in in_transit"
+                v-for="delivery in inTransit"
                 :key="delivery.id"
                 class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
@@ -349,16 +610,23 @@
           </TabPanel>
         </TabPanels>
       </TabGroup>
+      
     </section>
   </DashboardLayout>
 </template>
 
 <script>
+import { onMounted, ref } from "vue";
 import axios from "axios";
 import _ from "lodash";
 import DashboardLayout from "@/views/DashboardLayout.vue";
-import Pagination from "@/components/Pagination";
-import { TruckIcon, CubeIcon, CheckIcon } from "@heroicons/vue/outline";
+import Pagination from "@/components/Pagination.vue";
+import {
+  TruckIcon,
+  CubeIcon,
+  CheckIcon,
+  PlusIcon,
+} from "@heroicons/vue/outline";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 
 export default {
@@ -372,6 +640,7 @@ export default {
       delivered: [],
       search: "",
       show_entries: "5",
+      role: localStorage.getItem('role')
     };
   },
   created() {
@@ -465,16 +734,17 @@ export default {
     },
   },
   components: {
+    DashboardLayout,
+    TruckIcon,
+    CubeIcon,
+    CheckIcon,
+    PlusIcon,
     TabGroup,
     TabList,
     Tab,
     TabPanels,
-    TabPanel,
     pagination: Pagination,
-    TruckIcon,
-    CubeIcon,
-    CheckIcon,
-    DashboardLayout,
+    TabPanel,
   },
 };
 </script>

@@ -68,19 +68,19 @@ const routes = [
     path: '/bookings/create',
     name: 'Create Booking',
     component: () => import ('../views/CreateBooking.vue'),
-    meta: { authOnly: true }
+    meta: { authOnly: true, customer: true, role: 2 }
   },
   {
     path: '/quick-search',
     name: 'Quick Search',
     component: () => import ('../views/QuickSearch.vue'),
-    meta: { authOnly: true }
+    meta: { authOnly: true, driver: true, role: 1 }
   },
   {
     path: '/payment-success',
     name: 'Payment Success',
     component: () => import ('../views/PaymentSuccess.vue'),
-    meta: { authOnly: true }
+    meta: { authOnly: true, customer: true, role: 2 }
   },
   {
     path: '/wallet',

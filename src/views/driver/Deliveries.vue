@@ -5,12 +5,6 @@
         <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
           Deliveries
         </h2>
-
-        <router-link
-          to="/deliveries/create"
-          class="focus:outline-none flex justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 text-sm font-medium text-white hover:bg-blue focus:bg-blue"
-          >Create</router-link
-        >
       </div>
 
       <!-- Table -->
@@ -47,6 +41,260 @@
           </div>
         </div>
 
+        <!-- Driver Dummy Data -->
+        <section class="container mx-auto grid grid-cols-1">
+          <div class="-my-2 overflow-x-auto">
+            <div class="inline-block min-w-full py-2 align-middle">
+              <div class="overflow-hidden">
+                <table class="min-w-full divide-y divide-grey-light">
+                  <thead class="bg-grey-light bg-opacity-30">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Package Item
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Vehicle Type
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Drop Off
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Pick Up
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Date/Time
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Payment Method
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Status
+                      </th>
+                      <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Edit</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-grey-light bg-white">
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-grey-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-black">
+                              Cancelled
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Seeds</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Truck</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Marikina City</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Albay</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">Cash on Delivery</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div>
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Delivered
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
+                      >
+                        <a href="#" class="text-blue-light hover:text-blue"
+                          >View details</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Deliveries Table
         <section class="container mx-auto grid grid-cols-1">
           <div class="-my-2 overflow-x-auto">
             <div class="inline-block min-w-full py-2 align-middle">
@@ -169,7 +417,7 @@
               </div>
             </div>
           </div>
-        </section>
+        </section>  
 
         <div
           class="flex items-center justify-between px-6 md:flex-col md:space-y-2 lg:flex-row lg:space-y-0"
@@ -184,8 +432,8 @@
             <pagination :pagination="pagination" @paginate="fetchDeliveries" />
           </div>
         </div>
+      </div>-->
       </div>
-      <!-- /Table -->
     </section>
 
     <section class="relative grid px-3 md:hidden md:p-6 md:py-6">

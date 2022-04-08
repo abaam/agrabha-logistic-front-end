@@ -79,7 +79,7 @@ const routes = [
   {
     path: '/payment-success',
     name: 'Payment Success',
-    component: () => import ('../views/steps/PaymentSuccess.vue'),
+    component: () => import ('../views/PaymentSuccess.vue'),
     meta: { authOnly: true }
   },
   {

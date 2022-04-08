@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, ShoppingBagIcon  } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon  } from '@heroicons/vue/outline'
 
     const sidebarMenusDriver = [
         {
@@ -66,7 +66,7 @@
         {
             href: '/wallet',
             label: 'Wallet',
-            icon: 'ShoppingBagIcon'
+            icon: 'CashIcon'
         },
         {
             href: '/deliveries',
@@ -89,7 +89,7 @@
         {
             href: '/wallet',
             label: 'Wallet',
-            icon: 'ShoppingBagIcon'
+            icon: 'CashIcon'
         },
         {
             href: '/transactions',
@@ -106,7 +106,7 @@
             }
         },
         components: {
-            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, ShoppingBagIcon
+            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon
         },
         data() {
             return {

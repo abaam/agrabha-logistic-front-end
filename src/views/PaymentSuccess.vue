@@ -5,80 +5,44 @@
         <SidebarDesktop />
 
         <main class="flex-1">
-            <Navbar @show-sidebar="$refs.sidebar.show()" >Dashboard</Navbar>
-            <div class="container m-auto px-6">
-
-            <div class="lg:flex justify-between items-center mt-5">
-
-                <div class="lg:w-4/12 lg:p-0 p-7">
-                    <h1 class="text-center text-2xl font-bold leading-tight mb-3 capitalize">Tracking QR Code</h1>
+            <Navbar @show-sidebar="$refs.sidebar.show()" ></Navbar>
+            <div class="p-4 max-w-md rounded-lg border sm:p-8 m-auto mt-10 shadow-xl">
+              <svg viewBox="0 0 24 24" class="text-green-600 w-16 h-16 mx-auto my-6">
+                <path fill="currentColor"
+                    d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+                </path>
+              </svg>
+              <h2 class="block text-center text-xl font-bold leading-6 md:text-2xl lg:text-3xl mb-10">
+                Payment Successful
+              </h2>
+              <div class="md:mx-auto">
+                <table class="flex justify-center">
+                  <tbody>
+                    <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-xl font-medium text-gray-900">Payout Method:</td>
+                      <td class="text-xl text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        Cash
+                      </td>
+                    </tr>
+                    <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-xl font-medium text-gray-900">Amount Paid:</td>
+                      <td class="text-xl text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                        P 100
+                      </td>
+                    </tr>
+                    <tr class="bg-white border-b">
+                      <td class="px-6 py-4 whitespace-nowrap text-xl font-medium text-gray-900">Tracking No.:</td>
+                      <td class="text-xl text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
+                        09090909090
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h1 class="text-center text-2xl font-bold leading-tight mb-3 mt-10 capitalize">Tracking QR Code</h1>
+                  <a href="/trace">
                     <img class="mx-auto w-60" src="../../public/img/qrcode_lab.agrabah.ph.png" alt="Agrabah Logistics">
-
-                </div>
-                    <div class="lg:w-7/12 order-2">
-                        <div class="flex flex-col">
-                          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
-                              <div class="overflow-hidden">
-                                <table class="min-w-full text-center">
-                                  <thead class="border-b bg-gray-50">
-                                    <tr>
-                                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">
-                                        #
-                                      </th>
-                                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">
-                                        First
-                                      </th>
-                                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">
-                                        Last
-                                      </th>
-                                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4">
-                                        Handle
-                                      </th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr class="bg-white border-b">
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        Mark
-                                      </td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        Otto
-                                      </td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        @mdo
-                                      </td>
-                                    </tr>
-                                    <tr class="bg-white border-b">
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">2</td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        Jacob
-                                      </td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        Thornton
-                                      </td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        @fat
-                                      </td>
-                                    </tr>
-                                    <tr class="bg-white border-b">
-                                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">3</td>
-                                      <td colspan="2" class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
-                                        Larry the Bird
-                                      </td>
-                                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        @twitter
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
+                  </a>
+              </div>
             </div>
         </main>
     </div>
@@ -93,42 +57,6 @@
 
     import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
 
-    const MenusDriver = [
-        // {
-        //     href: '/dashboard',
-        //     label: 'Dashboard',
-        //     icon: 'ViewGridIcon'
-        // },
-        {
-            href: '/bookings',
-            label: 'Booking',
-            icon: 'TagIcon'
-        },
-        {
-            href: '/deliveries',
-            label: 'Deliveries',
-            icon: 'TruckIcon'
-        }
-    ]
-
-    const MenusCustomer = [
-        // {
-        //     href: '/dashboard',
-        //     label: 'Dashboard',
-        //     icon: 'ViewGridIcon'
-        // },
-        {
-            href: '/transactions',
-            label: 'Transactions',
-            icon: 'RefreshIcon'
-        },
-        {
-            href: '/bookings',
-            label: 'Booking',
-            icon: 'TagIcon'
-        }
-    ]
-
     export default {
         name: 'Dashboard',
         setup() {
@@ -140,9 +68,7 @@
                 ViewGridIcon,
                 TagIcon,
                 TruckIcon,
-                RefreshIcon,
-                MenusDriver,
-                MenusCustomer
+                RefreshIcon
             }
         },
         components: {

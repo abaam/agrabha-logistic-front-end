@@ -47,13 +47,13 @@
                     <div class="absolute bottom-0 right-0 left-0 z-10 p-3 flex items-center w-full">
                         <ul class="w-full">
                             <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                                <a href="#" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <a href="/profile" class="flex items-center space-x-3 w-full px-3 py-2">
                                 <UserCircleIcon class="h-5 w-5"/>
                                 <span>Profile</span>
                                 </a>
                             </li>
                             <li class="text-white hover:bg-blue hover:text-grey-light rounded-md mb-8">
-                                <a href="#" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <a href="/security" class="flex items-center space-x-3 w-full px-3 py-2">
                                 <ShieldCheckIcon class="h-5 w-5"/>
                                 <span>Security</span>
                                 </a>
@@ -84,7 +84,7 @@
 <script>
     import axios from 'axios';
     import { ref } from 'vue'
-    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon } from '@heroicons/vue/outline'
+    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, BookOpenIcon } from '@heroicons/vue/outline'
     import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
     const sidebarMenusDriver = [
@@ -120,6 +120,11 @@
             href: '/bookings',
             label: 'Booking',
             icon: 'TagIcon'
+        },
+        {
+            href: '/bookings/create',
+            label: 'Create Booking',
+            icon: 'BookOpenIcon'
         }
     ]
 
@@ -134,7 +139,7 @@
             }
         },
         components: {
-            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon
+            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon, BookOpenIcon
         },
         data() {
             return {

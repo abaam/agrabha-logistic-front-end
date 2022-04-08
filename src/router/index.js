@@ -87,6 +87,12 @@ const routes = [
     name: 'Wallet',
     component: () => import ('../views/Wallet.vue'),
     meta: { authOnly: true }
+  },
+  {
+    path: '/trace',
+    name: 'Trace',
+    component: () => import ('../views/Trace.vue'),
+    meta: { authOnly: true }
   }
 ]
 

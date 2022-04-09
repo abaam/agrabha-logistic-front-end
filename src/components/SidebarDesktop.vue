@@ -5,9 +5,17 @@
                 <img class="w-32" src="../../public/img/agrabah-logistics-logo.png" alt="Agrabah Logistics">
             </div>
             <hr class="mt-2 border-blue opacity-25">
-
             <div class="mt-8">
                 <ul>
+                    <li v-show="role == 1" >
+                        <div class="flex justify-center">
+                          <div class="mb-3 xl:w-96">
+                            <div class="input-group relative flex flex-wrap items-stretch w-full">
+                              <input type="search" class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Search Bookings" aria-label="Search" aria-describedby="button-addon3">
+                            </div>
+                          </div>
+                        </div>
+                    </li>
                     <!-- Driver -->
                     <li v-show="role == 1" v-for="menu in sidebarMenusDriver" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded-md">
                         <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
@@ -58,11 +66,11 @@
             label: 'Booking',
             icon: 'TagIcon'
         },
-        {
-            href: '/quick-search',
-            label: 'Quick Search',
-            icon: 'SearchIcon'
-        },
+        // {
+        //     href: '/quick-search',
+        //     label: 'Quick Search',
+        //     icon: 'SearchIcon'
+        // },
         {
             href: '/wallet',
             label: 'Wallet',

@@ -13,7 +13,7 @@
                     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" v-show="role == 1" v-for="menu in MenusDriver" :key="menu.label">
 
                         <!-- Article -->
-                        <div class="overflow-hidden rounded-lg shadow-lg bg-blue-light text-white hover:bg-blue hover:text-grey-light">
+                        <div class="overflow-hidden rounded-lg shadow-lg bg-green-light text-blue hover:bg-blue hover:text-green-light">
                             <router-link :to="menu.href">
                             <!-- <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random"> -->
                                 <component :is="menu.icon" class="block h-32 w-full"/>
@@ -28,6 +28,7 @@
                         </div>
                         <!-- END Article -->
 
+
                     </div>
                     <!-- END Column -->
 
@@ -35,7 +36,7 @@
                     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" v-show="role == 2" v-for="menu in MenusCustomer" :key="menu.label">
 
                         <!-- Article -->
-                        <div class="overflow-hidden rounded-lg shadow-lg bg-blue-light text-white hover:bg-blue hover:text-grey-light">
+                        <div class="overflow-hidden rounded-lg shadow-lg bg-green-light text-blue hover:bg-blue-light hover:text-green-light">
                             <router-link :to="menu.href">
                             <!-- <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random"> -->
                                 <component :is="menu.icon" class="block h-36 w-full"/>
@@ -66,42 +67,62 @@
     import SidebarMobile from "../components/SidebarMobile"
     import Navbar from "../components/Navbar"
 
-    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, SearchIcon, CashIcon, UserCircleIcon, ShieldCheckIcon  } from '@heroicons/vue/outline'
 
     const MenusDriver = [
-        // {
-        //     href: '/dashboard',
-        //     label: 'Dashboard',
-        //     icon: 'ViewGridIcon'
-        // },
         {
             href: '/bookings',
             label: 'Booking',
             icon: 'TagIcon'
         },
         {
+            href: '/wallet',
+            label: 'Wallet',
+            icon: 'CashIcon'
+        },
+        {
             href: '/deliveries',
             label: 'Deliveries',
             icon: 'TruckIcon'
-        }
+        },
+        {
+            href: '/profile',
+            label: 'Profile',
+            icon: 'UserCircleIcon'
+        },
+        {
+            href: '/profile',
+            label: 'Security',
+            icon: 'ShieldCheckIcon'
+        },
     ]
 
     const MenusCustomer = [
-        // {
-        //     href: '/dashboard',
-        //     label: 'Dashboard',
-        //     icon: 'ViewGridIcon'
-        // },
+        {
+            href: '/bookings',
+            label: 'Booking',
+            icon: 'TagIcon'
+        },
+        {
+            href: '/wallet',
+            label: 'Wallet',
+            icon: 'CashIcon'
+        },
         {
             href: '/transactions',
             label: 'Transactions',
             icon: 'RefreshIcon'
         },
         {
-            href: '/bookings',
-            label: 'Booking',
-            icon: 'TagIcon'
-        }
+            href: '/profile',
+            label: 'Profile',
+            icon: 'UserCircleIcon'
+        },
+        {
+            href: '/profile',
+            label: 'Security',
+            icon: 'ShieldCheckIcon'
+        },
     ]
 
     export default {
@@ -117,11 +138,15 @@
                 TruckIcon,
                 RefreshIcon,
                 MenusDriver,
-                MenusCustomer
+                MenusCustomer,
+                SearchIcon,
+                CashIcon,
+                UserCircleIcon,
+                ShieldCheckIcon
             }
         },
         components: {
-            UserMenu, SidebarDesktop, SidebarMobile, Navbar, ViewGridIcon, TagIcon, TruckIcon, RefreshIcon
+            UserMenu, SidebarDesktop, SidebarMobile, Navbar, ViewGridIcon, TagIcon, TruckIcon, RefreshIcon, SearchIcon, CashIcon, UserCircleIcon, ShieldCheckIcon
         },
         data() {
             return {

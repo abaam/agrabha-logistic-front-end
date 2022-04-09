@@ -93,7 +93,13 @@ const routes = [
     name: 'Trace',
     component: () => import ('../views/Trace.vue'),
     meta: { authOnly: true }
-  }
+  },
+  {
+    path: '/booking-details',
+    name: 'Booking Details',
+    component: () => import ('../views/BookingDetails.vue'),
+    meta: { authOnly: true }
+  },
 ]
 
 const router = createRouter({

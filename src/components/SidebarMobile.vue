@@ -140,11 +140,11 @@
             label: 'Booking',
             icon: 'TagIcon'
         },
-        {
-            href: '/bookings/create',
-            label: 'Create Booking',
-            icon: 'BookOpenIcon'
-        }
+        // {
+        //     href: '/bookings/create',
+        //     label: 'Create Booking',
+        //     icon: 'BookOpenIcon'
+        // }
     ]
 
     export default {

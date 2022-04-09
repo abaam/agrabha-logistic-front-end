@@ -36,10 +36,10 @@
                     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" v-show="role == 2" v-for="menu in MenusCustomer" :key="menu.label">
 
                         <!-- Article -->
-                        <div class="overflow-hidden rounded-lg shadow-lg bg-green-light text-blue hover:bg-blue-light hover:text-green-light">
+                        <div class="overflow-hidden rounded-lg shadow-lg bg-green-light text-blue hover:bg-blue hover:text-green-light">
                             <router-link :to="menu.href">
                             <!-- <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random"> -->
-                                <component :is="menu.icon" class="block h-36 w-full"/>
+                                <component :is="menu.icon" class="block h-32 w-full"/>
 
                                 <header class="flex items-center justify-center p-2 md:p-4">
                                     <h1 class="text-lg">
@@ -103,11 +103,11 @@
             label: 'Booking',
             icon: 'TagIcon'
         },
-        {
-            href: '/wallet',
-            label: 'Wallet',
-            icon: 'CashIcon'
-        },
+        // {
+        //     href: '/wallet',
+        //     label: 'Wallet',
+        //     icon: 'CashIcon'
+        // },
         {
             href: '/transactions',
             label: 'Transactions',

@@ -94,11 +94,11 @@
             label: 'Booking',
             icon: 'TagIcon'
         },
-        {
-            href: '/wallet',
-            label: 'Wallet',
-            icon: 'CashIcon'
-        },
+        // {
+        //     href: '/wallet',
+        //     label: 'Wallet',
+        //     icon: 'CashIcon'
+        // },
         {
             href: '/transactions',
             label: 'Transactions',

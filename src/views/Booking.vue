@@ -134,9 +134,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -172,9 +171,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -210,9 +208,9 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
+
                       </td>
                     </tr>
                     <tr>
@@ -248,9 +246,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -286,9 +283,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -387,9 +383,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -425,9 +420,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -463,9 +457,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -501,9 +494,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -539,9 +531,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -703,7 +694,15 @@
     </section>
 
     <!-- Driver Dummy Data Mobile -->
+    <div class="mb-6 px-3 md:p-6 flex justify-end md:invisible">
+        <router-link v-show="role == 2"
+          to="/bookings/create"
+          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded"
+          >Create Booking</router-link
+        >
+      </div>
     <section v-show="role == 1" class="relative grid px-3 md:hidden md:p-6 md:py-6">
+
       <TabGroup>
         <TabList
           class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
@@ -884,7 +883,7 @@
           </TabPanel>
           <TabPanel>
             <div v-if="delivered != ''" class="my-3 grid gap-y-2">
-              <div
+              <router-link to="/booking-details"
                 v-for="delivery in delivered"
                 :key="delivery.id"
                 class="grid gap-y-3 rounded-md bg-white p-3 shadow"
@@ -909,7 +908,7 @@
                   </div>
                   <p class="text-sm font-semibold text-green">Delivered</p>
                 </div>
-              </div>
+              </router-link>
             </div>
             <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
               <div class="px-3 py-6 text-center">

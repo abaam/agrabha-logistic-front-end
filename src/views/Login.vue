@@ -1,11 +1,11 @@
 <template>
-    <div class="flex items-center min-h-screen">
+    <div class="flex items-center min-h-screen bg-grey bg-opacity-20">
         <div class="w-0 lg:w-1/3">
             <img class="min-h-screen object-cover z-0" src="img/login-image.png" alt="">
         </div>
-        <div class="w-full lg:w-2/3 px-4 md:px-8 lg:px-12">
+        <div class="w-full lg:w-2/3 px-4 md:px-8 lg:px-12 max-w-4xl p-10 mx-auto bg-white rounded-md shadow-md hover:shadow-2xl">
             <router-link to="/">
-                <img src="img/agrabah-logistics-logo.png" class="w-64 mb-8" alt="Agrabah Logistics">
+                <img src="img/agrabah-logistics-logo.png" class="w-64 mb-8 inline-block animate-pulse" alt="Agrabah Logistics">
             </router-link>
 
             <h1 class="text-4xl text-blue font-bold py-4 border-b uppercase">Agrabah Logistics Login</h1>
@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     
-                    <ButtonSolidBlue class="w-full mb-4">Sign In</ButtonSolidBlue>
+                    <ButtonSolidBlue class="mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Sign In</ButtonSolidBlue>
                     
                 </div>
             </Form>

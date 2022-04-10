@@ -127,9 +127,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/transaction-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -165,9 +164,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/transaction-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -203,9 +201,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/transaction-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -241,9 +238,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/transaction-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -279,9 +275,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/transaction-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -442,6 +437,77 @@
       /Table -->
     </section>
 
+    <!-- Dummy Data Mobile -->
+    <section v-show="role == 2" class="relative grid px-3 md:hidden md:p-6 md:py-6">
+      <TabGroup>
+        <TabList
+          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
+        >
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              To Ship
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              To Receive
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              To Pay
+            </button>
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <div class="my-3 grid gap-y-2">
+              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Package Item: Seeds</p>
+                  <p class="font-bold">Vehicle Type: Truck</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Drop Off:</span> Marikina City
+                  <p>
+                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
+                  </p>
+                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
+                  <p>
+                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center space-x-1 text-blue">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-blue" />
+                  </div>
+                  <router-link to="/transaction-details" class="text-sm font-semibold text-blue"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+          </TabPanel>
+          
+        </TabPanels>
+      </TabGroup>
+      
+    </section>
+
+    <!-- Mobile Table
     <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
@@ -611,7 +677,7 @@
         </TabPanels>
       </TabGroup>
       
-    </section>
+    </section> -->
   </DashboardLayout>
 </template>
 

@@ -100,6 +100,18 @@ const routes = [
     component: () => import ('../views/BookingDetails.vue'),
     meta: { authOnly: true }
   },
+  {
+    path: '/transaction-details',
+    name: 'Transaction Details',
+    component: () => import ('../views/TransactionDetails.vue'),
+    meta: { authOnly: true }
+  },
+  {
+    path: '/delivery-details',
+    name: 'Delivery Details',
+    component: () => import ('../views/DeliveryDetails.vue'),
+    meta: { authOnly: true }
+  }
 ]
 
 const router = createRouter({

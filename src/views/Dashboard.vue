@@ -1,19 +1,19 @@
 <template>
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen bg-grey bg-opacity-20">
 
         <SidebarMobile ref="sidebar"/>
         <SidebarDesktop />
 
         <main class="flex-1">
             <Navbar @show-sidebar="$refs.sidebar.show()" >Dashboard</Navbar>
-            <div class="container max-w-3xl my-12 mx-auto px-4 md:px-12">
+            <div class="container max-w-4xl my-12 mx-auto px-4 md:px-12">
                 <div class="flex flex-wrap items-center justify-center -mx-1 lg:-mx-4">
 
                     <!-- Column -->
-                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" v-show="role == 1" v-for="menu in MenusDriver" :key="menu.label">
+                    <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 transition ease-in-out hover:-translate-y-1 hover:scale-110" v-show="role == 1" v-for="menu in MenusDriver" :key="menu.label">
 
                         <!-- Article -->
-                        <div class="overflow-hidden rounded-lg shadow-lg bg-green-light text-blue hover:bg-blue hover:text-green-light">
+                        <div class="overflow-hidden rounded-lg shadow-lg bg-white text-blue hover:bg-blue hover:text-white">
                             <router-link :to="menu.href">
                             <!-- <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random"> -->
                                 <component :is="menu.icon" class="block h-32 w-full"/>
@@ -36,7 +36,7 @@
                     <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3" v-show="role == 2" v-for="menu in MenusCustomer" :key="menu.label">
 
                         <!-- Article -->
-                        <div class="overflow-hidden rounded-lg shadow-lg bg-green-light text-blue hover:bg-blue hover:text-green-light">
+                        <div class="overflow-hidden rounded-lg shadow-lg bg-white text-blue hover:bg-blue hover:text-green-light">
                             <router-link :to="menu.href">
                             <!-- <img alt="Placeholder" class="block h-auto w-full" src="https://picsum.photos/600/400/?random"> -->
                                 <component :is="menu.icon" class="block h-32 w-full"/>

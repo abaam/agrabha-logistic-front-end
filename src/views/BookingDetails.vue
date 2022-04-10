@@ -19,7 +19,7 @@
     </section>
 
     <main class="flex-1">
-      <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4 p-4 rounded-lg border sm:p-8 m-2 mt-10 shadow-xl">
+      <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4 p-4 rounded-lg border sm:p-8 m-2">
         <div class="p-4 border rounded-lg rounded-lg">
           <h3 class="font-bold">Package Details</h3>
           <p>Item: Banana</p>
@@ -50,7 +50,7 @@
           <p>Total: ₱127.00</p>
 
           <br>
-          <h3 class="font-bold">Status: <span class="text-blue-light">For Pick-up</span></h3>
+          <h3 class="font-bold">Status: <span class="text-blue-light">Pending</span></h3>
         </div>
 
         <div class="p-4 border rounded-lg">

@@ -130,9 +130,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/delivery-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -168,9 +167,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/delivery-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -206,9 +204,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/delivery-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -244,9 +241,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/delivery-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                     <tr>
@@ -282,9 +278,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/delivery-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -395,9 +390,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/delivery-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -436,6 +430,7 @@
       </div>
     </section>
 
+    <!-- Dummy Data Mobile -->
     <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
@@ -446,7 +441,7 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              To Deliver
+              Delivered
             </button>
           </Tab>
           <Tab v-slot="{ selected }" as="template">
@@ -454,15 +449,67 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              In Transit
+              Cancelled
             </button>
           </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <div class="my-3 grid gap-y-2">
+              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Package Item: Seeds</p>
+                  <p class="font-bold">Vehicle Type: Truck</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Drop Off:</span> Marikina City
+                  <p>
+                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
+                  </p>
+                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
+                  <p>
+                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center space-x-1 text-green">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-green-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-green" />
+                  </div>
+                  <router-link to="/delivery-details" class="text-sm font-semibold text-green"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+          </TabPanel>
+        </TabPanels>
+      </TabGroup> 
+    </section>
+
+    <!-- Delivery Table Mobile
+    <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
+      <TabGroup>
+        <TabList
+          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
+        >
           <Tab v-slot="{ selected }" as="template">
             <button
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
               Delivered
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              Cancelled
             </button>
           </Tab>
         </TabList>
@@ -557,60 +604,9 @@
               </div>
             </div>
           </TabPanel>
-          <TabPanel>
-            <div v-if="delivered != ''" class="my-3 grid gap-y-2">
-              <div
-                v-for="delivery in delivered"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
-                </div>
-
-                <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-green">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-green-light"
-                  >
-                    <CheckIcon class="h-3 w-3 text-green" />
-                  </div>
-                  <p class="text-sm font-semibold text-green">Delivered</p>
-                </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your delivered deliveries here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
         </TabPanels>
-      </TabGroup>
-
-      <router-link
-        to="/deliveries/create"
-        class="focus:outline-none fixed bottom-3 right-3 z-40 flex justify-center rounded-full border border-transparent bg-blue-light p-3 font-medium text-white hover:bg-blue focus:bg-blue"
-        ><PlusIcon class="h-5 w-5"></PlusIcon
-      ></router-link>
-    </section>
+      </TabGroup> 
+    </section>-->
   </DashboardLayout>
 </template>
 

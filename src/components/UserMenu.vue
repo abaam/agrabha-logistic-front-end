@@ -4,7 +4,12 @@
         <MenuButton>
             <button class="flex space-x-4 items-center">
                 <img class="rounded-full bg-grey w-10 h-10" src="https://picsum.photos/200" alt="">
-                <span class="hidden md:flex">Charles Marnie Limpo</span>
+
+                <!-- Driver -->
+                <span v-show="role == 1" class="hidden md:flex">Driver</span>
+
+                <!-- Customer -->
+                <span v-show="role == 2" class="hidden md:flex">Customer</span>
                 <ChevronDownIcon class="h-4 w-4 hidden md:flex" />
             </button>
         </MenuButton>
@@ -78,6 +83,11 @@
                     })
                 }
             }
+        },
+        data() {
+            return {
+                role: localStorage.getItem('role')
+            };
         }
     }
 </script>

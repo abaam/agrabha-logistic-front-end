@@ -123,9 +123,9 @@
                       <td class="whitespace-nowrap px-6 py-4">
                         <div>
                           <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
+                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-blue">
+                            <p class="text-sm font-semibold text-orange">
                               Pending
                             </p>
                           </div>
@@ -160,9 +160,9 @@
                       <td class="whitespace-nowrap px-6 py-4">
                         <div>
                           <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
+                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-blue">
+                            <p class="text-sm font-semibold text-orange">
                               Pending
                             </p>
                           </div>
@@ -197,10 +197,10 @@
                       <td class="whitespace-nowrap px-6 py-4">
                         <div>
                           <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-blue">
-                              Pending
+                            <p class="text-sm font-semibold text-green">
+                              Out for Delivery
                             </p>
                           </div>
                         </div>
@@ -235,9 +235,9 @@
                       <td class="whitespace-nowrap px-6 py-4">
                         <div>
                           <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
+                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-blue">
+                            <p class="text-sm font-semibold text-orange">
                               Pending
                             </p>
                           </div>
@@ -275,7 +275,7 @@
                             class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
                           >
                             <p class="text-sm font-semibold text-blue">
-                              Pending
+                              For Pickup
                             </p>
                           </div>
                         </div>
@@ -712,7 +712,23 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              
+              Pending
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              For Pick-up
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              For Delivery
             </button>
           </Tab>
         </TabList>
@@ -743,7 +759,8 @@
                   >
                     <CubeIcon class="h-3 w-3 text-blue" />
                   </div>
-                  <p class="text-sm font-semibold text-blue">Pending</p>
+                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                          >View details</router-link>
                 </div>
               </div>
             </div>
@@ -759,7 +776,7 @@
       ></router-link>
     </section>
 
-    <!-- Customer Dummy Data Mobile -->
+    <!-- Customer Table Mobile
     <section v-show="role == 2" class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
@@ -770,7 +787,7 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              To Deliver
+              To Ship
             </button>
           </Tab>
           <Tab v-slot="{ selected }" as="template">
@@ -778,7 +795,7 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              In Transit
+              To Receive
             </button>
           </Tab>
           <Tab v-slot="{ selected }" as="template">
@@ -786,7 +803,7 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              Delivered
+              To Pay
             </button>
           </Tab>
         </TabList>
@@ -929,6 +946,76 @@
         </TabPanels>
       </TabGroup>
       
+    </section> -->
+
+    <!-- Customer Dummy Data Mobile -->
+    <section v-show="role == 2" class="relative grid px-3 md:hidden md:p-6 md:py-6">
+      <TabGroup>
+        <TabList
+          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
+        >
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              To Ship
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              To Receive
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              To Pay
+            </button>
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <div class="my-3 grid gap-y-2">
+              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Package Item: Seeds</p>
+                  <p class="font-bold">Vehicle Type: Truck</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Drop Off:</span> Marikina City
+                  <p>
+                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
+                  </p>
+                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
+                  <p>
+                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center space-x-1 text-blue">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-blue" />
+                  </div>
+                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+          </TabPanel>
+          
+        </TabPanels>
+      </TabGroup>
+      
     </section>
 
     <!-- Driver Table Mobile
@@ -948,66 +1035,22 @@
         </TabList>
         <TabPanels>
           <TabPanel>
-            <div v-if="toDeliver != ''" class="my-3 grid gap-y-2">
-              <div
-                v-for="delivery in toDeliver"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+            <div class="my-3 grid gap-y-2">
+              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
+                  <p class="font-semibold">Package Item: Seeds</p>
+                  <p class="font-bold">Vehicle Type: Truck</p>
                 </div>
 
                 <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
+                  <span class="font-bold">Drop Off:</span> Marikina City
+                  <p>
+                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
                   </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-orange">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-orange-light"
-                  >
-                    <CubeIcon class="h-3 w-3 text-orange" />
-                  </div>
-                  <p class="text-sm font-semibold text-orange">To Deliver</p>
-                </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your deliveries to be delivered here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div v-if="inTransit != ''" class="my-3 grid gap-y-2">
-              <div
-                v-for="delivery in inTransit"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
-                </div>
-
-                <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
+                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
+                  <p>
+                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
                   </p>
                 </div>
 
@@ -1015,73 +1058,14 @@
                   <div
                     class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
                   >
-                    <TruckIcon class="h-3 w-3 text-blue" />
+                    <CubeIcon class="h-3 w-3 text-blue" />
                   </div>
-                  <p class="text-sm font-semibold text-blue">In Transit</p>
+                  <p class="text-sm font-semibold text-blue">Pending</p>
                 </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your deliveries in transit here.
-                </p>
               </div>
             </div>
           </TabPanel>
-          <TabPanel>
-            <div v-if="delivered != ''" class="my-3 grid gap-y-2">
-              <div
-                v-for="delivery in delivered"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
-                </div>
-
-                <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-green">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-green-light"
-                  >
-                    <CheckIcon class="h-3 w-3 text-green" />
-                  </div>
-                  <p class="text-sm font-semibold text-green">Delivered</p>
-                </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your delivered deliveries here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
+          
         </TabPanels>
       </TabGroup> 
 

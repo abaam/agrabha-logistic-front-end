@@ -10,18 +10,18 @@
 
     <main class="flex-1">
       <div class="md:w-1/2 w-sm-full rounded-lg border m-auto mt-10 mb-10 shadow-xl">
-        <div class="grid md:grid-cols-6 gap-3 p-4 pl-6 bg-green-lighter bg-opacity-200 rounded-t-lg">
+        <div class="grid md:grid-cols-6 gap-3 p-4 pl-7 pr-7 bg-green-lighter bg-opacity-200 rounded-t-lg">
           <!-- Description -->
-          <div class="col-span-4 text-green">
+          <div class="col-span-3 text-green">
             <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl"> ₱520.00 </h2>
             <p class="text-lg"> Current Wallet Balance </p>
           </div>
 
                 <!-- Image -->
-          <div class="col-span-2 flex items-center justify-center -ml-6">
+          <div class="col-span-3 flex items-center md:justify-end">
             <button class="inline-flex items-center bg-green hover:bg-blue text-white font-bold py-2 px-8 md:text-lg border-b-4 border-orange-light hover:border-orange-light rounded">
-              <PlusIcon class="h-5 2-5 pr-2"></PlusIcon>
-              <span>Add Money to Wallet</span>
+              <ArchiveIcon class="h-5 2-5 pr-2"></ArchiveIcon>
+              <span>Withdraw</span>
             </button>
           </div>
 
@@ -113,11 +113,11 @@
 import _ from "lodash";
 import DashboardLayout from "@/views/DashboardLayout.vue";
 
-import { CashIcon, CheckCircleIcon, PlusIcon  } from '@heroicons/vue/outline'
+import { CashIcon, CheckCircleIcon, ArchiveIcon  } from '@heroicons/vue/outline'
 
 export default {
   components: {
-    DashboardLayout, CheckCircleIcon, CashIcon, PlusIcon
+    DashboardLayout, CheckCircleIcon, CashIcon, ArchiveIcon
   },
 };
 </script>

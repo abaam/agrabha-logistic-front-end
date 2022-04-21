@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6">
+  <div class="mx-auto max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6" id="location_form">
     <div class="mb-4 flex items-center gap-2">
       <LocationMarkerIcon class="h-8 w-8 text-blue-light" />
       <h6 class="text-sm font-semibold uppercase">Location</h6>
@@ -9,6 +9,7 @@
     </div>
     <div class="relative mb-4">
       <Field
+        :rules="isRequired"
         type="text"
         as="input"
         id="pick-up"
@@ -28,6 +29,7 @@
     </div>
     <div class="relative mb-4">
       <Field
+        :rules="isRequired"
         type="text"
         as="input"
         id="drop-off"
@@ -47,6 +49,7 @@
     </div>
     <div class="relative">
       <Field
+        :rules="isRequired"
         type="datetime-local"
         as="input"
         id="date-time"
@@ -68,6 +71,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import { Field, ErrorMessage } from "vee-validate";
 import { LocationMarkerIcon } from "@heroicons/vue/outline";
 
@@ -79,6 +83,24 @@ export default {
     LocationMarkerIcon,
     Field,
     ErrorMessage,
+  },
+  methods: {
+    isRequired(value) {
+      if (value && value.trim()) {
+        var location_form = [];
+        $('#location_form input').each(function(){location_form.push(this.value);});
+        
+        if(!location_form.some(function(e){return (!e || 0 === e.length);})){
+          localStorage['location_form'] = JSON.stringify(location_form);
+          localStorage.setItem('validate_form', true);
+        }
+        
+        return true;
+      } else {
+        localStorage.setItem('validate_form', false);
+        return 'This is required';
+      }
+    },
   },
 };
 </script>

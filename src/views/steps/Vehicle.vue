@@ -1,11 +1,12 @@
 <template>
-  <div class="mx-auto max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6">
+  <div class="mx-auto max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6" id="vehicle_form">
     <div class="mb-4 flex items-center gap-2">
       <TruckIcon class="h-8 w-8 text-blue-light" />
       <h6 class="text-sm font-semibold uppercase">Vehicle Type</h6>
     </div>
     <div class="relative">
       <Field
+        :rules="isRequired"
         as="select"
         id="vehicle-type"
         name="vehicle_type"
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import { Field, ErrorMessage } from "vee-validate";
 import { TruckIcon } from "@heroicons/vue/outline";
 
@@ -41,6 +43,25 @@ export default {
     TruckIcon,
     Field,
     ErrorMessage,
+  },
+  methods: {
+    isRequired(value) {
+      if (value && value.trim()) {
+        var vehicle_form = [];
+        var selected_vehicle = $('#vehicle_form option:selected').val();
+        vehicle_form.push(selected_vehicle)
+        
+        if(!vehicle_form.some(function(e){return (!e || 0 === e.length);})){
+          localStorage['vehicle_form'] = JSON.stringify(vehicle_form);
+          localStorage.setItem('validate_form', true);
+        }
+
+        return true;
+      } else {
+        localStorage.setItem('validate_form', false);
+        return 'This is required';
+      }
+    },
   },
 };
 </script>

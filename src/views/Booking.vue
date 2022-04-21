@@ -38,8 +38,8 @@
             <input
               type="text"
               v-model="search"
-              @keyup="searchDelivery"
-              @keyup.enter="fetchDeliveries"
+              @keyup="searchBooking"
+              @keyup.enter="fetchBookings"
               class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-900 focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             />
           </div>
@@ -294,7 +294,7 @@
           </div>
         </section>
 
-        <!-- Customer Dummy Data -->
+        <!-- Customer Data -->
         <section v-show="role == 2" class="container mx-auto grid grid-cols-1">
           <div class="-my-2 overflow-x-auto">
             <div class="inline-block min-w-full py-2 align-middle">
@@ -349,279 +349,28 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-grey-light bg-white">
-                    <tr>
+                  <tbody class="divide-y divide-grey-light bg-white" v-if="bookings != ''">
+                    <tr v-for="booking in bookings" :key="booking.id">
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
+                        <div class="text-sm">{{ booking.package_item }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
+                        <div class="text-sm">{{ booking.vehicle_type }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
+                        <div class="text-sm">{{ booking.drop_off }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
+                        <div class="text-sm">{{ booking.pick_up }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
+                        <div class="text-sm">{{ booking.date_time }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              To Ship
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
+                        <div class="text-sm">{{ booking.payment_method }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              To Ship
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              To Ship
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              To Ship
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              To Ship
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="flex items-center justify-between px-6 md:flex-col md:space-y-2 lg:flex-row lg:space-y-0">
-          <p>
-            Showing <span>1</span> to
-            <span>5</span> of
-            <span>5</span> entries
-          </p>
-        </div>
-      </div>
-
-      <!-- Customer Table
-      <section class="container mx-auto grid grid-cols-1">
-          <div class="-my-2 overflow-x-auto">
-            <div class="inline-block min-w-full py-2 align-middle">
-              <div class="overflow-hidden">
-                <table class="min-w-full divide-y divide-grey-light">
-                  <thead class="bg-grey-light bg-opacity-30">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Delivery Date
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Delivery ID
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Origin
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Destination
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Cost
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Status
-                      </th>
-                      <th scope="col" class="relative px-6 py-3">
-                        <span class="sr-only">Edit</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody
-                    v-if="deliveries != ''"
-                    class="divide-y divide-grey-light bg-white"
-                  >
-                    <tr v-for="delivery in deliveries" :key="delivery.id">
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.delivery_date }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.id }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.origin }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.destination }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ delivery.cost }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div v-if="delivery.status == 1">
+                        <div v-if="booking.status == 1">
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
                           >
@@ -630,21 +379,21 @@
                             </p>
                           </div>
                         </div>
-                        <div v-else-if="delivery.status == 2">
+                        <div v-if="booking.status == 2">
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
                           >
                             <p class="text-sm font-semibold text-blue">
-                              In Transit
+                              To Receive
                             </p>
                           </div>
                         </div>
-                        <div v-else-if="delivery.status == 3">
+                        <div v-if="booking.status == 3">
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
                             <p class="text-sm font-semibold text-orange">
-                              To Deliver
+                              To Ship
                             </p>
                           </div>
                         </div>
@@ -652,9 +401,8 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <a href="#" class="text-blue-light hover:text-blue"
-                          >View details</a
-                        >
+                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                          >View details</router-link>
                       </td>
                     </tr>
                   </tbody>
@@ -678,7 +426,7 @@
 
         <div
           class="flex items-center justify-between px-6 md:flex-col md:space-y-2 lg:flex-row lg:space-y-0"
-          v-if="deliveries != ''"
+          v-if="bookings != ''"
         >
           <p>
             Showing <span>{{ entries }}</span> to
@@ -686,11 +434,10 @@
             <span>{{ pagination.total }}</span> entries
           </p>
           <div>
-            <pagination :pagination="pagination" @paginate="fetchDeliveries" />
+            <pagination :pagination="pagination" @paginate="fetchBookings" />
           </div>
         </div>
       </div>
-      /Table -->
     </section>
 
     <!-- Driver Dummy Data Mobile -->
@@ -776,7 +523,7 @@
       ></router-link>
     </section>
 
-    <!-- Customer Table Mobile
+    <!-- Customer Data Mobile -->
     <section v-show="role == 2" class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
@@ -809,194 +556,23 @@
         </TabList>
         <TabPanels>
           <TabPanel>
-            <div v-if="toDeliver != ''" class="my-3 grid gap-y-2">
-              <div
-                v-for="delivery in toDeliver"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+            <div v-if="to_ship != ''" class="my-3 grid gap-y-2">
+              <div v-for="booking in to_ship"
+                :key="booking.id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
+                  <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
+                  <p class="font-bold">Vehicle Type: {{ booking.vehicle_type }}</p>
                 </div>
 
                 <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-orange">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-orange-light"
-                  >
-                    <CubeIcon class="h-3 w-3 text-orange" />
-                  </div>
-                  <p class="text-sm font-semibold text-orange">To Deliver</p>
-                </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your deliveries to be delivered here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div v-if="inTransit != ''" class="my-3 grid gap-y-2">
-              <div
-                v-for="delivery in inTransit"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
-                </div>
-
-                <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-blue">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
-                  >
-                    <TruckIcon class="h-3 w-3 text-blue" />
-                  </div>
-                  <p class="text-sm font-semibold text-blue">In Transit</p>
-                </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your deliveries in transit here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div v-if="delivered != ''" class="my-3 grid gap-y-2">
-              <router-link to="/booking-details"
-                v-for="delivery in delivered"
-                :key="delivery.id"
-                class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">{{ delivery.delivery_id }}</p>
-                  <p class="font-bold">{{ delivery.cost }}</p>
-                </div>
-
-                <div class="block">
-                  <p>{{ delivery.description }}</p>
-                  <p class="text-sm text-grey">
-                    Weight: <span>{{ delivery.weight }}</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-green">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-green-light"
-                  >
-                    <CheckIcon class="h-3 w-3 text-green" />
-                  </div>
-                  <p class="text-sm font-semibold text-green">Delivered</p>
-                </div>
-              </router-link>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No deliveries yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your delivered deliveries here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
-      
-    </section> -->
-
-    <!-- Customer Dummy Data Mobile -->
-    <section v-show="role == 2" class="relative grid px-3 md:hidden md:p-6 md:py-6">
-      <TabGroup>
-        <TabList
-          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
-        >
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              To Ship
-            </button>
-          </Tab>
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              To Receive
-            </button>
-          </Tab>
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              To Pay
-            </button>
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <div class="my-3 grid gap-y-2">
-              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">Package Item: Seeds</p>
-                  <p class="font-bold">Vehicle Type: Truck</p>
-                </div>
-
-                <div class="block">
-                  <span class="font-bold">Drop Off:</span> Marikina City
+                  <span class="font-bold">Drop Off:</span> {{ booking.drop_off }}
                   <p>
-                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
+                  <span class="font-bold">Pick Up:</span> <span>{{ booking.pick_up }}</span>
                   </p>
-                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
+                  <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
                   <p>
-                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
+                  <span class="font-bold">Payment Method:</span> <span>{{ booking.payment_method }}</span>
                   </p>
                 </div>
 
@@ -1009,6 +585,117 @@
                   <router-link to="/booking-details" class="text-sm font-semibold text-blue"
                           >View details</router-link>
                 </div>
+              </div>
+            </div>
+            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
+              <div class="px-3 py-6 text-center">
+                <img
+                  class="mx-auto w-48"
+                  src="../../public/svg/no_delivery.svg"
+                  alt=""
+                />
+                <h6 class="mt-8 block text-xl font-semibold">
+                  No bookings yet?
+                </h6>
+                <p class="block leading-6 text-grey-dark">
+                  You'll see all your bookings to be shipped here.
+                </p>
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div v-if="to_receive != ''" class="my-3 grid gap-y-2">
+              <div v-for="booking in to_receive"
+                :key="booking.id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
+                  <p class="font-bold">Vehicle Type: {{ booking.vehicle_type }}</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Drop Off:</span> {{ booking.drop_off }}
+                  <p>
+                  <span class="font-bold">Pick Up:</span> <span>{{ booking.pick_up }}</span>
+                  </p>
+                  <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
+                  <p>
+                  <span class="font-bold">Payment Method:</span> <span>{{ booking.payment_method }}</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center space-x-1 text-blue">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-blue" />
+                  </div>
+                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
+              <div class="px-3 py-6 text-center">
+                <img
+                  class="mx-auto w-48"
+                  src="../../public/svg/no_delivery.svg"
+                  alt=""
+                />
+                <h6 class="mt-8 block text-xl font-semibold">
+                  No bookings yet?
+                </h6>
+                <p class="block leading-6 text-grey-dark">
+                  You'll see all your bookings to be received here.
+                </p>
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div v-if="delivered != ''" class="my-3 grid gap-y-2">
+              <div v-for="booking in delivered"
+                :key="booking.id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
+                  <p class="font-bold">Vehicle Type: {{ booking.vehicle_type }}</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Drop Off:</span> {{ booking.drop_off }}
+                  <p>
+                  <span class="font-bold">Pick Up:</span> <span>{{ booking.pick_up }}</span>
+                  </p>
+                  <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
+                  <p>
+                  <span class="font-bold">Payment Method:</span> <span>{{ booking.payment_method }}</span>
+                  </p>
+                </div>
+
+                <div class="flex items-center space-x-1 text-blue">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-blue" />
+                  </div>
+                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
+              <div class="px-3 py-6 text-center">
+                <img
+                  class="mx-auto w-48"
+                  src="../../public/svg/no_delivery.svg"
+                  alt=""
+                />
+                <h6 class="mt-8 block text-xl font-semibold">
+                  No bookings yet?
+                </h6>
+                <p class="block leading-6 text-grey-dark">
+                  You'll see all your bookings to be delivered here.
+                </p>
               </div>
             </div>
           </TabPanel>
@@ -1070,7 +757,7 @@
       </TabGroup> 
 
       <router-link
-        to="/deliveries/create"
+        to="/bookings/create"
         class="focus:outline-none fixed bottom-3 right-3 z-40 flex justify-center rounded-full border border-transparent bg-blue-light p-3 font-medium text-white hover:bg-blue focus:bg-blue"
         ><SearchIcon class="h-5 w-5"></SearchIcon
       ></router-link>
@@ -1098,9 +785,9 @@ export default {
     return {
       offset: 4,
       pagination: {},
-      deliveries: [],
-      to_deliver: [],
-      in_transit: [],
+      bookings: [],
+      to_ship: [],
+      to_receive: [],
       delivered: [],
       search: "",
       show_entries: "5",
@@ -1108,13 +795,13 @@ export default {
     };
   },
   created() {
-    this.fetchDeliveries(),
-      this.fetchToDeliver(),
-      this.fetchInTransit(),
+    this.fetchBookings(),
+      this.fetchToShip(),
+      this.fetchToReceive(),
       this.fetchDelivered();
   },
   methods: {
-    fetchDeliveries() {
+    fetchBookings() {
       let current_page = this.pagination.current_page;
       let pageNum = current_page ? current_page : 1;
 
@@ -1122,35 +809,35 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries?page=${pageNum}&entries=${this.show_entries}`
+              `bookings?page=${pageNum}&entries=${this.show_entries}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       } else {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`
+              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     },
 
-    searchDelivery: _.debounce(function () {
+    searchBooking: _.debounce(function () {
       if (this.search != "") {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries/search?q=${this.search}&entries=${this.show_entries}`
+              `bookings/search?q=${this.search}&entries=${this.show_entries}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     }),
@@ -1159,40 +846,40 @@ export default {
       if (this.search == "") {
         axios
           .get(
-            process.env.VUE_APP_API + "deliveries?entries=" + event.target.value
+            process.env.VUE_APP_API + "bookings?entries=" + event.target.value
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
             this.show_entries = event.target.value;
           });
       } else {
         axios
           .get(
             process.env.VUE_APP_API +
-              `deliveries/search?q=${this.search}&entries=${this.show_entries}`
+              `bookings/search?q=${this.search}&entries=${this.show_entries}`
           )
           .then((response) => {
-            this.pagination = response.data.deliveries.pagination;
-            this.deliveries = response.data.deliveries.collection;
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     },
 
-    fetchToDeliver() {
-      axios.get(process.env.VUE_APP_API + `deliveries`).then((response) => {
-        this.to_deliver = response.data.to_deliver;
+    fetchToShip() {
+      axios.get(process.env.VUE_APP_API + `bookings`).then((response) => {
+        this.to_ship = response.data.to_ship;
       });
     },
 
-    fetchInTransit() {
-      axios.get(process.env.VUE_APP_API + `deliveries`).then((response) => {
-        this.in_transit = response.data.in_transit;
+    fetchToReceive() {
+      axios.get(process.env.VUE_APP_API + `bookings`).then((response) => {
+        this.to_receive = response.data.to_receive;
       });
     },
 
     fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `deliveries`).then((response) => {
+      axios.get(process.env.VUE_APP_API + `bookings`).then((response) => {
         this.delivered = response.data.delivered;
       });
     },

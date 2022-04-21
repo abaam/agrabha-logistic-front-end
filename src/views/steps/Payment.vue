@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6">
+  <div class="mx-auto max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6" id="payment_form">
     <div class="mb-4 flex items-center gap-2">
       <CreditCardIcon class="h-8 w-8 text-blue-light" />
       <h6 class="text-sm font-semibold uppercase">Payment Method</h6>
@@ -17,7 +17,7 @@
             <span class="block font-semibold">Cash on Delivery (COD)</span>
           </div>
         </div>
-        <Field type="radio" as="input" id="cod" name="cod" value="1" />
+        <Field :rules="isRequired" type="radio" as="input" id="cod" name="payment_method" value="Cash on Delivery (COD)" />
       </label>
       <ErrorMessage
         class="my-1 block text-sm font-semibold text-purple"
@@ -37,7 +37,7 @@
           />
           <span class="block font-semibold">GCash</span>
         </div>
-        <Field type="radio" as="input" id="gcash" name="gcash" value="2" />
+        <Field :rules="isRequired" type="radio" as="input" id="gcash" name="payment_method" value="GCash" />
       </label>
       <ErrorMessage
         class="my-1 block text-sm font-semibold text-purple"
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import { Field, ErrorMessage } from "vee-validate";
 import { CreditCardIcon } from "@heroicons/vue/outline";
 
@@ -59,6 +60,27 @@ export default {
     CreditCardIcon,
     Field,
     ErrorMessage,
+  },
+  methods: {
+    isRequired(value) {
+      if (value && value.trim()) {
+        var payment_form = [];
+        var selected_payment_method = document.querySelector('input[name="payment_method"]:checked').value;
+        payment_form.push(selected_payment_method)
+
+        var checked_payment_method = document.querySelector('input[name="payment_method"]:checked');
+
+        if (checked_payment_method != null) {
+          localStorage['payment_form'] = JSON.stringify(payment_form);
+          localStorage.setItem('validate_form', true);
+        }
+
+        return true;
+      } else {
+        localStorage.setItem('validate_form', false);
+        return 'This is required';
+      }
+    },
   },
 };
 </script>

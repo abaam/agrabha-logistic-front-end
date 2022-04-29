@@ -5,7 +5,11 @@
       <h6 class="text-sm font-semibold uppercase">Location</h6>
     </div>
     <div class="mb-4 flex items-center gap-2">
-      <img src="../../../public/img/google-map.png" alt="Agrabah Logistics">
+      <GoogleMap api-key="AIzaSyA0iIeis8lY_SWjdcPnqcS4KE4_4wBKI_Y" style="width: 100%; height: 500px" :center="center" :zoom="5">
+        <Polyline :options="flightPath" />
+        <InfoWindow :options="{ position: { lat: 37.772, lng: -122.214 } }"> Pick Up </InfoWindow>
+        <InfoWindow :options="{ position: { lat: -27.467, lng: 153.027 } }"> Drop Off </InfoWindow>
+      </GoogleMap>
     </div>
     <div class="relative mb-4">
       <Field
@@ -74,6 +78,8 @@
 import $ from "jquery";
 import { Field, ErrorMessage } from "vee-validate";
 import { LocationMarkerIcon } from "@heroicons/vue/outline";
+import { GoogleMap, Polyline, InfoWindow } from "vue3-google-map";
+
 
 export default {
   setup() {
@@ -83,6 +89,9 @@ export default {
     LocationMarkerIcon,
     Field,
     ErrorMessage,
+    GoogleMap, 
+    Polyline,
+    InfoWindow
   },
   methods: {
     isRequired(value) {
@@ -102,5 +111,23 @@ export default {
       }
     },
   },
+  setup() {
+    const center = { lat: 0, lng: -180 };
+    const flightPlanCoordinates = [
+      { lat: 37.772, lng: -122.214 },
+      { lat: 21.291, lng: -157.821 },
+      { lat: -18.142, lng: 178.431 },
+      { lat: -27.467, lng: 153.027 },
+    ];
+    const flightPath = {
+      path: flightPlanCoordinates,
+      geodesic: true,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2,
+    };
+
+    return { center, flightPath };
+  }
 };
 </script>

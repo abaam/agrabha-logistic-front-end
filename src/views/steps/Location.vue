@@ -74,6 +74,52 @@ import { Field, ErrorMessage } from "vee-validate";
 import { LocationMarkerIcon } from "@heroicons/vue/outline";
 import { loadScript } from "vue-plugin-load-script";
 
+function setupPlaceChangedListener(autocomplete, mode) {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: {lat:12.8819585, lng: 121.76654050000002},
+    scrollwheel: false,
+    zoom: 4
+  })
+  autocomplete.bindTo("bounds", map);
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+
+    if (!place.place_id) {
+      window.alert("Please select an option from the dropdown list.");
+      return;
+    }
+
+    if (mode === "ORIG") {
+      var originPlaceId = place.place_id;
+    } else {
+      var destinationPlaceId = place.place_id;
+    }
+
+    if (!originPlaceId || !destinationPlaceId) {
+      return;
+    }
+
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+
+    directionsService.route(
+      {
+        origin: { placeId: originPlaceId },
+        destination: { placeId: destinationPlaceId },
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (response, status) => {
+        if (status === "OK") {
+          directionsRenderer.setDirections(response);
+          console.log(response);
+        } else {
+          window.alert("Directions request failed due to " + status);
+        }
+      }
+    );
+  });
+}
+
 export default {
   setup() {
     return {};
@@ -87,7 +133,7 @@ export default {
     loadScript("https://polyfill.io/v3/polyfill.min.js?features=default")
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
     .then(() => {
-      new google.maps.Map(document.getElementById('map'), {
+      const map = new google.maps.Map(document.getElementById("map"), {
         center: {lat:12.8819585, lng: 121.76654050000002},
         scrollwheel: false,
         zoom: 4
@@ -110,6 +156,9 @@ export default {
           componentRestrictions: {country: "ph"} 
         }
       );
+
+      setupPlaceChangedListener(originAutocomplete, "ORIG");
+      setupPlaceChangedListener(destinationAutocomplete, "DEST");
     })
   },
   methods: {
@@ -128,7 +177,7 @@ export default {
         localStorage.setItem('validate_form', false);
         return 'This is required';
       }
-    }
+    },
   }
 };
 </script>

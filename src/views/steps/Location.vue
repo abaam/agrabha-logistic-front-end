@@ -4,19 +4,13 @@
       <LocationMarkerIcon class="h-8 w-8 text-blue-light" />
       <h6 class="text-sm font-semibold uppercase">Location</h6>
     </div>
-    <div class="mb-4 flex items-center gap-2">
-      <GoogleMap api-key="AIzaSyA0iIeis8lY_SWjdcPnqcS4KE4_4wBKI_Y" style="width: 100%; height: 500px" :center="center" :zoom="5">
-        <Polyline :options="flightPath" />
-        <InfoWindow :options="{ position: { lat: 37.772, lng: -122.214 } }"> Pick Up </InfoWindow>
-        <InfoWindow :options="{ position: { lat: -27.467, lng: 153.027 } }"> Drop Off </InfoWindow>
-      </GoogleMap>
-    </div>
+    <div class="mb-4 flex items-center gap-2 h-96" id="map"></div>
     <div class="relative mb-4">
       <Field
         :rules="isRequired"
         type="text"
         as="input"
-        id="pick-up"
+        id="origin-input"
         name="pick_up"
         placeholder="Pick Up"
         class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
@@ -36,7 +30,7 @@
         :rules="isRequired"
         type="text"
         as="input"
-        id="drop-off"
+        id="destination-input"
         name="drop_off"
         placeholder="Drop Off"
         class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
@@ -78,8 +72,7 @@
 import $ from "jquery";
 import { Field, ErrorMessage } from "vee-validate";
 import { LocationMarkerIcon } from "@heroicons/vue/outline";
-import { GoogleMap, Polyline, InfoWindow } from "vue3-google-map";
-
+import { loadScript } from "vue-plugin-load-script";
 
 export default {
   setup() {
@@ -88,10 +81,36 @@ export default {
   components: {
     LocationMarkerIcon,
     Field,
-    ErrorMessage,
-    GoogleMap, 
-    Polyline,
-    InfoWindow
+    ErrorMessage
+  },
+  mounted: function() {
+    loadScript("https://polyfill.io/v3/polyfill.min.js?features=default")
+    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
+    .then(() => {
+      new google.maps.Map(document.getElementById('map'), {
+        center: {lat:12.8819585, lng: 121.76654050000002},
+        scrollwheel: false,
+        zoom: 4
+      })
+
+      const originInput = document.getElementById("origin-input");
+      const destinationInput = document.getElementById("destination-input");
+
+      // Specify just the place data fields that you need.
+      const originAutocomplete = new google.maps.places.Autocomplete(
+        originInput,
+        { fields: ["place_id"],
+          componentRestrictions: {country: "ph"} 
+        }
+      );
+      // Specify just the place data fields that you need.
+      const destinationAutocomplete = new google.maps.places.Autocomplete(
+        destinationInput,
+        { fields: ["place_id"],
+          componentRestrictions: {country: "ph"} 
+        }
+      );
+    })
   },
   methods: {
     isRequired(value) {
@@ -109,25 +128,7 @@ export default {
         localStorage.setItem('validate_form', false);
         return 'This is required';
       }
-    },
-  },
-  setup() {
-    const center = { lat: 0, lng: -180 };
-    const flightPlanCoordinates = [
-      { lat: 37.772, lng: -122.214 },
-      { lat: 21.291, lng: -157.821 },
-      { lat: -18.142, lng: 178.431 },
-      { lat: -27.467, lng: 153.027 },
-    ];
-    const flightPath = {
-      path: flightPlanCoordinates,
-      geodesic: true,
-      strokeColor: "#FF0000",
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-    };
-
-    return { center, flightPath };
+    }
   }
 };
 </script>

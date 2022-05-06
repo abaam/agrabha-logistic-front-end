@@ -75,48 +75,77 @@ import { LocationMarkerIcon } from "@heroicons/vue/outline";
 import { loadScript } from "vue-plugin-load-script";
 
 function setupPlaceChangedListener(autocomplete, mode) {
+  localStorage.removeItem('originPlaceId');
+  localStorage.removeItem('originLat');
+  localStorage.removeItem('originLng');
+  localStorage.removeItem('destinationPlaceId');
+  localStorage.removeItem('destinationLat');
+  localStorage.removeItem('destinationLng');
+
   const map = new google.maps.Map(document.getElementById("map"), {
     center: {lat:12.8819585, lng: 121.76654050000002},
     scrollwheel: false,
     zoom: 4
   })
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer({ suppressMarkers: true });
+  directionsRenderer.setMap(map);
+
   autocomplete.bindTo("bounds", map);
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
 
     if (!place.place_id) {
-      window.alert("Please select an option from the dropdown list.");
+      alert("Please select an option from the dropdown list.");
       return;
     }
 
     if (mode === "ORIG") {
-      var originPlaceId = place.place_id;
+      localStorage.setItem('originPlaceId', place.place_id);
+      localStorage.setItem('originLat', place.geometry.location.lat());
+      localStorage.setItem('originLng', place.geometry.location.lng());
     } else {
-      var destinationPlaceId = place.place_id;
+      localStorage.setItem('destinationPlaceId', place.place_id);
+      localStorage.setItem('destinationLat', place.geometry.location.lat());
+      localStorage.setItem('destinationLng', place.geometry.location.lng());
     }
-
-    if (!originPlaceId || !destinationPlaceId) {
-      return;
-    }
-
-    const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer();
 
     directionsService.route(
       {
-        origin: { placeId: originPlaceId },
-        destination: { placeId: destinationPlaceId },
+        origin: { placeId: localStorage.getItem('originPlaceId') },
+        destination: { placeId: localStorage.getItem('destinationPlaceId') },
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (response, status) => {
         if (status === "OK") {
           directionsRenderer.setDirections(response);
-          console.log(response);
         } else {
-          window.alert("Directions request failed due to " + status);
+          alert("Directions request failed due to " + status);
         }
       }
     );
+
+    const originMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(localStorage.getItem('originLat'), localStorage.getItem('originLng')),
+      icon: '/img/pick-up.png',
+      map: map,
+      animation: google.maps.Animation.DROP,
+    });
+
+    const destinationMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(localStorage.getItem('destinationLat'), localStorage.getItem('destinationLng')),
+      icon: '/img/drop-off.png',
+      map: map,
+      animation: google.maps.Animation.DROP,
+    });
+
+    var origininfowindow = new google.maps.InfoWindow();
+    origininfowindow.setContent('Pick Up');
+    origininfowindow.open(map, originMarker);
+
+    var destinationinfowindow = new google.maps.InfoWindow();
+    destinationinfowindow.setContent('Drop Off');
+    destinationinfowindow.open(map, destinationMarker);
   });
 }
 
@@ -145,14 +174,14 @@ export default {
       // Specify just the place data fields that you need.
       const originAutocomplete = new google.maps.places.Autocomplete(
         originInput,
-        { fields: ["place_id"],
+        { 
           componentRestrictions: {country: "ph"} 
         }
       );
       // Specify just the place data fields that you need.
       const destinationAutocomplete = new google.maps.places.Autocomplete(
         destinationInput,
-        { fields: ["place_id"],
+        { 
           componentRestrictions: {country: "ph"} 
         }
       );

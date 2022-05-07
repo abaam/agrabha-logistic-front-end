@@ -125,19 +125,15 @@ function setupPlaceChangedListener(autocomplete, mode) {
       }
     );
 
-    const originMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(localStorage.getItem('originLat'), localStorage.getItem('originLng')),
-      icon: '/img/pick-up.png',
-      map: map,
-      animation: google.maps.Animation.DROP,
-    });
+    originMarker.setPosition(new google.maps.LatLng(localStorage.getItem('originLat'), localStorage.getItem('originLng')));
+    originMarker.setMap(map);
+    originMarker.setAnimation(google.maps.Animation.DROP);
+    originMarker.setIcon('/img/pick-up.png');
 
-    const destinationMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(localStorage.getItem('destinationLat'), localStorage.getItem('destinationLng')),
-      icon: '/img/drop-off.png',
-      map: map,
-      animation: google.maps.Animation.DROP,
-    });
+    destinationMarker.setPosition(new google.maps.LatLng(localStorage.getItem('destinationLat'), localStorage.getItem('destinationLng')));
+    destinationMarker.setMap(map);
+    destinationMarker.setAnimation(google.maps.Animation.DROP);
+    destinationMarker.setIcon('/img/drop-off.png');
 
     var origininfowindow = new google.maps.InfoWindow();
     origininfowindow.setContent('Pick Up');
@@ -146,6 +142,14 @@ function setupPlaceChangedListener(autocomplete, mode) {
     var destinationinfowindow = new google.maps.InfoWindow();
     destinationinfowindow.setContent('Drop Off');
     destinationinfowindow.open(map, destinationMarker);
+  });
+
+  var originMarker = new google.maps.Marker({
+    draggable: false
+  });
+
+  var destinationMarker = new google.maps.Marker({
+    draggable: false
   });
 }
 

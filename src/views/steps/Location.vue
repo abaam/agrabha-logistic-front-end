@@ -15,6 +15,24 @@
         placeholder="Pick Up"
         class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
       />
+      <Field
+        :rules="isRequired"
+        type="hidden"
+        as="input"
+        id="origin-input-lat"
+        name="pick_up_lat"
+        placeholder="Pick Up Latitude"
+        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+      />
+      <Field
+        :rules="isRequired"
+        type="hidden"
+        as="input"
+        id="origin-input-lng"
+        name="pick_up_lng"
+        placeholder="Pick Up Longitude"
+        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+      />
       <label
         for="pick-up"
         class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
@@ -33,6 +51,24 @@
         id="destination-input"
         name="drop_off"
         placeholder="Drop Off"
+        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+      />
+      <Field
+        :rules="isRequired"
+        type="hidden"
+        as="input"
+        id="destination-input-lat"
+        name="drop_off_lat"
+        placeholder="Drop Off Latitude"
+        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+      />
+      <Field
+        :rules="isRequired"
+        type="hidden"
+        as="input"
+        id="destination-input-lng"
+        name="drop_off_lng"
+        placeholder="Drop Off Longitude"
         class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
       />
       <label
@@ -109,6 +145,24 @@ function setupPlaceChangedListener(autocomplete, mode) {
       localStorage.setItem('destinationLat', place.geometry.location.lat());
       localStorage.setItem('destinationLng', place.geometry.location.lng());
     }
+
+    var geocoder = new google.maps.Geocoder();
+    var origin_input = document.getElementById("origin-input").value;
+    var destination_input = document.getElementById("destination-input").value;
+    geocoder.geocode( { 'address': origin_input}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK)
+      {
+          $('#origin-input-lat').val(results[0].geometry.location.lat());
+          $('#origin-input-lng').val(results[0].geometry.location.lng());
+      }
+    });
+    geocoder.geocode( { 'address': destination_input}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK)
+      {
+          $('#destination-input-lat').val(results[0].geometry.location.lat());
+          $('#destination-input-lng').val(results[0].geometry.location.lng());
+      }
+    });
 
     directionsService.route(
       {

@@ -4,7 +4,7 @@
     mobileTitle="Create Booking"
   >
   <!-- Customer -->
-    <section v-show="role == 2" class="mx-auto max-w-7xl px-3 py-4 sm:p-6">
+    <section v-show="role == 2" class="mx-auto max-w-7xl px-3 py-4 sm:p-6 relative">
       <div class="mb-6 hidden items-center justify-between md:flex">
         <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
           Create Booking
@@ -173,6 +173,7 @@ import Review from "./steps/Review.vue";
 
 $( document ).ready(function() {
     localStorage.removeItem('booking_form');
+    localStorage.removeItem('validate_form');
 });
 
 export default {
@@ -251,7 +252,7 @@ export default {
   },
   methods: {
       createBooking(){
-          alert('aw');
+          alert('SUCCESS');
       }
   },
 };

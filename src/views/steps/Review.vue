@@ -91,6 +91,88 @@
   </div>
   <!-- /Delivery Address -->
 
+  <!-- Package Details -->
+  <div
+    class="mx-auto mt-4 max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6"
+  >
+    <div class="mb-4">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-2">
+          <CubeIcon class="h-8 w-8 text-blue-light" />
+          <h6 class="text-sm font-semibold uppercase">Package Details</h6>
+        </div>
+        <span
+          class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
+          >Edit</span
+        >
+      </div>
+    </div>
+    <div class="mb-2 flex items-center justify-between">
+      <p>Item</p>
+      <p id="package-item"></p>
+    </div>
+    <div class="mb-2 flex items-center justify-between">
+      <p>Quantity</p>
+      <p id="package-quantity"></p>
+    </div>
+    <div class="mb-2 flex items-center justify-between">
+      <p>Unit</p>
+      <p id="package-unit"></p>
+    </div>
+    <div class="mb-2 flex items-center justify-between">
+      <p>Note</p>
+      <p id="package-note"></p>
+    </div>
+  </div>
+  <!-- Package Details -->
+
+  <!-- Receiver's Information -->
+  <div
+    class="mx-auto mt-4 max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6"
+  >
+    <div class="mb-4">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-2">
+          <UserIcon class="h-8 w-8 text-blue-light" />
+          <h6 class="text-sm font-semibold uppercase">Receiver's Information</h6>
+        </div>
+        <span
+          class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
+          >Edit</span
+        >
+      </div>
+    </div>
+    <div class="mb-2 flex items-center justify-between">
+      <p>Name</p>
+      <p id="receiver-name"></p>
+    </div>
+    <div class="mb-2 flex items-center justify-between">
+      <p>Contact Number</p>
+      <p id="receiver-contact"></p>
+    </div>
+  </div>
+  <!-- Package Details -->
+
+  <!-- Vehicle Type -->
+  <div
+    class="mx-auto mt-4 max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6"
+  >
+    <div class="mb-4">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-2">
+          <TruckIcon class="h-8 w-8 text-blue-light" />
+          <h6 class="text-sm font-semibold uppercase">Vehicle Type</h6>
+        </div>
+        <span
+          class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
+          >Edit</span
+        >
+      </div>
+    </div>
+    <p>To be delivered via <span class="font-semibold" id="vehicle-type">Truck</span>.</p>
+  </div>
+  <!-- /Vehicle Type -->
+
   <!-- Payment method -->
   <div
     class="mx-auto mt-4 max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6"
@@ -109,72 +191,29 @@
     </div>
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start space-x-4">
-        <img
+        <img id="payment-logo" 
           src="../../../public/img/gcash-logo.png"
           alt="GCash Logo"
           class="w-8 rounded"
         />
         <div class="grid">
-          <span class="block font-semibold">GCash</span>
-          <span class="block">09*****8520</span>
+          <span class="block font-semibold" id="payment-method">GCash</span>
+          <!-- <span class="block">09*****8520</span> -->
         </div>
       </div>
-      <p class="font-semibold">₱ 127.00</p>
+      <p class="font-semibold" id="payment-total"></p>
     </div>
-  </div>
-  <!-- /Payment method -->
-
-  <!-- Vehicle Type -->
-  <div
-    class="mx-auto mt-4 max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6"
-  >
-    <div class="mb-4">
-      <div class="flex items-start justify-between">
-        <div class="flex items-center gap-2">
-          <TruckIcon class="h-8 w-8 text-blue-light" />
-          <h6 class="text-sm font-semibold uppercase">Vehicle Type</h6>
-        </div>
-        <span
-          class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
-          >Edit</span
-        >
-      </div>
-    </div>
-    <p>To be delivered via <span class="font-semibold">Truck</span>.</p>
-  </div>
-  <!-- /Vehicle Type -->
-
-  <!-- Delivery summary -->
-  <div
-    class="mx-auto mt-4 max-w-lg rounded-md bg-white px-3 py-4 shadow sm:p-6"
-  >
-    <div class="mb-4">
-      <div class="flex items-start justify-between">
-        <div class="flex items-center gap-2">
-          <CubeIcon class="h-8 w-8 text-blue-light" />
-          <h6 class="text-sm font-semibold uppercase">Package Details</h6>
-        </div>
-        <span
-          class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
-          >Edit</span
-        >
-      </div>
-    </div>
+    <hr class="mb-4 mt-2" />
     <div class="mb-2 flex items-center justify-between">
-      <p>Sample details</p>
-      <p>₱ 88.00</p>
-    </div>
-    <hr class="mb-2" />
-    <div class="mb-2 flex items-center justify-between">
-      <p class="text-grey-dark">Subtotal</p>
-      <p class="text-grey-dark">₱ 88.00</p>
+      <p class="text-grey-dark">Distance</p>
+      <p id="total-amount" class="text-grey-dark"></p>
     </div>
     <div class="flex items-center justify-between">
       <p class="text-grey-dark">Delivery Fee</p>
-      <p class="text-grey-dark">₱ 39.00</p>
+      <p class="text-grey-dark" id="delivery-fee"></p>
     </div>
   </div>
-  <!-- /Delivery summary -->
+  <!-- /Payment method -->
 </template>
 
 <script>
@@ -186,6 +225,7 @@ import {
   PencilIcon,
   LocationMarkerIcon,
   CreditCardIcon,
+  UserIcon,
 } from "@heroicons/vue/outline";
 import { loadScript } from "vue-plugin-load-script";
 import ButtonSolidBlue from '../../components/buttons/ButtonSolidBlue'
@@ -339,6 +379,10 @@ function initializeMap(){
     map: map
   });
 
+  var distance = haversineDistance(originMarker, destinationMarker);
+  $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
+  localStorage.setItem('distance', distance.toFixed(2))
+
   var origin_input = JSON.parse(localStorage['booking_form'])[7];
   var destination_input = JSON.parse(localStorage['booking_form'])[10];
   var origininfowindow = new google.maps.InfoWindow();
@@ -348,6 +392,17 @@ function initializeMap(){
   var destinationinfowindow = new google.maps.InfoWindow();
   destinationinfowindow.setContent('Drop Off: ' + destination_input);
   destinationinfowindow.open(map, destinationMarker);
+}
+
+function haversineDistance(mk1, mk2) {
+    var rad = 6371.0710; // Radius of the Earth in kms
+    var rlat1 = mk1.position.lat() * (Math.PI/180); // Convert degrees to radians
+    var rlat2 = mk2.position.lat() * (Math.PI/180); // Convert degrees to radians
+    var difflat = rlat2-rlat1; // Radian difference (latitudes)
+    var difflon = (mk2.position.lng()-mk1.position.lng()) * (Math.PI/180); // Radian difference (longitudes)
+
+    var d = 2 * rad * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
+    return d;
 }
 
 function hideDestinationInputs(){
@@ -370,7 +425,8 @@ export default {
     CreditCardIcon,
     Field,
     ErrorMessage,
-    ButtonSolidBlue
+    ButtonSolidBlue,
+    UserIcon
   },
   mounted: function() {
     loadScript("https://polyfill.io/v3/polyfill.min.js?features=default")
@@ -396,6 +452,27 @@ export default {
       );
 
       hideDestinationInputs()
+
+      var originMarker = new google.maps.Marker({
+        draggable: false,
+        icon: '/img/pick-up.png',
+        position: new google.maps.LatLng(JSON.parse(localStorage['booking_form'])[8], JSON.parse(localStorage['booking_form'])[9]),
+        animation: google.maps.Animation.DROP,
+        map: map
+      });
+
+      var destinationMarker = new google.maps.Marker({
+        draggable: false,
+        icon: '/img/drop-off.png',
+        position: new google.maps.LatLng(JSON.parse(localStorage['booking_form'])[11], JSON.parse(localStorage['booking_form'])[12]),
+        animation: google.maps.Animation.DROP,
+        map: map
+      });
+
+      var distance = haversineDistance(originMarker, destinationMarker);
+      $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
+      $('#payment-total').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
+      $('#pay-button').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
 
       $("#location-change").click(function() {
         setupPlaceChangedListener(originAutocomplete, "ORIG");
@@ -427,6 +504,28 @@ export default {
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideDestinationInputs()
           $("#location-change").show();
+
+          var originMarker = new google.maps.Marker({
+            draggable: false,
+            icon: '/img/pick-up.png',
+            position: new google.maps.LatLng($('#origin-input-lat').val(), $('#origin-input-lng').val()),
+            animation: google.maps.Animation.DROP,
+            map: map
+          });
+
+          var destinationMarker = new google.maps.Marker({
+            draggable: false,
+            icon: '/img/drop-off.png',
+            position: new google.maps.LatLng($('#destination-input-lat').val(), $('#destination-input-lng').val()),
+            animation: google.maps.Animation.DROP,
+            map: map
+          });
+
+          var distance = haversineDistance(originMarker, destinationMarker);
+          localStorage.setItem('distance', distance.toFixed(2))
+          $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
+          $('#payment-total').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
+          $('#pay-button').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
         } else {
           alert("Please select an option from the dropdown list.");
         }
@@ -438,6 +537,24 @@ export default {
         $("#location-change").show();
       });
     })
+
+    $('#package-item').html(JSON.parse(localStorage['booking_form'])[0]);
+    $('#package-quantity').html(JSON.parse(localStorage['booking_form'])[1]);
+    $('#package-unit').html(JSON.parse(localStorage['booking_form'])[2]);
+    $('#package-note').html(JSON.parse(localStorage['booking_form'])[3]);
+    $('#receiver-name').html(JSON.parse(localStorage['booking_form'])[4]);
+    $('#receiver-contact').html(JSON.parse(localStorage['booking_form'])[5]);
+    $('#vehicle-type').html(JSON.parse(localStorage['booking_form'])[6]);
+    $('#payment-method').html(JSON.parse(localStorage['booking_form'])[14]);
+
+    if (JSON.parse(localStorage['booking_form'])[14] == 'Paymaya') {
+      var payment_logo = "/img/paymaya-logo.png"
+    } else {
+      var payment_logo = "/img/gcash-logo.png"
+    }
+
+    $('#payment-logo').attr('src', payment_logo);
+    $('#delivery-fee').html('₱ 200.00 /Kms');
   },
 };
 </script>

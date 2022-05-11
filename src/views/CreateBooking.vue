@@ -132,7 +132,7 @@
             Back
           </button> -->
           <button v-if="currentStep === 4"
-            @click.prevent="createBooking"
+            @click.prevent="createBooking" id="pay-button" 
             class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
           >
             Pay ₱127.00
@@ -174,6 +174,7 @@ import Review from "./steps/Review.vue";
 $( document ).ready(function() {
     localStorage.removeItem('booking_form');
     localStorage.removeItem('validate_form');
+    localStorage.removeItem('distance')
 });
 
 export default {

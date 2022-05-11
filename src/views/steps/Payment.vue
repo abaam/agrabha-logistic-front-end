@@ -6,22 +6,24 @@
     </div>
     <div class="mb-2">
       <label
-        for="cod"
+        for="paymaya"
         class="flex h-20 w-full cursor-pointer items-center justify-between rounded-md border border-grey-light px-6 py-5"
       >
         <div class="flex items-center justify-start space-x-4">
-          <div class="h-7 w-8 rounded bg-green-light text-center text-white">
-            <span class="text-xs font-semibold">PHP</span>
-          </div>
+          <img
+            src="../../../public/img/paymaya-logo.png"
+            alt="GCash Logo"
+            class="h-7 w-8 rounded"
+          />
           <div class="grid">
-            <span class="block font-semibold">Cash on Delivery (COD)</span>
+            <span class="block font-semibold">Paymaya</span>
           </div>
         </div>
-        <Field :rules="isRequired" type="radio" as="input" id="cod" name="payment_method" value="Cash on Delivery (COD)" />
+        <Field :rules="isRequired" type="radio" as="input" id="paymaya" name="payment_method" value="Paymaya" />
       </label>
       <ErrorMessage
         class="my-1 block text-sm font-semibold text-purple"
-        name="cod"
+        name="paymaya"
       />
     </div>
     <div class="">

@@ -101,27 +101,117 @@
           <CubeIcon class="h-8 w-8 text-blue-light" />
           <h6 class="text-sm font-semibold uppercase">Package Details</h6>
         </div>
-        <span
+        <span id="package-change" 
           class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
           >Edit</span
         >
       </div>
     </div>
-    <div class="mb-2 flex items-center justify-between">
-      <p>Item</p>
-      <p id="package-item"></p>
+    <div id="package-details">
+      <div class="mb-2 flex items-center justify-between">
+        <p>Item</p>
+        <p id="package-item"></p>
+      </div>
+      <div class="mb-2 flex items-center justify-between">
+        <p>Quantity</p>
+        <p id="package-quantity"></p>
+      </div>
+      <div class="mb-2 flex items-center justify-between">
+        <p>Unit</p>
+        <p id="package-unit"></p>
+      </div>
+      <div class="mb-2 flex items-center justify-between">
+        <p>Note</p>
+        <p id="package-note"></p>
+      </div>
     </div>
-    <div class="mb-2 flex items-center justify-between">
-      <p>Quantity</p>
-      <p id="package-quantity"></p>
+    <div id="package-details-input">
+      <div class="relative mb-4">
+        <Field
+          :rules="isRequired"
+          autofocus
+          type="text"
+          as="input"
+          id="item"
+          name="package_item"
+          placeholder="Item"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <label
+          for="item"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Item</label
+        >
+        <ErrorMessage
+        class="my-1 block text-sm font-semibold text-purple"
+        name="package_item"
+        />
+      </div>
+      <div class="mb-4 grid grid-cols-2 gap-2">
+        <div class="relative">
+          <Field
+            :rules="isRequired"
+            type="text"
+            as="input"
+            id="quantity"
+            name="package_quantity"
+            placeholder="Quantity"
+            class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+          />
+          <label
+            for="quantity"
+            class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+            >Quantity</label
+          >
+          <ErrorMessage
+            class="my-1 block text-sm font-semibold text-purple"
+            name="package_quantity"
+          />
+        </div>
+        <div class="relative">
+          <Field
+            :rules="isRequired"
+            type="text"
+            as="input"
+            id="unit"
+            name="package_unit"
+            placeholder="Unit"
+            class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+          />
+          <label
+            for="unit"
+            class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+            >Unit</label
+          >
+          <ErrorMessage
+            class="my-1 block text-sm font-semibold text-purple"
+            name="package_unit"
+          />
+        </div>
+      </div>
+      <div class="relative">
+        <Field
+          :rules="isRequired"
+          as="textarea"
+          id="note"
+          name="package_note"
+          placeholder="Note"
+          class="mb-4 peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <label
+          for="note"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Note</label
+        >
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="package_note"
+        />
+      </div>
     </div>
-    <div class="mb-2 flex items-center justify-between">
-      <p>Unit</p>
-      <p id="package-unit"></p>
-    </div>
-    <div class="mb-2 flex items-center justify-between">
-      <p>Note</p>
-      <p id="package-note"></p>
+    <div class="inline-flex w-full space-x-4" id="package-buttons">
+      <span id="package-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</span>
+      <span id="package-cancel" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</span>
     </div>
   </div>
   <!-- Package Details -->
@@ -136,20 +226,70 @@
           <UserIcon class="h-8 w-8 text-blue-light" />
           <h6 class="text-sm font-semibold uppercase">Receiver's Information</h6>
         </div>
-        <span
+        <span id="receiver-change" 
           class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
           >Edit</span
         >
       </div>
     </div>
-    <div class="mb-2 flex items-center justify-between">
-      <p>Name</p>
-      <p id="receiver-name"></p>
+    <div id="receiver-details">
+      <div class="mb-2 flex items-center justify-between">
+        <p>Name</p>
+        <p id="receiver-name"></p>
+      </div>
+      <div class="mb-2 flex items-center justify-between">
+        <p>Contact Number</p>
+        <p id="receiver-contact"></p>
+      </div>
     </div>
-    <div class="mb-2 flex items-center justify-between">
-      <p>Contact Number</p>
-      <p id="receiver-contact"></p>
+    <div id="receiver-details-input">
+      <div class="mb-4 grid grid-cols-2 gap-2">
+          <div class="relative">
+            <Field
+              :rules="isRequired"
+              type="text"
+              as="input"
+              id="receiver"
+              name="receiver_name"
+              placeholder="Name"
+              class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+            />
+            <label
+              for="receiver"
+              class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+              >Name</label
+            >
+            <ErrorMessage
+              class="my-1 block text-sm font-semibold text-purple"
+              name="receiver_name"
+            />
+          </div>
+          <div class="relative">
+            <Field
+              :rules="isRequired"
+              type="text"
+              as="input"
+              id="contact_number"
+              name="contact_number"
+              placeholder="Contact Number"
+              class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+            />
+            <label
+              for="contact_number"
+              class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+              >Contact Number</label
+            >
+            <ErrorMessage
+              class="my-1 block text-sm font-semibold text-purple"
+              name="contact_number"
+            />
+          </div>
+      </div>
     </div>
+    <div class="inline-flex w-full space-x-4" id="receiver-buttons">
+      <span id="receiver-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</span>
+      <span id="receiver-cancel" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</span>
+    </div>  
   </div>
   <!-- Package Details -->
 
@@ -163,13 +303,44 @@
           <TruckIcon class="h-8 w-8 text-blue-light" />
           <h6 class="text-sm font-semibold uppercase">Vehicle Type</h6>
         </div>
-        <span
+        <span id="vehicle-change" 
           class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
           >Edit</span
         >
       </div>
     </div>
-    <p>To be delivered via <span class="font-semibold" id="vehicle-type">Truck</span>.</p>
+    <div id="vehicle-details">
+      <p>To be delivered via <span class="font-semibold" id="vehicle-type">Truck</span>.</p>
+    </div>
+    <div id="vehicle-details-input">
+      <div class="relative mb-4">
+        <Field
+          :rules="isRequired"
+          as="select"
+          id="vehicle-type"
+          name="vehicle_type"
+          placeholder="Select Vehicle Type"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        >
+          <option value="Truck">Truck</option>
+          <option value="Van">Van</option>
+          <option value="Car">Car</option>
+        </Field>
+        <label
+          for="vehicle-type"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Select Vehicle Type</label
+        >
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="vehicle_type"
+        />
+      </div>
+    </div>
+    <div class="inline-flex w-full space-x-4" id="vehicle-buttons">
+      <span id="vehicle-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</span>
+      <span id="vehicle-cancel" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</span>
+    </div> 
   </div>
   <!-- /Vehicle Type -->
 
@@ -183,26 +354,73 @@
           <CreditCardIcon class="h-8 w-8 text-blue-light" />
           <h6 class="text-sm font-semibold uppercase">Payment Method</h6>
         </div>
-        <span
+        <span id="payment-method-change" 
           class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
           >Edit</span
         >
       </div>
     </div>
-    <div class="flex items-center justify-between">
+    <div id="payment-method-details" class="flex items-center justify-between">
       <div class="flex items-center justify-start space-x-4">
         <img id="payment-logo" 
-          src="../../../public/img/gcash-logo.png"
-          alt="GCash Logo"
+          src=""
           class="w-8 rounded"
         />
         <div class="grid">
-          <span class="block font-semibold" id="payment-method">GCash</span>
+          <span class="block font-semibold" id="payment-method"></span>
           <!-- <span class="block">09*****8520</span> -->
         </div>
       </div>
       <p class="font-semibold" id="payment-total"></p>
     </div>
+    <div id="payment-method-details-input" class="mb-4">
+      <div class="mb-2">
+        <label
+          for="paymaya"
+          class="flex h-20 w-full cursor-pointer items-center justify-between rounded-md border border-grey-light px-6 py-5"
+        >
+          <div class="flex items-center justify-start space-x-4">
+            <img
+              src="../../../public/img/paymaya-logo.png"
+              alt="GCash Logo"
+              class="h-7 w-8 rounded"
+            />
+            <div class="grid">
+              <span class="block font-semibold">Paymaya</span>
+            </div>
+          </div>
+          <Field :rules="isRequired" type="radio" as="input" id="paymaya" name="payment_method" value="Paymaya" />
+        </label>
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="paymaya"
+        />
+      </div>
+      <div class="">
+        <label
+          for="gcash"
+          class="flex h-20 w-full cursor-pointer items-center justify-between rounded-md border border-grey-light px-6 py-5"
+        >
+          <div class="flex items-center justify-start space-x-4">
+            <img
+              src="../../../public/img/gcash-logo.png"
+              alt="GCash Logo"
+              class="h-7 w-8 rounded"
+            />
+            <span class="block font-semibold">GCash</span>
+          </div>
+          <Field :rules="isRequired" type="radio" as="input" id="gcash" name="payment_method" value="GCash" />
+        </label>
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="gcash"
+        />
+      </div>
+    </div>
+    <div class="inline-flex w-full space-x-4" id="payment-method-buttons">
+      <span id="payment-method-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</span>
+      <span id="payment-method-cancel" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</span>
+    </div> 
     <hr class="mb-4 mt-2" />
     <div class="mb-2 flex items-center justify-between">
       <p class="text-grey-dark">Distance</p>
@@ -413,6 +631,26 @@ function hideDestinationInputs(){
   $("#location-buttons").hide();
 }
 
+function hidePackageInputs(){
+  $("#package-details-input").hide();
+  $("#package-buttons").hide();
+}
+
+function hideReceiverInputs(){
+  $("#receiver-details-input").hide();
+  $("#receiver-buttons").hide();
+}
+
+function hideVehicleInputs(){
+  $("#vehicle-details-input").hide();
+  $("#vehicle-buttons").hide();
+}
+
+function hidePaymentMethodInputs(){
+  $("#payment-method-details-input").hide();
+  $("#payment-method-buttons").hide();
+}
+
 export default {
   setup() {
     return {};
@@ -429,6 +667,12 @@ export default {
     UserIcon
   },
   mounted: function() {
+    hideDestinationInputs()
+    hidePackageInputs()
+    hideReceiverInputs()
+    hideVehicleInputs()
+    hidePaymentMethodInputs()
+
     loadScript("https://polyfill.io/v3/polyfill.min.js?features=default")
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
     .then(() => {
@@ -450,8 +694,6 @@ export default {
           componentRestrictions: {country: "ph"} 
         }
       );
-
-      hideDestinationInputs()
 
       var originMarker = new google.maps.Marker({
         draggable: false,
@@ -486,6 +728,34 @@ export default {
 
         $('#origin-input').val('')
         $('#destination-input').val('')
+      });
+
+      $("#package-change").click(function() {
+        $("#package-details-input").show();
+        $("#package-buttons").show();
+        $("#package-details").hide();
+        $("#package-change").hide();
+      });
+
+      $("#receiver-change").click(function() {
+        $("#receiver-details-input").show();
+        $("#receiver-buttons").show();
+        $("#receiver-details").hide();
+        $("#receiver-change").hide();
+      });
+
+      $("#vehicle-change").click(function() {
+        $("#vehicle-details-input").show();
+        $("#vehicle-buttons").show();
+        $("#vehicle-details").hide();
+        $("#vehicle-change").hide();
+      });
+
+      $("#payment-method-change").click(function() {
+        $("#payment-method-details-input").show();
+        $("#payment-method-buttons").show();
+        $("#payment-method-details").hide();
+        $("#payment-method-change").hide();
       });
 
       $("#location-save").click(function(e) {        
@@ -535,6 +805,30 @@ export default {
         initializeMap()
         hideDestinationInputs()
         $("#location-change").show();
+      });
+
+      $("#package-cancel").click(function(e) {        
+        hidePackageInputs()
+        $("#package-details").show();
+        $("#package-change").show();
+      });
+
+      $("#receiver-cancel").click(function(e) {        
+        hideReceiverInputs()
+        $("#receiver-details").show();
+        $("#receiver-change").show();
+      });
+
+      $("#vehicle-cancel").click(function(e) {        
+        hideVehicleInputs()
+        $("#vehicle-details").show();
+        $("#vehicle-change").show();
+      });
+
+      $("#payment-method-cancel").click(function(e) {        
+        hidePaymentMethodInputs()
+        $("#payment-method-details").show();
+        $("#payment-method-change").show();
       });
     })
 

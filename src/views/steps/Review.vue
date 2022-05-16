@@ -132,13 +132,13 @@
           autofocus
           type="text"
           as="input"
-          id="item"
+          id="item-input"
           name="package_item"
           placeholder="Item"
           class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
         />
         <label
-          for="item"
+          for="item-input"
           class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
           >Item</label
         >
@@ -153,13 +153,13 @@
             :rules="isRequired"
             type="text"
             as="input"
-            id="quantity"
+            id="quantity-input"
             name="package_quantity"
             placeholder="Quantity"
             class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
           />
           <label
-            for="quantity"
+            for="quantity-input"
             class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
             >Quantity</label
           >
@@ -173,13 +173,13 @@
             :rules="isRequired"
             type="text"
             as="input"
-            id="unit"
+            id="unit-input"
             name="package_unit"
             placeholder="Unit"
             class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
           />
           <label
-            for="unit"
+            for="unit-input"
             class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
             >Unit</label
           >
@@ -193,13 +193,13 @@
         <Field
           :rules="isRequired"
           as="textarea"
-          id="note"
+          id="note-input"
           name="package_note"
           placeholder="Note"
           class="mb-4 peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
         />
         <label
-          for="note"
+          for="note-input"
           class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
           >Note</label
         >
@@ -249,13 +249,13 @@
               :rules="isRequired"
               type="text"
               as="input"
-              id="receiver"
+              id="receiver-input"
               name="receiver_name"
               placeholder="Name"
               class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             />
             <label
-              for="receiver"
+              for="receiver-input"
               class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
               >Name</label
             >
@@ -269,13 +269,13 @@
               :rules="isRequired"
               type="text"
               as="input"
-              id="contact_number"
+              id="contact-number-input"
               name="contact_number"
               placeholder="Contact Number"
               class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             />
             <label
-              for="contact_number"
+              for="contact-number-input"
               class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
               >Contact Number</label
             >
@@ -317,7 +317,7 @@
         <Field
           :rules="isRequired"
           as="select"
-          id="vehicle-type"
+          id="vehicle-type-input"
           name="vehicle_type"
           placeholder="Select Vehicle Type"
           class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
@@ -327,7 +327,7 @@
           <option value="Car">Car</option>
         </Field>
         <label
-          for="vehicle-type"
+          for="vehicle-type-input"
           class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
           >Select Vehicle Type</label
         >
@@ -651,6 +651,26 @@ function hidePaymentMethodInputs(){
   $("#payment-method-buttons").hide();
 }
 
+function retrievePackage(){
+  $('#package-item').html(JSON.parse(localStorage['booking_form'])[0]);
+  $('#package-quantity').html(JSON.parse(localStorage['booking_form'])[1]);
+  $('#package-unit').html(JSON.parse(localStorage['booking_form'])[2]);
+  $('#package-note').html(JSON.parse(localStorage['booking_form'])[3]);
+}
+
+function retrieveReceiversInfo(){
+  $('#receiver-name').html(JSON.parse(localStorage['booking_form'])[4]);
+  $('#receiver-contact').html(JSON.parse(localStorage['booking_form'])[5]);
+}
+
+function retrieveVehicleType(){
+  $('#vehicle-type').html(JSON.parse(localStorage['booking_form'])[6]);
+}
+
+function retrievePaymentMethod(){
+  $('#payment-method').html(JSON.parse(localStorage['booking_form'])[14]);
+}
+
 export default {
   setup() {
     return {};
@@ -714,7 +734,7 @@ export default {
       var distance = haversineDistance(originMarker, destinationMarker);
       $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
       $('#payment-total').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
-      $('#pay-button').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
+      $('#pay-button').html('PAY ₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
 
       $("#location-change").click(function() {
         setupPlaceChangedListener(originAutocomplete, "ORIG");
@@ -735,6 +755,11 @@ export default {
         $("#package-buttons").show();
         $("#package-details").hide();
         $("#package-change").hide();
+
+        $('#item-input').val(JSON.parse(localStorage['booking_form'])[0]);
+        $('#quantity-input').val(JSON.parse(localStorage['booking_form'])[1]);
+        $('#unit-input').val(JSON.parse(localStorage['booking_form'])[2]);
+        $('#note-input').val(JSON.parse(localStorage['booking_form'])[3]);
       });
 
       $("#receiver-change").click(function() {
@@ -742,6 +767,9 @@ export default {
         $("#receiver-buttons").show();
         $("#receiver-details").hide();
         $("#receiver-change").hide();
+
+        $('#receiver-input').val(JSON.parse(localStorage['booking_form'])[4]);
+        $('#contact-number-input').val(JSON.parse(localStorage['booking_form'])[5]);
       });
 
       $("#vehicle-change").click(function() {
@@ -749,6 +777,8 @@ export default {
         $("#vehicle-buttons").show();
         $("#vehicle-details").hide();
         $("#vehicle-change").hide();
+
+        $('#vehicle-type-input').val(JSON.parse(localStorage['booking_form'])[6]);
       });
 
       $("#payment-method-change").click(function() {
@@ -756,6 +786,10 @@ export default {
         $("#payment-method-buttons").show();
         $("#payment-method-details").hide();
         $("#payment-method-change").hide();
+
+        $('input.type_checkbox[value="6"]').prop('checked', true);
+
+        $('input[name="payment_method"][value="'+JSON.parse(localStorage['booking_form'])[6]+'"]').prop('checked', true);
       });
 
       $("#location-save").click(function(e) {        
@@ -801,6 +835,85 @@ export default {
         }
       });
 
+      $("#package-save").click(function(e) {        
+        var item_input = $('#item-input').val();
+        var quantity_input = $('#quantity-input').val();
+        var unit_input = $('#unit-input').val();
+        var note_input = $('#note-input').val();
+
+        if(item_input !== '' && quantity_input !== '' && unit_input !== ''){
+          let booking_form = JSON.parse(localStorage['booking_form']);
+          booking_form.splice(0, 1, item_input)
+          booking_form.splice(1, 1, quantity_input)
+          booking_form.splice(2, 1, unit_input)
+          booking_form.splice(3, 1, note_input)
+          
+          localStorage['booking_form'] = JSON.stringify(booking_form);
+          hidePackageInputs()
+          $("#package-change").show();
+          retrievePackage();
+          $("#package-details").show();
+        } else {
+          alert("All fields are required.");
+        }
+      });
+
+      $("#receiver-save").click(function(e) {        
+        var receiver_input = $('#receiver-input').val();
+        var contact_number_input = $('#contact-number-input').val();
+
+        if(receiver_input !== '' && contact_number_input !== ''){
+          let booking_form = JSON.parse(localStorage['booking_form']);
+          booking_form.splice(4, 1, receiver_input)
+          booking_form.splice(5, 1, contact_number_input)
+          
+          localStorage['booking_form'] = JSON.stringify(booking_form);
+          hideReceiverInputs()
+          $("#receiver-change").show();
+          retrieveReceiversInfo();
+          $("#receiver-details").show();
+        } else {
+          alert("All fields are required.");
+        }
+      });
+
+      $("#vehicle-save").click(function(e) {        
+        var vehicle_type_input = $('#vehicle-type-input').val();
+
+        if(vehicle_type_input !== ''){
+          let booking_form = JSON.parse(localStorage['booking_form']);
+          booking_form.splice(6, 1, vehicle_type_input)
+          
+          localStorage['booking_form'] = JSON.stringify(booking_form);
+          hideVehicleInputs()
+          $("#vehicle-change").show();
+          retrieveVehicleType();
+          $("#vehicle-details").show();
+        } else {
+          alert("All fields are required.");
+        }
+      });
+
+      $("#payment-method-save").click(function(e) {        
+        var vehicle_type_input = $('input[name="payment_method"]:checked').val();
+        let booking_form = JSON.parse(localStorage['booking_form']);
+        booking_form.splice(14, 1, vehicle_type_input)
+          
+        localStorage['booking_form'] = JSON.stringify(booking_form);
+        hidePaymentMethodInputs()
+        $("#payment-method-change").show();
+
+        if (JSON.parse(localStorage['booking_form'])[14] == 'Paymaya') {
+          var payment_logo = "/img/paymaya-logo.png"
+        } else {
+          var payment_logo = "/img/gcash-logo.png"
+        }
+
+        $('#payment-logo').attr('src', payment_logo);
+        retrievePaymentMethod();
+        $("#payment-method-details").show();
+      });
+
       $("#location-cancel").click(function(e) {        
         initializeMap()
         hideDestinationInputs()
@@ -832,14 +945,10 @@ export default {
       });
     })
 
-    $('#package-item').html(JSON.parse(localStorage['booking_form'])[0]);
-    $('#package-quantity').html(JSON.parse(localStorage['booking_form'])[1]);
-    $('#package-unit').html(JSON.parse(localStorage['booking_form'])[2]);
-    $('#package-note').html(JSON.parse(localStorage['booking_form'])[3]);
-    $('#receiver-name').html(JSON.parse(localStorage['booking_form'])[4]);
-    $('#receiver-contact').html(JSON.parse(localStorage['booking_form'])[5]);
-    $('#vehicle-type').html(JSON.parse(localStorage['booking_form'])[6]);
-    $('#payment-method').html(JSON.parse(localStorage['booking_form'])[14]);
+    retrievePackage()
+    retrieveReceiversInfo()
+    retrieveVehicleType()
+    retrievePaymentMethod()
 
     if (JSON.parse(localStorage['booking_form'])[14] == 'Paymaya') {
       var payment_logo = "/img/paymaya-logo.png"

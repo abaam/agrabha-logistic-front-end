@@ -132,6 +132,7 @@
                     })
                 .then((response) => {
                     console.log(response);
+                    localStorage.setItem('csrf_token', response.data.csrf_token);
                     this.$root.$emit('login', true); 
                     if(response.data.verified){
                         localStorage.setItem('auth', 'true');

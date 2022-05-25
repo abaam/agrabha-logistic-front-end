@@ -131,24 +131,25 @@
           >
             Back
           </button> -->
-          <button v-if="currentStep === 4"
-            id="pay-button" 
-            type="button"
-            class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
-            data-bs-toggle="modal" data-bs-target="#pay_info"
-          >
-          </button>
-
-          
-          <button v-else
-            @click.prevent="nextStep"
-            class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
-          >
-            <template v-if="currentStep === 0">Select vehicle</template>
-            <template v-else-if="currentStep === 1">Set location</template>
-            <template v-else-if="currentStep === 2">Payment method</template>
-            <template v-else-if="currentStep === 3">Review package</template>
-          </button>
+          <form @submit.prevent="createBooking">
+            <button v-if="currentStep === 4"
+              id="pay-button" 
+              type="submit"
+              class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
+              data-bs-toggle="modal" data-bs-target="#pay_info" 
+            >
+            </button>
+            
+            <button v-else
+              @click.prevent="nextStep"
+              class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
+            >
+              <template v-if="currentStep === 0">Select vehicle</template>
+              <template v-else-if="currentStep === 1">Set location</template>
+              <template v-else-if="currentStep === 2">Payment method</template>
+              <template v-else-if="currentStep === 3">Review package</template>
+            </button>
+          </form>
 
           <!-- Modal -->
           <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20"
@@ -202,6 +203,7 @@
 <script>
 import $ from "jquery";
 import 'tw-elements';
+import axios from "axios";
 import { ref, shallowRef, computed } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import DashboardLayout from "@/views/DashboardLayout.vue";
@@ -298,6 +300,25 @@ export default {
       return {
           role: localStorage.getItem('role')
       };
+  },
+  methods: {
+    createBooking() {
+      axios.defaults.headers.common['X-CSRF-TOKEN'] = localStorage.getItem('csrf_token');
+      const headers = {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+      axios.post(
+          process.env.VUE_APP_API +
+            `bookings/create`, localStorage['booking_form'], {
+                method: 'post',
+                headers: headers,
+                credentials: 'include'
+            }
+        )
+        .then((response) => {
+          alert(response.data.success);
+      });
+    }
   }
 };
 </script>

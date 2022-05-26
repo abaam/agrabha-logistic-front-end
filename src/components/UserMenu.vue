@@ -84,6 +84,42 @@
                 }
             }
         },
+        mounted: function() {
+            window.onunload = function () {
+                if (localStorage.getItem('time_of_login') && (new Date()).getTime() - (localStorage.getItem('time_of_login')) > 900000) {
+                    localStorage.clear();
+                    window.location.href = "/login"
+                }
+            }
+
+            const timeoutInMS = 900000;
+            let timeoutId;
+            
+            function handleInactive() {
+                localStorage.clear();
+                window.location.href = "/login"
+            }
+
+            function startTimer() { 
+                timeoutId = setTimeout(handleInactive, timeoutInMS);
+            }
+
+            function resetTimer() { 
+                clearTimeout(timeoutId);
+                startTimer();
+            }
+            
+            function setupTimers () {
+                document.addEventListener("keypress", resetTimer, false);
+                document.addEventListener("mousemove", resetTimer, false);
+                document.addEventListener("mousedown", resetTimer, false);
+                document.addEventListener("touchmove", resetTimer, false);
+                
+                startTimer();
+            }
+
+            setupTimers()
+        },
         data() {
             return {
                 role: localStorage.getItem('role')

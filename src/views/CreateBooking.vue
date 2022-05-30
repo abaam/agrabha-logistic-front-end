@@ -131,7 +131,7 @@
           >
             Back
           </button> -->
-          <form @submit.prevent="createBooking">
+          <form method="POST" id="frm-pay" class="flex w-full">
             <button v-if="currentStep === 4"
               id="pay-button" 
               type="submit"
@@ -222,9 +222,38 @@ import Payment from "./steps/Payment.vue";
 import Review from "./steps/Review.vue";
 
 $( document ).ready(function() {
-    localStorage.removeItem('booking_form');
-    localStorage.removeItem('validate_form');
-    localStorage.removeItem('distance')
+  localStorage.removeItem('booking_form');
+  localStorage.removeItem('validate_form');
+  localStorage.removeItem('distance')
+
+  $('#frm-pay').submit(function(e) {
+    e.preventDefault();
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': localStorage.getItem('csrf_token')
+      }
+    });
+
+    $.ajax({
+      url: process.env.VUE_APP_API + `bookings/create`,
+      type: 'POST',
+      data: { arrayField: localStorage['booking_form'] },
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function(data) {
+          $('#pay-button').attr("disabled", true);
+          setTimeout(function() {
+            $('#pay-button').attr("disabled", false);
+            $('#pay-button').click();
+          }, 1000);
+      },
+      error:function (xhr, error, ajaxOptions, thrownError){
+        console.log(xhr);
+      }
+    });
+  });
 });
 
 export default {
@@ -301,24 +330,5 @@ export default {
           role: localStorage.getItem('role')
       };
   },
-  methods: {
-    createBooking() {
-      axios.defaults.headers.common['X-CSRF-TOKEN'] = localStorage.getItem('csrf_token');
-      const headers = {
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-      axios.post(
-          process.env.VUE_APP_API +
-            `bookings/create`, localStorage['booking_form'], {
-                method: 'post',
-                headers: headers,
-                credentials: 'include'
-            }
-        )
-        .then((response) => {
-          alert(response.data.success);
-      });
-    }
-  }
 };
 </script>

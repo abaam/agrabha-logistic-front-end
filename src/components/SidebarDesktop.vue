@@ -31,6 +31,14 @@
                             <span>{{ menu.label }}</span>
                         </router-link>
                     </li>
+
+                    <!-- Admin -->
+                    <li v-show="role == 3" v-for="menu in sidebarMenusAdmin" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                        <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <component :is="menu.icon" class="h-5 w-5"/>
+                            <span>{{ menu.label }}</span>
+                        </router-link>
+                    </li>
                     
                     <div class="absolute inset-x-4 bottom-5">
                         <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
@@ -53,7 +61,7 @@
 </template>
 
 <script>
-    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon  } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon  } from '@heroicons/vue/outline'
 
     const sidebarMenusDriver = [
         {
@@ -106,15 +114,34 @@
         }
     ]
 
+    const sidebarMenusAdmin = [
+        {
+            href: '/dashboard',
+            label: 'Dashboard',
+            icon: 'ViewGridIcon'
+        },
+        {
+            href: '/bookings',
+            label: 'Booking',
+            icon: 'TagIcon'
+        },
+        {
+            href: '/users',
+            label: 'Users',
+            icon: 'UsersIcon'
+        }
+    ]
+
     export default {
         setup() {
             return {
                 sidebarMenusDriver,
-                sidebarMenusCustomer
+                sidebarMenusCustomer,
+                sidebarMenusAdmin
             }
         },
         components: {
-            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon
+            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon
         },
         data() {
             return {

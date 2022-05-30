@@ -10,6 +10,9 @@
 
                 <!-- Customer -->
                 <span v-show="role == 2" class="hidden md:flex">Customer</span>
+
+                <!-- Admin -->
+                <span v-show="role == 3" class="hidden md:flex">Admin</span>
                 <ChevronDownIcon class="h-4 w-4 hidden md:flex" />
             </button>
         </MenuButton>

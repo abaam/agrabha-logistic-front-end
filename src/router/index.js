@@ -111,7 +111,13 @@ const routes = [
     name: 'Delivery Details',
     component: () => import ('../views/DeliveryDetails.vue'),
     meta: { authOnly: true }
-  }
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import ('../views/admin/Users.vue'),
+    meta: { authOnly: true, driver: true, role: 3 }
+  },
 ]
 
 const router = createRouter({
@@ -145,6 +151,14 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else if (to.matched.some(record => record.meta.customer)) {
+    if (isLoggedIn() && role() != to.meta.role) {
+      next({
+        path: "/dashboard"
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.admin)) {
     if (isLoggedIn() && role() != to.meta.role) {
       next({
         path: "/dashboard"

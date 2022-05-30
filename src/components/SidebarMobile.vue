@@ -49,6 +49,13 @@
                                     <span>{{ menu.label }}</span>
                                 </router-link>
                             </li>
+
+                            <li v-show="role == 3" v-for="menu in sidebarMenusAdmin" :key="menu.label" class="text-white hover:bg-blue hover:text-grey-light rounded">
+                                <router-link :to="menu.href" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                                    <component :is="menu.icon" class="h-5 w-5"/>
+                                    <span>{{ menu.label }}</span>
+                                </router-link>
+                            </li>
                         </ul>
                     </div>
 
@@ -93,7 +100,7 @@
 <script>
     import axios from 'axios';
     import { ref } from 'vue'
-    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon } from '@heroicons/vue/outline'
+    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon, UsersIcon } from '@heroicons/vue/outline'
     import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
     const sidebarMenusDriver = [
@@ -131,20 +138,38 @@
             icon: 'ViewGridIcon'
         },
         {
-            href: '/transactions',
-            label: 'Transactions',
-            icon: 'RefreshIcon'
-        },
-        {
             href: '/bookings',
             label: 'Booking',
             icon: 'TagIcon'
+        },
+        {
+            href: '/transactions',
+            label: 'Transactions',
+            icon: 'RefreshIcon'
         },
         // {
         //     href: '/bookings/create',
         //     label: 'Create Booking',
         //     icon: 'BookOpenIcon'
         // }
+    ]
+
+    const sidebarMenusAdmin = [
+        {
+            href: '/dashboard',
+            label: 'Dashboard',
+            icon: 'ViewGridIcon'
+        },
+        {
+            href: '/bookings',
+            label: 'Booking',
+            icon: 'TagIcon'
+        },
+        {
+            href: '/users',
+            label: 'Users',
+            icon: 'UsersIcon'
+        }
     ]
 
     export default {
@@ -154,11 +179,12 @@
             return {
                 isOpen,
                 sidebarMenusDriver,
-                sidebarMenusCustomer
+                sidebarMenusCustomer,
+                sidebarMenusAdmin
             }
         },
         components: {
-            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon
+            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon, UsersIcon
         },
         data() {
             return {

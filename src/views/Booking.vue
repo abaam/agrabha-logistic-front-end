@@ -312,6 +312,18 @@
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
+                        Receiver's Name
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
+                        Receiver's Contact
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
                         Vehicle Type
                       </th>
                       <th
@@ -342,6 +354,12 @@
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
+                        Payment Status
+                      </th>
+                      <th
+                        scope="col"
+                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
+                      >
                         Status
                       </th>
                       <th scope="col" class="relative px-6 py-3">
@@ -355,19 +373,42 @@
                         <div class="text-sm">{{ booking.package_item }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.vehicle_type }}</div>
+                        <div class="text-sm">{{ booking.receiver_name }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.drop_off }}</div>
+                        <div class="text-sm">{{ booking.receiver_contact }}</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">{{ booking.vehicle_type }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.pick_up }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.date_time }}</div>
+                        <div class="text-sm">{{ booking.drop_off }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.payment_method }}</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div v-if="booking.payment_status == 0">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Pending
+                            </p>
+                          </div>
+                        </div>
+                        <div v-if="booking.payment_status == 1">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-blue">
+                              Paid
+                            </p>
+                          </div>
+                        </div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div v-if="booking.status == 1">
@@ -408,7 +449,7 @@
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="7" class="p-6">
+                      <td colspan="10" class="p-6">
                         <img
                           class="mx-auto w-24"
                           src="../../public/svg/no_data.svg"
@@ -809,7 +850,14 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings?page=${pageNum}&entries=${this.show_entries}`
+              `bookings?page=${pageNum}&entries=${this.show_entries}`, {
+              withCredentials: true,  
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }
           )
           .then((response) => {
             this.pagination = response.data.bookings.pagination;
@@ -819,7 +867,14 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`
+              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`, {
+              withCredentials: true,  
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }
           )
           .then((response) => {
             this.pagination = response.data.bookings.pagination;
@@ -833,7 +888,14 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&entries=${this.show_entries}`
+              `bookings/search?q=${this.search}&entries=${this.show_entries}`, {
+              withCredentials: true,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }
           )
           .then((response) => {
             this.pagination = response.data.bookings.pagination;
@@ -846,7 +908,14 @@ export default {
       if (this.search == "") {
         axios
           .get(
-            process.env.VUE_APP_API + "bookings?entries=" + event.target.value
+            process.env.VUE_APP_API + "bookings?entries=" + event.target.value, {
+              withCredentials: true,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }
           )
           .then((response) => {
             this.pagination = response.data.bookings.pagination;
@@ -857,7 +926,14 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&entries=${this.show_entries}`
+              `bookings/search?q=${this.search}&entries=${this.show_entries}`, {
+              withCredentials: true,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }
           )
           .then((response) => {
             this.pagination = response.data.bookings.pagination;
@@ -867,19 +943,40 @@ export default {
     },
 
     fetchToShip() {
-      axios.get(process.env.VUE_APP_API + `bookings`).then((response) => {
+      axios.get(process.env.VUE_APP_API + `bookings`, {
+              withCredentials: true,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }).then((response) => {
         this.to_ship = response.data.to_ship;
       });
     },
 
     fetchToReceive() {
-      axios.get(process.env.VUE_APP_API + `bookings`).then((response) => {
+      axios.get(process.env.VUE_APP_API + `bookings`, {
+              withCredentials: true,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }).then((response) => {
         this.to_receive = response.data.to_receive;
       });
     },
 
     fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `bookings`).then((response) => {
+      axios.get(process.env.VUE_APP_API + `bookings`, {
+              withCredentials: true,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }).then((response) => {
         this.delivered = response.data.delivered;
       });
     },

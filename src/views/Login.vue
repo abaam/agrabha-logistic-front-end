@@ -133,7 +133,7 @@
                 .then((response) => {
                     console.log(response);
                     localStorage.setItem('time_of_login', (new Date()).getTime())
-                    localStorage.setItem('csrf_token', response.data.csrf_token);
+                    localStorage.setItem('csrf_token', response.data.access_token);
                     this.$root.$emit('login', true); 
                     if(response.data.verified){
                         localStorage.setItem('auth', 'true');

@@ -5,10 +5,5 @@ let Api = axios.create({
 });
 
 Api.defaults.withCredentials = true;
-Api.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-};
 
 export default Api;

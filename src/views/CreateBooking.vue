@@ -231,17 +231,18 @@ $( document ).ready(function() {
 
     $.ajaxSetup({
       headers: {
-        'X-CSRF-TOKEN': localStorage.getItem('csrf_token')
+        'X-CSRF-TOKEN': localStorage.getItem('csrf_token'),
       }
     });
 
     $.ajax({
-      url: process.env.VUE_APP_API + `bookings/create`,
+      url: process.env.VUE_APP_API + `bookings/store`,
       type: 'POST',
-      data: { arrayField: localStorage['booking_form'] },
-      contentType: false,
-      processData: false,
-      dataType: 'json',
+      data: { 
+        arrayField: localStorage['booking_form'],
+      },
+      dataType: 'jsonp',
+      crossDomain: true,
       success: function(data) {
           $('#pay-button').attr("disabled", true);
           setTimeout(function() {

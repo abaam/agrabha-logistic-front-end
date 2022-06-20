@@ -382,13 +382,33 @@
                         <div class="text-sm">{{ booking.vehicle_type }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.pick_up }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.drop_off }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.payment_method }}</div>
+                        <div class="text-sm">{{ booking.pick_up }}</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">{{ booking.date_time }}</div>
+                      </td>
+                      <td class="whitespace-nowrap px-6 py-4">
+                        <div v-if="booking.payment_method == 0">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
+                              Paymaya
+                            </p>
+                          </div>
+                        </div>
+                        <div v-if="booking.payment_method == 1">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-blue">
+                              Gcash
+                            </p>
+                          </div>
+                        </div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div v-if="booking.payment_status == 0">

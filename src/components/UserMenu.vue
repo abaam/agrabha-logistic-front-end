@@ -70,8 +70,22 @@
         methods: {
             logout(menu) {
                 if(menu == 'Logout'){
-                    axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie").then(response => {
-                        axios.post(process.env.VUE_APP_API + "logout")
+                    axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie", {
+                      withCredentials: true,  
+                      headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+                      "Access-Control-Allow-Origin": "*"
+                      }
+                    }).then(response => {
+                        axios.post(process.env.VUE_APP_API + "logout", {
+                          withCredentials: true,  
+                          headers: {
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+                          "Access-Control-Allow-Origin": "*"
+                          }
+                        })
                         .then(response => {
                             if (response.data.success) {
                                 localStorage.clear();

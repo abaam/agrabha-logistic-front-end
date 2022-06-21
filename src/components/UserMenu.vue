@@ -113,8 +113,7 @@
             let timeoutId;
             
             function handleInactive() {
-                localStorage.clear();
-                window.location.href = "/login"
+                logout('Logout')
             }
 
             function startTimer() { 

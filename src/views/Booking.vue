@@ -360,7 +360,7 @@
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Status
+                        Booking Status
                       </th>
                       <th scope="col" class="relative px-6 py-3">
                         <span class="sr-only">Edit</span>

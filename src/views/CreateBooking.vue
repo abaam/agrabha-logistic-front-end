@@ -120,7 +120,7 @@
         <!-- /Stepper Icon -->
       </div>
 
-      <Form>
+      <form @submit="storeBooking">
         <component :is="stepForms[currentStep].component"></component>
 
         <div class="mx-auto mt-4 flex max-w-lg justify-between space-x-4">
@@ -131,28 +131,28 @@
           >
             Back
           </button> -->
-          <form method="POST" id="frm-pay" class="flex w-full">
-            <button v-if="currentStep === 4"
-              id="pay-button" 
-              type="submit"
-              class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
-              data-bs-toggle="modal" data-bs-target="#pay_info" 
-            >
-            </button>
-            
-            <button v-else
-              @click.prevent="nextStep"
-              class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
-            >
-              <template v-if="currentStep === 0">Select vehicle</template>
-              <template v-else-if="currentStep === 1">Set location</template>
-              <template v-else-if="currentStep === 2">Payment method</template>
-              <template v-else-if="currentStep === 3">Review package</template>
-            </button>
-          </form>
+          
+          <button v-if="currentStep === 4"
+            id="pay-button" 
+            type="submit"
+            class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
+            data-bs-toggle="modal" data-bs-target="#pay_info" 
+          >
+          </button>
+          
+          <button v-else
+            @click.prevent="nextStep"
+            class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
+          >
+            <template v-if="currentStep === 0">Select vehicle</template>
+            <template v-else-if="currentStep === 1">Set location</template>
+            <template v-else-if="currentStep === 2">Payment method</template>
+            <template v-else-if="currentStep === 3">Review package</template>
+          </button>
+          
 
           <!-- Modal -->
-          <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20"
+          <div class="modal fade fixed top-20 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20"
             id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog relative w-auto pointer-events-none">
@@ -195,7 +195,7 @@
             </div>
           </div>
         </div>
-      </Form>
+      </form>
     </section>
   </DashboardLayout>
 </template>
@@ -226,35 +226,32 @@ $( document ).ready(function() {
   localStorage.removeItem('validate_form');
   localStorage.removeItem('distance')
 
-  $('#frm-pay').submit(function(e) {
-    e.preventDefault();
+  // $('#frm-pay').submit(function(e) {
+  //   e.preventDefault();
 
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': localStorage.getItem('csrf_token'),
-      }
-    });
-
-    $.ajax({
-      url: process.env.VUE_APP_API + `bookings/store`,
-      type: 'POST',
-      data: { 
-        arrayField: localStorage['booking_form'],
-      },
-      dataType: 'jsonp',
-      crossDomain: true,
-      success: function(data) {
-          $('#pay-button').attr("disabled", true);
-          setTimeout(function() {
-            $('#pay-button').attr("disabled", false);
-            $('#pay-button').click();
-          }, 1000);
-      },
-      error:function (xhr, error, ajaxOptions, thrownError){
-        console.log(xhr);
-      }
-    });
-  });
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: process.env.VUE_APP_API + `bookings/store`,
+  //     data: { 
+  //       arrayField: localStorage['booking_form'],
+  //     },
+  //     beforeSend: function (xhr) {
+  //         xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('csrf_token'));
+  //     },
+  //     dataType: 'jsonp',
+  //     crossDomain: true,
+  //     success: function(data) {
+  //         $('#pay-button').attr("disabled", true);
+  //         setTimeout(function() {
+  //           $('#pay-button').attr("disabled", false);
+  //           $('#pay-button').click();
+  //         }, 1000);
+  //     },
+  //     error:function (xhr, error, ajaxOptions, thrownError){
+  //       console.log(xhr);
+  //     }
+  //   });
+  // });
 });
 
 export default {
@@ -330,6 +327,30 @@ export default {
       return {
           role: localStorage.getItem('role')
       };
+  },
+  methods: {
+    storeBooking(e) {
+      e.preventDefault();
+      let currentObj = this;
+      let arrayField = localStorage['booking_form'];
+
+      axios.post(process.env.VUE_APP_API + "bookings/store", {
+          arrayField
+      }, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(function (response) {
+          currentObj.output = response.data;
+      })
+      .catch(function (error) {
+          currentObj.output = error;
+      });
+    }
   },
 };
 </script>

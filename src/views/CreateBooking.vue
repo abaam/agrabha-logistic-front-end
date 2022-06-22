@@ -335,11 +335,12 @@ export default {
       let arrayField = localStorage['booking_form'];
 
       axios.post(process.env.VUE_APP_API + "bookings/store", {
-          arrayField
-      }, {
+        arrayField
+      }, 
+      {
         withCredentials: true,
         headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
         "Access-Control-Allow-Origin": "*"
         }

@@ -70,14 +70,7 @@
         methods: {
             logout(menu) {
                 if(menu == 'Logout'){
-                    axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie", {
-                      withCredentials: true,  
-                      headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
-                      "Access-Control-Allow-Origin": "*"
-                      }
-                    }).then(response => {
+                    axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie").then(response => {
                         axios.post(process.env.VUE_APP_API + "logout", {
                           withCredentials: true,  
                           headers: {
@@ -102,12 +95,12 @@
             }
         },
         mounted: function() {
-            window.onunload = function () {
-                if (localStorage.getItem('time_of_login') && (new Date()).getTime() - (localStorage.getItem('time_of_login')) > 900000) {
-                    localStorage.clear();
-                    window.location.href = "/login"
-                }
-            }
+            // window.onunload = function () {
+            //     if (localStorage.getItem('time_of_login') && (new Date()).getTime() - (localStorage.getItem('time_of_login')) > 900000) {
+            //         localStorage.clear();
+            //         window.location.href = "/login"
+            //     }
+            // }
 
             const timeoutInMS = 900000;
             let timeoutId;

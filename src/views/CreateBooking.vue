@@ -334,23 +334,25 @@ export default {
       let currentObj = this;
       let arrayField = localStorage['booking_form'];
 
-      axios.post(process.env.VUE_APP_API + "bookings/store", {
-        arrayField
-      }, 
-      {
-        withCredentials: true,
-        headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
-        "Access-Control-Allow-Origin": "*"
-        }
+      axios.get(process.env.VUE_APP_LARAVEL + "sanctum/csrf-cookie").then(response => {
+          axios.post(process.env.VUE_APP_API + "bookings/store", {
+          arrayField
+        }, 
+        {
+          withCredentials: true,
+          headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+          "Access-Control-Allow-Origin": "*"
+          }
+        })
+        .then(function (response) {
+            currentObj.output = response.data;
+        })
+        .catch(function (error) {
+            currentObj.output = error;
+        });
       })
-      .then(function (response) {
-          currentObj.output = response.data;
-      })
-      .catch(function (error) {
-          currentObj.output = error;
-      });
     }
   },
 };

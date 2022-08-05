@@ -22,35 +22,35 @@
       <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4 p-4 rounded-lg border sm:p-8 m-2">
         <div class="p-4 border rounded-lg rounded-lg">
           <h3 class="font-bold">Package Details</h3>
-          <p>Item: Banana</p>
-          <p>Quantity: 50 KG</p>
-          <p>Note: Please handle with care. Perishable goods.</p>
+          <p id="package-item"></p>
+          <p id="package-quantity"></p>
+          <p id="package-note"></p>
           
           <br>
           <h3 class="font-bold">Receiver's Information</h3>
-          <p>Name: Juan Dela Cruz</p>
-          <p>Contact Number: 09015644552</p>
-          <p>Address: 110 E. Rodriguez Jr. Avenue, Libis, Quezon City, Metro Manila</p>
+          <p id="receiver-name"></p>
+          <p id="contact-number"></p>
+          <p></p>
         </div>
         <!-- ... -->
         <div class="p-4 border rounded-lg">
           <h3 class="font-bold">Vehicle</h3>
-          <p>Vehicle Type: Truck</p>
+          <p id="vehicle-type"></p>
 
           <br>
           <h3 class="font-bold">Location</h3>
-          <p>Pick-up: Juan Dela Cruz</p>
-          <p>Drop-off: 110 E. Rodriguez Jr. Avenue, Libis, Quezon City, Metro Manila</p>
-          <p>Date & Time: April 9, 2022 04:35 PM</p>
+          <p id="pick-up"></p>
+          <p id="drop-off"></p>
+          <p id="date-time"></p>
         </div>
 
         <div  class="p-4 border rounded-lg">
           <h3 class="font-bold">Payment</h3>
-          <p>Payment Method: Cash on Delivery</p>
+          <p id="payment-method"></p>
           <p>Total: ₱127.00</p>
 
           <br>
-          <h3 class="font-bold">Status: <span class="text-blue-light">Pending</span></h3>
+          <h3 class="font-bold">Status: <span class="text-blue-light" id="payment-status"></span></h3>
         </div>
 
         <div class="p-4 border rounded-lg">
@@ -82,7 +82,9 @@
 </template>
 
 <script>
+import $ from "jquery";
 import _ from "lodash";
+import axios from "axios";
 import DashboardLayout from "@/views/DashboardLayout.vue";
 import ButtonOutlineBlue from "@/components/buttons/ButtonOutlineBlue.vue";
 import ButtonOutlineGreen from "@/components/buttons/ButtonOutlineGreen.vue";
@@ -98,5 +100,49 @@ export default {
           role: localStorage.getItem('role')
       };
   },
+  mounted(){
+    this.showBookingDetails()
+  },
+  methods:{
+    showBookingDetails(){
+        axios.get(process.env.VUE_APP_API + `bookings/details/${this.$route.params.id}`, {
+              withCredentials: true,  
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+              "Access-Control-Allow-Origin": "*"
+              }
+            }).then(response=>{
+            $('#package-item').html('Item: ' + response.data.package_item);
+            $('#package-quantity').html('Quantity: ' + response.data.package_quantity + ' ' + + response.data.package_unit);
+            $('#package-note').html('Note: ' + response.data.package_note);
+            $('#receiver-name').html('Name: ' + response.data.receiver_name);
+            $('#contact-number').html('Contact Number: ' + response.data.receiver_contact);
+            $('#vehicle-type').html('Vehicle Type: ' + response.data.vehicle_type);
+            $('#pick-up').html('Pick-up: ' + response.data.pick_up);
+            $('#drop-off').html('Drop Off: ' + response.data.drop_off);
+            let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            $('#date-time').html('Date & Time: ' + new Date(response.data.date_time.replace('T', ' ')).toLocaleString('en-US', options));
+
+            if(response.data.payment_method == 0){
+              var payment_method = "Paymaya";
+            }else{
+              var payment_method = "Gcash";
+            }
+            $('#payment-method').html('Payment Method: ' + payment_method);
+
+            if(response.data.payment_status == 0){
+              var payment_status = "Pending";
+            }else{
+              var payment_status = "Paid";
+              $('#payment-status').attr('class', 'text-green')
+            }
+            $('#payment-status').html(payment_status);
+
+        }).catch(error=>{
+            console.log(error)
+        })
+    }
+  }
 };
 </script>

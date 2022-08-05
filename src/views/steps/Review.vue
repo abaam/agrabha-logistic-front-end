@@ -589,7 +589,7 @@ function initializeMap(){
   var originMarker = new google.maps.Marker({
     draggable: false,
     icon: '/img/pick-up.png',
-    position: new google.maps.LatLng(JSON.parse(localStorage['booking_form'])[8], JSON.parse(localStorage['booking_form'])[9]),
+    position: new google.maps.LatLng(booking_form.get('pick_up_lat'), booking_form.get('pick_up_lng')),
     animation: google.maps.Animation.DROP,
     map: map
   });
@@ -597,7 +597,7 @@ function initializeMap(){
   var destinationMarker = new google.maps.Marker({
     draggable: false,
     icon: '/img/drop-off.png',
-    position: new google.maps.LatLng(JSON.parse(localStorage['booking_form'])[11], JSON.parse(localStorage['booking_form'])[12]),
+    position: new google.maps.LatLng(booking_form.get('drop_off_lat'), booking_form.get('drop_off_lng')),
     animation: google.maps.Animation.DROP,
     map: map
   });
@@ -606,8 +606,8 @@ function initializeMap(){
   $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
   localStorage.setItem('distance', distance.toFixed(2))
 
-  var origin_input = JSON.parse(localStorage['booking_form'])[7];
-  var destination_input = JSON.parse(localStorage['booking_form'])[10];
+  var origin_input = booking_form.get('pick_up');
+  var destination_input = booking_form.get('drop_off');
   var origininfowindow = new google.maps.InfoWindow();
   origininfowindow.setContent('Pick Up: ' + origin_input);
   origininfowindow.open(map, originMarker);
@@ -657,23 +657,43 @@ function hidePaymentMethodInputs(){
 }
 
 function retrievePackage(){
-  $('#package-item').html(JSON.parse(localStorage['booking_form'])[0]);
-  $('#package-quantity').html(JSON.parse(localStorage['booking_form'])[1]);
-  $('#package-unit').html(JSON.parse(localStorage['booking_form'])[2]);
-  $('#package-note').html(JSON.parse(localStorage['booking_form'])[3]);
+  let booking_form = new Map();
+  JSON.parse(localStorage['booking_form']).forEach(item => {
+      booking_form.set(item.name, item.value);
+  })
+
+  $('#package-item').html(booking_form.get('package_item'));
+  $('#package-quantity').html(booking_form.get('package_quantity'));
+  $('#package-unit').html(booking_form.get('package_unit'));
+  $('#package-note').html(booking_form.get('package_note'));
 }
 
 function retrieveReceiversInfo(){
-  $('#receiver-name').html(JSON.parse(localStorage['booking_form'])[4]);
-  $('#receiver-contact').html(JSON.parse(localStorage['booking_form'])[5]);
+  let booking_form = new Map();
+  JSON.parse(localStorage['booking_form']).forEach(item => {
+      booking_form.set(item.name, item.value);
+  })
+
+  $('#receiver-name').html(booking_form.get('receiver_name'));
+  $('#receiver-contact').html(booking_form.get('contact_number'));
 }
 
 function retrieveVehicleType(){
-  $('#vehicle-type').html(JSON.parse(localStorage['booking_form'])[6]);
+  let booking_form = new Map();
+  JSON.parse(localStorage['booking_form']).forEach(item => {
+      booking_form.set(item.name, item.value);
+  })
+
+  $('#vehicle-type').html(booking_form.get('vehicle_form'));
 }
 
 function retrievePaymentMethod(){
-  $('#payment-method').html(JSON.parse(localStorage['booking_form'])[14]);
+  let booking_form = new Map();
+  JSON.parse(localStorage['booking_form']).forEach(item => {
+      booking_form.set(item.name, item.value);
+  })
+
+  $('#payment-method').html(booking_form.get('payment_method'));
 }
 
 export default {
@@ -702,6 +722,11 @@ export default {
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
     .then(() => {
 
+      let booking_form = new Map();
+      JSON.parse(localStorage['booking_form']).forEach(item => {
+          booking_form.set(item.name, item.value);
+      })
+
       initializeMap()
 
       const originInput = document.getElementById("origin-input");
@@ -723,7 +748,7 @@ export default {
       var originMarker = new google.maps.Marker({
         draggable: false,
         icon: '/img/pick-up.png',
-        position: new google.maps.LatLng(JSON.parse(localStorage['booking_form'])[8], JSON.parse(localStorage['booking_form'])[9]),
+        position: new google.maps.LatLng(booking_form.get('pick_up_lat'), booking_form.get('pick_up_lng')),
         animation: google.maps.Animation.DROP,
         map: map
       });
@@ -731,7 +756,7 @@ export default {
       var destinationMarker = new google.maps.Marker({
         draggable: false,
         icon: '/img/drop-off.png',
-        position: new google.maps.LatLng(JSON.parse(localStorage['booking_form'])[11], JSON.parse(localStorage['booking_form'])[12]),
+        position: new google.maps.LatLng(booking_form.get('drop_off_lat'), booking_form.get('drop_off_lng')),
         animation: google.maps.Animation.DROP,
         map: map
       });
@@ -756,37 +781,57 @@ export default {
       });
 
       $("#package-change").click(function() {
+        let booking_form = new Map();
+        JSON.parse(localStorage['booking_form']).forEach(item => {
+            booking_form.set(item.name, item.value);
+        })
+
         $("#package-details-input").show();
         $("#package-buttons").show();
         $("#package-details").hide();
         $("#package-change").hide();
 
-        $('#item-input').val(JSON.parse(localStorage['booking_form'])[0]);
-        $('#quantity-input').val(JSON.parse(localStorage['booking_form'])[1]);
-        $('#unit-input').val(JSON.parse(localStorage['booking_form'])[2]);
-        $('#note-input').val(JSON.parse(localStorage['booking_form'])[3]);
+        $('#item-input').val(booking_form.get('package_item'));
+        $('#quantity-input').val(booking_form.get('package_quantity'));
+        $('#unit-input').val(booking_form.get('package_unit'));
+        $('#note-input').val(booking_form.get('package_note'));
       });
 
       $("#receiver-change").click(function() {
+        let booking_form = new Map();
+        JSON.parse(localStorage['booking_form']).forEach(item => {
+            booking_form.set(item.name, item.value);
+        })
+
         $("#receiver-details-input").show();
         $("#receiver-buttons").show();
         $("#receiver-details").hide();
         $("#receiver-change").hide();
 
-        $('#receiver-input').val(JSON.parse(localStorage['booking_form'])[4]);
-        $('#contact-number-input').val(JSON.parse(localStorage['booking_form'])[5]);
+        $('#receiver-input').val(booking_form.get('receiver_name'));
+        $('#contact-number-input').val(booking_form.get('contact_number'));
       });
 
       $("#vehicle-change").click(function() {
+        let booking_form = new Map();
+        JSON.parse(localStorage['booking_form']).forEach(item => {
+            booking_form.set(item.name, item.value);
+        })
+
         $("#vehicle-details-input").show();
         $("#vehicle-buttons").show();
         $("#vehicle-details").hide();
         $("#vehicle-change").hide();
 
-        $('#vehicle-type-input').val(JSON.parse(localStorage['booking_form'])[6]);
+        $('#vehicle-type-input').val(booking_form.get('vehicle_form'));
       });
 
       $("#payment-method-change").click(function() {
+        let booking_form = new Map();
+        JSON.parse(localStorage['booking_form']).forEach(item => {
+            booking_form.set(item.name, item.value);
+        })
+        
         $("#payment-method-details-input").show();
         $("#payment-method-buttons").show();
         $("#payment-method-details").hide();
@@ -794,7 +839,7 @@ export default {
 
         $('input.type_checkbox[value="6"]').prop('checked', true);
 
-        $('input[name="payment_method"][value="'+JSON.parse(localStorage['booking_form'])[6]+'"]').prop('checked', true);
+        $('input[name="payment_method"][value="'+booking_form.get('vehicle_form')+'"]').prop('checked', true);
       });
 
       $("#location-save").click(function(e) {        
@@ -803,12 +848,12 @@ export default {
 
         if(origin_input !== '' && destination_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form.splice(7, 1, origin_input)
-          booking_form.splice(8, 1, $('#origin-input-lat').val())
-          booking_form.splice(9, 1, $('#origin-input-lng').val())
-          booking_form.splice(10, 1, destination_input)
-          booking_form.splice(11, 1, $('#destination-input-lat').val())
-          booking_form.splice(12, 1, $('#destination-input-lng').val())
+          booking_form[7]['value'] = origin_input;
+          booking_form[8]['value'] = $('#origin-input-lat').val();
+          booking_form[9]['value'] = $('#origin-input-lng').val();
+          booking_form[10]['value'] = destination_input;
+          booking_form[11]['value'] = $('#destination-input-lat').val();
+          booking_form[12]['value'] = $('#destination-input-lng').val();
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideDestinationInputs()
@@ -848,10 +893,10 @@ export default {
 
         if(item_input !== '' && quantity_input !== '' && unit_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form.splice(0, 1, item_input)
-          booking_form.splice(1, 1, quantity_input)
-          booking_form.splice(2, 1, unit_input)
-          booking_form.splice(3, 1, note_input)
+          booking_form[0]['value'] = item_input;
+          booking_form[1]['value'] = quantity_input;
+          booking_form[2]['value'] = unit_input;
+          booking_form[3]['value'] = note_input;
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hidePackageInputs()
@@ -869,8 +914,8 @@ export default {
 
         if(receiver_input !== '' && contact_number_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form.splice(4, 1, receiver_input)
-          booking_form.splice(5, 1, contact_number_input)
+          booking_form[4]['value'] = receiver_input;
+          booking_form[5]['value'] = contact_number_input;
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideReceiverInputs()
@@ -887,7 +932,7 @@ export default {
 
         if(vehicle_type_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form.splice(6, 1, vehicle_type_input)
+          booking_form[6]['value'] = vehicle_type_input;
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideVehicleInputs()
@@ -900,15 +945,15 @@ export default {
       });
 
       $("#payment-method-save").click(function(e) {        
-        var vehicle_type_input = $('input[name="payment_method"]:checked').val();
+        var payment_method_input = $('input[name="payment_method"]:checked').val();
         let booking_form = JSON.parse(localStorage['booking_form']);
-        booking_form.splice(14, 1, vehicle_type_input)
+        booking_form[14]['value'] = payment_method_input;
           
         localStorage['booking_form'] = JSON.stringify(booking_form);
         hidePaymentMethodInputs()
         $("#payment-method-change").show();
 
-        if (JSON.parse(localStorage['booking_form'])[14] == 'Paymaya') {
+        if (booking_form.get('payment_method') == 'Paymaya') {
           var payment_logo = "/img/paymaya-logo.png"
         } else {
           var payment_logo = "/img/gcash-logo.png"
@@ -950,12 +995,17 @@ export default {
       });
     })
 
+    let booking_form = new Map();
+    JSON.parse(localStorage['booking_form']).forEach(item => {
+        booking_form.set(item.name, item.value);
+    })
+
     retrievePackage()
     retrieveReceiversInfo()
     retrieveVehicleType()
     retrievePaymentMethod()
 
-    if (JSON.parse(localStorage['booking_form'])[14] == 'Paymaya') {
+    if (booking_form.get('payment_method') == 'Paymaya') {
       var payment_logo = "/img/paymaya-logo.png"
     } else {
       var payment_logo = "/img/gcash-logo.png"

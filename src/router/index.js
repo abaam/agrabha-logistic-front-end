@@ -95,7 +95,7 @@ const routes = [
     meta: { authOnly: true }
   },
   {
-    path: '/booking-details',
+    path: '/booking-details/:id',
     name: 'Booking Details',
     component: () => import ('../views/BookingDetails.vue'),
     meta: { authOnly: true }

@@ -226,33 +226,6 @@ $( document ).ready(function() {
   localStorage.removeItem('booking_form');
   localStorage.removeItem('validate_form');
   localStorage.removeItem('distance')
-
-  // $('#frm-pay').submit(function(e) {
-  //   e.preventDefault();
-
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: process.env.VUE_APP_API + `bookings/store`,
-  //     data: { 
-  //       arrayField: localStorage['booking_form'],
-  //     },
-  //     beforeSend: function (xhr) {
-  //         xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('csrf_token'));
-  //     },
-  //     dataType: 'jsonp',
-  //     crossDomain: true,
-  //     success: function(data) {
-  //         $('#pay-button').attr("disabled", true);
-  //         setTimeout(function() {
-  //           $('#pay-button').attr("disabled", false);
-  //           $('#pay-button').click();
-  //         }, 1000);
-  //     },
-  //     error:function (xhr, error, ajaxOptions, thrownError){
-  //       console.log(xhr);
-  //     }
-  //   });
-  // });
 });
 
 export default {
@@ -332,20 +305,17 @@ export default {
   methods: {
     storeBooking(e) {
       e.preventDefault();
-      let self = this
       let currentObj = this;
-      let arrayField = JSON.parse(localStorage.getItem("booking_form"));
+      let arrayField = new Map();
+      JSON.parse(localStorage.getItem("booking_form")).forEach(item => {
+          arrayField.set(item.name, item.value);
+      })
+      let booking_form = JSON.parse(JSON.stringify([...arrayField]));
       
-      Booking.store({arrayField})
+      Booking.store({booking_form})
       .then(function (response) {
         console.log(response);
         currentObj.output = response.data;
-
-        // let arr2 = new Map();
-        // arrayField.forEach(item => {
-        //     arr2.set(item.name, item.value);
-        // })
-        // console.log(arr2);
       })
       .catch(function (error) {
         currentObj.output = error;

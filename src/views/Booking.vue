@@ -462,7 +462,7 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
+                        <router-link :to='{name:"Booking Details",params:{id:booking.id}}' class="text-blue-light hover:text-blue"
                           >View details</router-link>
                       </td>
                     </tr>

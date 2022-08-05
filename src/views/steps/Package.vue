@@ -153,7 +153,12 @@ export default {
     isRequired(value) {
       if (value && value.trim()) {
         var package_form = [];
-        $('#package_form input, #package_form textarea').each(function(){package_form.push(this.value);});
+        $('#package_form input, #package_form textarea').each(function(){
+          package_form.push({
+            name: this.name, 
+            value:  this.value
+          });
+        });
         
         if(!package_form.some(function(e){return (!e || 0 === e.length);})){
           localStorage['package_form'] = JSON.stringify(package_form);

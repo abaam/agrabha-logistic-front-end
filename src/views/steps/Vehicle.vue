@@ -49,7 +49,10 @@ export default {
       if (value && value.trim()) {
         var vehicle_form = [];
         var selected_vehicle = $('#vehicle_form option:selected').val();
-        vehicle_form.push(selected_vehicle)
+        vehicle_form.push({
+          name: 'vehicle_form', 
+          value: selected_vehicle
+        });
         
         if(!vehicle_form.some(function(e){return (!e || 0 === e.length);})){
           localStorage['vehicle_form'] = JSON.stringify(vehicle_form);

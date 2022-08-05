@@ -546,6 +546,11 @@ function setupPlaceChangedListener(autocomplete, mode) {
 }
 
 function initializeMap(){
+  let booking_form = new Map();
+  JSON.parse(localStorage['booking_form']).forEach(item => {
+      booking_form.set(item.name, item.value);
+  })
+
   const map = new google.maps.Map(document.getElementById("map"), {
     center: {
       lat: 12.8819585, 
@@ -563,12 +568,12 @@ function initializeMap(){
   directionsService.route(
     {
       origin: { 
-        lat: parseFloat(JSON.parse(localStorage['booking_form'])[8]), 
-        lng: parseFloat(JSON.parse(localStorage['booking_form'])[9]) 
+        lat: parseFloat(booking_form.get('pick_up_lat')), 
+        lng: parseFloat(booking_form.get('pick_up_lng')) 
       },
       destination: { 
-        lat: parseFloat(JSON.parse(localStorage['booking_form'])[11]), 
-        lng: parseFloat(JSON.parse(localStorage['booking_form'])[12]) 
+        lat: parseFloat(booking_form.get('drop_off_lat')), 
+        lng: parseFloat(booking_form.get('drop_off_lng')) 
       },
       travelMode: google.maps.TravelMode.DRIVING,
     },

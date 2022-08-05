@@ -334,12 +334,18 @@ export default {
       e.preventDefault();
       let self = this
       let currentObj = this;
-      let arrayField = localStorage['booking_form'];
+      let arrayField = JSON.parse(localStorage.getItem("booking_form"));
       
       Booking.store({arrayField})
       .then(function (response) {
         console.log(response);
         currentObj.output = response.data;
+
+        // let arr2 = new Map();
+        // arrayField.forEach(item => {
+        //     arr2.set(item.name, item.value);
+        // })
+        // console.log(arr2);
       })
       .catch(function (error) {
         currentObj.output = error;

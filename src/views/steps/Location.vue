@@ -252,7 +252,12 @@ export default {
     isRequired(value) {
       if (value && value.trim()) {
         var location_form = [];
-        $('#location_form input').each(function(){location_form.push(this.value);});
+        $('#location_form input').each(function(){
+          location_form.push({
+            name: this.name, 
+            value:  this.value
+          });
+        });
         
         if(!location_form.some(function(e){return (!e || 0 === e.length);})){
           localStorage['location_form'] = JSON.stringify(location_form);

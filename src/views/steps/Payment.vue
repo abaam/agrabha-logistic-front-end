@@ -68,7 +68,10 @@ export default {
       if (value && value.trim()) {
         var payment_form = [];
         var selected_payment_method = document.querySelector('input[name="payment_method"]:checked').value;
-        payment_form.push(selected_payment_method)
+        payment_form.push({
+          name: 'payment_method', 
+          value: selected_payment_method
+        });
 
         var checked_payment_method = document.querySelector('input[name="payment_method"]:checked');
 

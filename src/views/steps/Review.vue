@@ -946,12 +946,17 @@ export default {
 
       $("#payment-method-save").click(function(e) {        
         var payment_method_input = $('input[name="payment_method"]:checked').val();
-        let booking_form = JSON.parse(localStorage['booking_form']);
-        booking_form[14]['value'] = payment_method_input;
+        let booking_form_array = JSON.parse(localStorage['booking_form']);
+        booking_form_array[14]['value'] = payment_method_input;
           
-        localStorage['booking_form'] = JSON.stringify(booking_form);
+        localStorage['booking_form'] = JSON.stringify(booking_form_array);
         hidePaymentMethodInputs()
         $("#payment-method-change").show();
+
+        let booking_form = new Map();
+        JSON.parse(localStorage['booking_form']).forEach(item => {
+            booking_form.set(item.name, item.value);
+        })
 
         if (booking_form.get('payment_method') == 'Paymaya') {
           var payment_logo = "/img/paymaya-logo.png"

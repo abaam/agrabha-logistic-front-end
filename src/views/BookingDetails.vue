@@ -121,8 +121,7 @@ export default {
             $('#vehicle-type').html('Vehicle Type: ' + response.data.vehicle_type);
             $('#pick-up').html('Pick-up: ' + response.data.pick_up);
             $('#drop-off').html('Drop Off: ' + response.data.drop_off);
-            let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            $('#date-time').html('Date & Time: ' + new Date(response.data.date_time.replace('T', ' ')).toLocaleString('en-US', options));
+            $('#date-time').html('Date & Time: ' + response.data.date_time);
 
             if(response.data.payment_method == 0){
               var payment_method = "Paymaya";

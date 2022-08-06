@@ -152,46 +152,48 @@
           
 
           <!-- Modal -->
-          <div class="modal fade fixed top-20 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20"
+          <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20"
             id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog relative w-auto pointer-events-none">
-              <div
-                class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+              <form @submit="payBooking">
                 <div
-                  class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
-                  <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
-                    Scan the QR Code
-                  </h5>
-                  <button type="button"
-                    class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
-                    data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body relative p-4">
-                  <h3 class="font-bold flex justify-center items-center text-xl">Paymaya</h3>
-                  <img class="mx-auto w-60 self-center" src="../../public/img/paymaya-qr.png" alt="Agrabah Logistics">
-                  <div class="border-t border-gray-200">
-                    <dl>
-                      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-medium text-gray-500">Account Name</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Agrabah</dd>
-                      </div>
-                      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt class="text-lg font-medium text-gray-500">Account Number</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
-                      </div>
-                    </dl>
+                  class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                  <div
+                    class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                      Scan the QR Code
+                    </h5>
+                    <button type="button"
+                      class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                      data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body relative p-4">
+                    <h3 class="font-bold flex justify-center items-center text-xl">Paymaya</h3>
+                    <img class="mx-auto w-60 self-center" src="../../public/img/paymaya-qr.png" alt="Agrabah Logistics">
+                    <div class="border-t border-gray-200">
+                      <dl>
+                        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt class="text-lg font-medium text-gray-500">Account Name</dt>
+                          <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Agrabah</dd>
+                        </div>
+                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                          <dt class="text-lg font-medium text-gray-500">Account Number</dt>
+                          <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                  <div
+                    class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                    <button type="button"
+                      class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                      data-bs-dismiss="modal">Later</button>
+                    <button type="submit"
+                      class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Done</button>
                   </div>
                 </div>
-                <div
-                  class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                  <button type="button"
-                    class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                    data-bs-dismiss="modal">Close</button>
-                  <button type="button"
-                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Done</button>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -225,7 +227,13 @@ import Review from "./steps/Review.vue";
 $( document ).ready(function() {
   localStorage.removeItem('booking_form');
   localStorage.removeItem('validate_form');
-  localStorage.removeItem('distance')
+  localStorage.removeItem('distance');
+  localStorage.removeItem('booking_id')
+
+  var ran_booking_id = Array.from(Array(8), () => Math.floor(Math.random() * 36).toString(36)).join('');
+  localStorage.setItem('booking_id', ran_booking_id);
+
+  $('#hdn-booking-id').val(localStorage.getItem('booking_id'));
 });
 
 export default {
@@ -314,13 +322,28 @@ export default {
       
       Booking.store({booking_form})
       .then(function (response) {
-        console.log(response);
+        $('#pay-button').prop("disabled", true);
+        
+        currentObj.output = response.data;
+      })
+      .catch(function (error) {
+        currentObj.output = error;
+      });
+    },
+    payBooking(e) {
+      e.preventDefault();
+      let currentObj = this;
+      let booking_id = localStorage.getItem('booking_id');
+      
+      Booking.payBooking({booking_id})
+      .then(function (response) {
+        window.location.replace(window.location.origin + '/booking-details/' + localStorage.getItem('booking_id'));
         currentObj.output = response.data;
       })
       .catch(function (error) {
         currentObj.output = error;
       });
     }
-  },
+  }
 };
 </script>

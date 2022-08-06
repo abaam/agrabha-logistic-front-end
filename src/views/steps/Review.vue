@@ -762,6 +762,14 @@ export default {
       });
 
       var distance = haversineDistance(originMarker, destinationMarker);
+      var payment_total = [];
+      payment_total.push({
+        name: 'payment_total', 
+        value: parseFloat(localStorage.getItem('distance') * 200).toLocaleString()
+      });
+
+      localStorage['payment_total'] = JSON.stringify(payment_total);
+      localStorage['booking_form'] = JSON.stringify(JSON.parse(localStorage['booking_form']).concat(JSON.parse(localStorage["payment_total"])));
       $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
       $('#payment-total').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
       $('#pay-button').html('PAY ₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
@@ -848,12 +856,12 @@ export default {
 
         if(origin_input !== '' && destination_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form[7]['value'] = origin_input;
-          booking_form[8]['value'] = $('#origin-input-lat').val();
-          booking_form[9]['value'] = $('#origin-input-lng').val();
-          booking_form[10]['value'] = destination_input;
-          booking_form[11]['value'] = $('#destination-input-lat').val();
-          booking_form[12]['value'] = $('#destination-input-lng').val();
+          booking_form[8]['value'] = origin_input;
+          booking_form[9]['value'] = $('#origin-input-lat').val();
+          booking_form[10]['value'] = $('#origin-input-lng').val();
+          booking_form[11]['value'] = destination_input;
+          booking_form[12]['value'] = $('#destination-input-lat').val();
+          booking_form[13]['value'] = $('#destination-input-lng').val();
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideDestinationInputs()
@@ -876,10 +884,11 @@ export default {
           });
 
           var distance = haversineDistance(originMarker, destinationMarker);
-          localStorage.setItem('distance', distance.toFixed(2))
           $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
-          $('#payment-total').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
-          $('#pay-button').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
+          $('#payment-total').html('₱ ' + parseFloat(distance * 200).toLocaleString());
+          $('#pay-button').html('₱ ' + parseFloat(distance * 200).toLocaleString());
+          booking_form[16]['value'] = parseFloat(distance * 200).toLocaleString();
+          localStorage['booking_form'] = JSON.stringify(booking_form);
         } else {
           alert("Please select an option from the dropdown list.");
         }
@@ -893,10 +902,10 @@ export default {
 
         if(item_input !== '' && quantity_input !== '' && unit_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form[0]['value'] = item_input;
-          booking_form[1]['value'] = quantity_input;
-          booking_form[2]['value'] = unit_input;
-          booking_form[3]['value'] = note_input;
+          booking_form[1]['value'] = item_input;
+          booking_form[2]['value'] = quantity_input;
+          booking_form[3]['value'] = unit_input;
+          booking_form[4]['value'] = note_input;
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hidePackageInputs()
@@ -914,8 +923,8 @@ export default {
 
         if(receiver_input !== '' && contact_number_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form[4]['value'] = receiver_input;
-          booking_form[5]['value'] = contact_number_input;
+          booking_form[5]['value'] = receiver_input;
+          booking_form[6]['value'] = contact_number_input;
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideReceiverInputs()
@@ -932,7 +941,7 @@ export default {
 
         if(vehicle_type_input !== ''){
           let booking_form = JSON.parse(localStorage['booking_form']);
-          booking_form[6]['value'] = vehicle_type_input;
+          booking_form[7]['value'] = vehicle_type_input;
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideVehicleInputs()
@@ -947,7 +956,7 @@ export default {
       $("#payment-method-save").click(function(e) {        
         var payment_method_input = $('input[name="payment_method"]:checked').val();
         let booking_form_array = JSON.parse(localStorage['booking_form']);
-        booking_form_array[14]['value'] = payment_method_input;
+        booking_form_array[15]['value'] = payment_method_input;
           
         localStorage['booking_form'] = JSON.stringify(booking_form_array);
         hidePaymentMethodInputs()

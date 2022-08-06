@@ -5,6 +5,7 @@
       <h6 class="text-sm font-semibold uppercase">Package Details</h6>
     </div>
     <div class="relative mb-4">
+      <input id="hdn-booking-id" type="hidden" val="" name="booking_id">
       <Field
         :rules="isRequired"
         autofocus

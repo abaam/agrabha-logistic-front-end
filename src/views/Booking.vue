@@ -368,7 +368,7 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-grey-light bg-white" v-if="bookings != ''">
-                    <tr v-for="booking in bookings" :key="booking.id">
+                    <tr v-for="booking in bookings" :key="booking.booking_id">
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.package_item }}</div>
                       </td>
@@ -413,9 +413,9 @@
                       <td class="whitespace-nowrap px-6 py-4">
                         <div v-if="booking.payment_status == 0">
                           <div
-                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-green">
+                            <p class="text-sm font-semibold text-orange">
                               Pending
                             </p>
                           </div>
@@ -425,6 +425,15 @@
                             class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
                           >
                             <p class="text-sm font-semibold text-blue">
+                              Pending Approval
+                            </p>
+                          </div>
+                        </div>
+                        <div v-if="booking.payment_status == 2">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-green">
                               Paid
                             </p>
                           </div>
@@ -462,7 +471,7 @@
                       <td
                         class="whitespace-nowrap px-6 py-4 text-right text-sm"
                       >
-                        <router-link :to='{name:"Booking Details",params:{id:booking.id}}' class="text-blue-light hover:text-blue"
+                        <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-blue-light hover:text-blue"
                           >View details</router-link>
                       </td>
                     </tr>
@@ -619,7 +628,7 @@
           <TabPanel>
             <div v-if="to_ship != ''" class="my-3 grid gap-y-2">
               <div v-for="booking in to_ship"
-                :key="booking.id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+                :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
                   <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
@@ -633,7 +642,13 @@
                   </p>
                   <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
                   <p>
-                  <span class="font-bold">Payment Method:</span> <span>{{ booking.payment_method }}</span>
+                  <span class="font-bold">Payment Method:</span> 
+                  <span v-if="booking.payment_method == 0">
+                    Paymaya
+                  </span>
+                  <span v-else>
+                    Gcash
+                  </span>
                   </p>
                 </div>
 
@@ -643,7 +658,7 @@
                   >
                     <CubeIcon class="h-3 w-3 text-blue" />
                   </div>
-                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                  <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-sm font-semibold text-blue"
                           >View details</router-link>
                 </div>
               </div>
@@ -667,7 +682,7 @@
           <TabPanel>
             <div v-if="to_receive != ''" class="my-3 grid gap-y-2">
               <div v-for="booking in to_receive"
-                :key="booking.id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+                :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
                   <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
@@ -691,7 +706,7 @@
                   >
                     <CubeIcon class="h-3 w-3 text-blue" />
                   </div>
-                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                  <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-sm font-semibold text-blue"
                           >View details</router-link>
                 </div>
               </div>
@@ -715,7 +730,7 @@
           <TabPanel>
             <div v-if="delivered != ''" class="my-3 grid gap-y-2">
               <div v-for="booking in delivered"
-                :key="booking.id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+                :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
                   <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
@@ -739,7 +754,7 @@
                   >
                     <CubeIcon class="h-3 w-3 text-blue" />
                   </div>
-                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
+                  <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-sm font-semibold text-blue"
                           >View details</router-link>
                 </div>
               </div>

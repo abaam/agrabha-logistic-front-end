@@ -145,6 +145,7 @@
                         createToast('Welcome! Logged-in successfully.',
                         {
                             type: 'success',
+                            transition: 'bounce',
                         })
 
                         setTimeout(function () {
@@ -157,6 +158,7 @@
                         createToast('Logged-in! Your account needs to be verified.',
                         {
                             type: 'info',
+                            transition: 'bounce',
                         })
 
                         setTimeout(function () {
@@ -169,6 +171,7 @@
                         createToast(error.response.data.message,
                         {
                             type: 'danger',
+                            transition: 'bounce',
                         })
                     }
                 });

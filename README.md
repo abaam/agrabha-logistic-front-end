@@ -12,7 +12,7 @@ cd agrabha-logistic-front-end
 
 ### Install project dependencies
 ```
-npm install
+npm install --force
 ```
 
 ### Compiles and minifies for production

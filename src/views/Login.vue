@@ -85,7 +85,9 @@
     import { Form, Field, ErrorMessage } from "vee-validate";
     import { LockClosedIcon } from '@heroicons/vue/solid'
     import ButtonSolidBlue from '../components/buttons/ButtonSolidBlue'
-    
+    import { createToast } from 'mosha-vue-toastify';
+    import 'mosha-vue-toastify/dist/style.css'
+
     export default {
         components: {
             LockClosedIcon,
@@ -139,16 +141,35 @@
                         localStorage.setItem('auth', 'true');
                         localStorage.setItem('role', response.data.role);
                         localStorage.setItem('user_id', response.data.id);
-                        this.$router.push('/dashboard');
+
+                        createToast('Welcome! Logged-in successfully.',
+                        {
+                            type: 'success',
+                        })
+
+                        setTimeout(function () {
+                            self.$router.push('/dashboard');
+                        }, 2000);
                     } else {
                         localStorage.setItem('Phone Number', response.data.phone_number);
                         localStorage.setItem('user_id', response.data.id);
-                        this.$router.push('/verification');
+                        
+                        createToast('Logged-in! Your account needs to be verified.',
+                        {
+                            type: 'info',
+                        })
+
+                        setTimeout(function () {
+                            self.$router.push('/verification');
+                        }, 2000);
                     }
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        self.invalidCredentials = error.response.data.message;
+                        createToast(error.response.data.message,
+                        {
+                            type: 'danger',
+                        })
                     }
                 });
             }

@@ -135,8 +135,7 @@
           <button v-if="currentStep === 4"
             id="pay-button" 
             type="submit"
-            class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue"
-            data-bs-toggle="modal" data-bs-target="#pay_info" 
+            class="focus:outline-none flex w-full justify-center rounded-md border border-transparent bg-blue-light py-2 px-4 font-semibold text-white hover:bg-blue focus:bg-blue" 
           >
           </button>
           
@@ -154,7 +153,7 @@
           <!-- Modal -->
           <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20"
             id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="modal">
             <div class="modal-dialog relative w-auto pointer-events-none">
               <form @submit="payBooking">
                 <div
@@ -319,16 +318,19 @@ export default {
           arrayField.set(item.name, item.value);
       })
       let booking_form = JSON.parse(JSON.stringify([...arrayField]));
-      
-      Booking.store({booking_form})
-      .then(function (response) {
-        $('#pay-button').prop("disabled", true);
-        
-        currentObj.output = response.data;
-      })
-      .catch(function (error) {
-        currentObj.output = error;
-      });
+
+      $('#pay-button').attr('disabled', 'true');
+      $('.animate-spin').show();
+      setTimeout(function() { 
+        $('#pay_info').toggle();
+        Booking.store({booking_form})
+        .then(function (response) {        
+          currentObj.output = response.data;
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
+      }, 2000);
     },
     payBooking(e) {
       e.preventDefault();
@@ -343,6 +345,10 @@ export default {
       .catch(function (error) {
         currentObj.output = error;
       });
+    },
+    showModal() {
+      let element = this.$refs.modal.$el
+      $(element).modal('show')
     }
   }
 };

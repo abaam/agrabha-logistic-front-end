@@ -148,6 +148,12 @@
             <template v-else-if="currentStep === 2">Payment method</template>
             <template v-else-if="currentStep === 3">Review package</template>
           </button>
+
+          <button type="button"
+            class="hidden inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            data-bs-toggle="modal" data-bs-target="#pay_info" id="btn-booking-mdl">
+            Launch static backdrop modal
+          </button>
           
 
           <!-- Modal -->
@@ -187,7 +193,7 @@
                     class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                     <button type="button"
                       class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                      data-bs-dismiss="modal">Later</button>
+                      data-bs-dismiss="modal" @click="redirectBooking">Later</button>
                     <button type="submit"
                       class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Done</button>
                   </div>
@@ -322,7 +328,7 @@ export default {
       $('#pay-button').attr('disabled', 'true');
       $('.animate-spin').show();
       setTimeout(function() { 
-        $('#pay_info').toggle();
+        $('#btn-booking-mdl').click();
         Booking.store({booking_form})
         .then(function (response) {        
           currentObj.output = response.data;
@@ -345,6 +351,9 @@ export default {
       .catch(function (error) {
         currentObj.output = error;
       });
+    },
+    redirectBooking(){
+      this.$router.push('/bookings');
     },
     showModal() {
       let element = this.$refs.modal.$el

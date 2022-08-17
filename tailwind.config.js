@@ -30,6 +30,10 @@ module.exports = {
           DEFAULT: "#c3cedb",
           dark: "#7f9bb5",
         },
+        red: {
+          DEFAULT: "#be4d25",
+          light: "#Ff8181",
+        },
       },
     },
   },

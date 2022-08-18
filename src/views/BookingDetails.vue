@@ -100,8 +100,8 @@
       </div>
 
       <!-- Pay Modal -->
-      <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20" id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog relative w-auto pointer-events-none">
+      <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
           <form @submit="payBooking">
             <div
               class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
@@ -128,6 +128,12 @@
                       <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
                     </div>
                   </dl>
+                </div>
+              </div>
+              <div class="bg-indigo-900 text-center py-4 lg:px-4">
+                <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                  <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">Note</span>
+                  <span class="font-semibold mr-2 text-left flex-auto">When paying using Gcash or Paymaya, use your registered mobile number.</span>
                 </div>
               </div>
               <div

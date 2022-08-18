@@ -30,6 +30,7 @@
                             as="input"
                             id="phone-number"
                             name="phone_number"
+                            autocomplete="off"
                             class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:z-10 sm:text-sm"
                             :class="errors['phone_number'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                         />
@@ -44,6 +45,7 @@
                             as="input"
                             id="password"
                             name="password"
+                            autocomplete="off"
                             class="appearance-none rounded relative block w-full px-3 py-2 placeholder-grey text-gray-600 focus:outline-none focus:z-10 sm:text-sm"
                             :class="errors['password'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                         />
@@ -93,10 +95,6 @@
     import 'flowbite';
     import $ from "jquery";
 
-    $( document ).ready(function() {
-        $('.animate-spin').hide();
-    });
-
     export default {
         components: {
             LockClosedIcon,
@@ -133,6 +131,9 @@
                 state,
                 schema,
             };
+        },
+        mounted() {
+            $('.animate-spin').hide();
         },
         methods: {
             login(){

@@ -9,15 +9,15 @@
         </h2>
 
         <button v-show="role == 1"
-          class="bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-700 hover:border-green-500 rounded"
+          class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-700 hover:border-green-500 rounded"
           >Accept</button>
 
         <button v-show="role == 2" id="pay-button" 
-          class="bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
+          class="details-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
           >Pay</button>
 
         <button v-show="role == 2"
-          class="bg-orange-light hover:bg-orange text-white font-bold py-2 px-8 text-lg border-b-4 border-orange hover:border-orange-light rounded"
+          class="details-button cancel-button bg-orange-light hover:bg-orange text-white font-bold py-2 px-8 text-lg border-b-4 border-orange hover:border-orange-light rounded"
           >Cancel</button>
       </div>
     </section>
@@ -86,7 +86,7 @@
           >Cancel</button>
       </div>
 
-      <!-- Modal -->
+      <!-- Pay Modal -->
       <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto mr-20" id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog relative w-auto pointer-events-none">
           <form @submit="payBooking">
@@ -156,6 +156,7 @@ export default {
   },
   mounted(){
     this.showBookingDetails()
+    $('.cancel-button').hide();
   },
   methods:{
     showBookingDetails(){
@@ -191,11 +192,20 @@ export default {
         }else if(response.data.payment_status == 1){
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
-        }else{
+        }else if(response.data.payment_status == 1){
           var payment_status = "Paid";
           $('#payment-status').attr('class', 'text-green')
+          $('.details-button').hide();
+        }else{
+          var payment_status = "Cancelled";
+          $('#payment-status').attr('class', 'text-red')
+          $('.details-button').hide();
         }
         $('#payment-status').html(payment_status);
+
+        if(response.data.status == 3){
+          $('.cancel-button').show();
+        }
 
         if (response.data.payment_status == 1 || response.data.payment_status == 2) {
           $('#pay-button').hide();

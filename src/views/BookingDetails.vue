@@ -58,13 +58,25 @@
         </div>
 
         <div class="p-4 border rounded-lg">
-          <h3 class="font-bold">Tracking QR Code</h3>
-          <a href="/trace">
-            <img class="mx-auto w-60 self-center" src="../../public/img/qrcode_lab.agrabah.ph.png" alt="Agrabah Logistics">
-          </a>
-          <div class="flex justify-center space-x-4">
-            <ButtonOutlineBlue buttonClass="" buttonText="Copy URL"/>
-            <ButtonOutlineGreen buttonClass="" buttonText="Download QR"/>
+          <div id="tracking-qr-code">
+            <h3 class="font-bold">Tracking QR Code</h3>
+            <a href="/trace">
+              <img class="mx-auto w-60 self-center" src="../../public/img/qrcode_lab.agrabah.ph.png" alt="Agrabah Logistics">
+            </a>
+            <div class="flex justify-center space-x-4">
+              <ButtonOutlineBlue buttonClass="" buttonText="Copy URL"/>
+              <ButtonOutlineGreen buttonClass="" buttonText="Download QR"/>
+            </div>
+          </div>
+
+          <div id="tracking-not-available" class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 md:mt-5 shadow-md" role="alert">
+            <div class="flex">
+              <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+              <div>
+                <p class="font-bold">Tracking not available.</p>
+                <p class="text-sm">Once your item has been picked up, this will be accessible.</p>
+              </div>
+            </div>
           </div>
             
           <!-- <br>
@@ -192,7 +204,7 @@ export default {
         }else if(response.data.payment_status == 1){
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
-        }else if(response.data.payment_status == 1){
+        }else if(response.data.payment_status == 2){
           var payment_status = "Paid";
           $('#payment-status').attr('class', 'text-green')
           $('.details-button').hide();
@@ -205,6 +217,14 @@ export default {
 
         if(response.data.status == 3){
           $('.cancel-button').show();
+        }
+
+        if(response.data.tracking_id == null){
+          $('#tracking-qr-code').hide();
+          $('#tracking-not-available').show();
+        }else{
+          $('#tracking-qr-code').show();
+          $('#tracking-not-available').hide();
         }
 
         if (response.data.payment_status == 1 || response.data.payment_status == 2) {

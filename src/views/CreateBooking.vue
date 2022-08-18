@@ -332,6 +332,7 @@ export default {
         Booking.store({booking_form})
         .then(function (response) {        
           currentObj.output = response.data;
+          $('.animate-spin').hide();
         })
         .catch(function (error) {
           currentObj.output = error;

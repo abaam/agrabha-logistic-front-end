@@ -3,15 +3,8 @@
     <section class="hidden px-3 py-6 md:block md:p-6">
       <div class="mb-6 flex items-center justify-between">
         <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
-          Bookings
+          Transactions
         </h2>
-
-        <!-- Customer -->
-        <router-link v-show="role == 2"
-          to="/bookings/create"
-          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >Create Booking</router-link
-        >
       </div>
 
       <div class="hidden gap-y-3 rounded-md bg-white py-6 shadow md:grid">

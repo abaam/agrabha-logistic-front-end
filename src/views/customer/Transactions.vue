@@ -38,257 +38,7 @@
           </div>
         </div>
 
-        <!-- Driver Dummy Data -->
-        <section v-show="role == 1" class="container mx-auto grid grid-cols-1">
-          <div class="-my-2 overflow-x-auto">
-            <div class="inline-block min-w-full py-2 align-middle">
-              <div class="overflow-hidden">
-                <table class="min-w-full divide-y divide-grey-light">
-                  <thead class="bg-grey-light bg-opacity-30">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Package Item
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Vehicle Type
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Drop Off
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Pick Up
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Date/Time
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Payment Method
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Status
-                      </th>
-                      <th scope="col" class="relative px-6 py-3">
-                        <span class="sr-only">Edit</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-grey-light bg-white">
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              Pending
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              Pending
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-green">
-                              Out for Delivery
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              Pending
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Seeds</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Truck</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Marikina City</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Albay</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">June 27, 2022 12:00 PM</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">Cash on Delivery</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div>
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-blue">
-                              For Pickup
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link to="/booking-details" class="text-blue-light hover:text-blue"
-                          >View details</router-link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Customer Data -->
-        <section v-show="role == 2" class="container mx-auto grid grid-cols-1">
+        <section class="container mx-auto grid grid-cols-1">
           <div class="-my-2 overflow-x-auto">
             <div class="inline-block min-w-full py-2 align-middle">
               <div class="overflow-hidden">
@@ -337,22 +87,7 @@
                       >
                         Date/Time
                       </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Payment Method
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Payment Status
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
+                      <th>
                         Booking Status
                       </th>
                       <th scope="col" class="relative px-6 py-3">
@@ -383,70 +118,12 @@
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.date_time }}</div>
                       </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div v-if="booking.payment_method == 0">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-green">
-                              Paymaya
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.payment_method == 1">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-blue">
-                              Gcash
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div v-if="booking.payment_status == 0">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-orange">
-                              Pending
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.payment_status == 1">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-blue">
-                              Pending Approval
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.payment_status == 2">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-green">
-                              Paid
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.payment_status == 3">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-red-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-red">
-                              Cancelled
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
+                      <td class="whitespace-nowrap px-6 py-4 w-48">
                         <div v-if="booking.status == 1">
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-green">
+                            <p class="text-sm font-semibold text-white">
                               Delivered
                             </p>
                           </div>
@@ -455,7 +132,7 @@
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-blue">
+                            <p class="text-sm font-semibold text-white">
                               To Receive
                             </p>
                           </div>
@@ -464,7 +141,7 @@
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
-                            <p class="text-sm font-semibold text-orange">
+                            <p class="text-sm font-semibold text-white">
                               To Ship
                             </p>
                           </div>
@@ -510,89 +187,6 @@
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Driver Dummy Data Mobile -->
-    <div class="mb-6 px-3 md:p-6 flex justify-end md:invisible">
-        <router-link v-show="role == 2"
-          to="/bookings/create"
-          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >Create Booking</router-link
-        >
-      </div>
-    <section v-show="role == 1" class="relative grid px-3 md:hidden md:p-6 md:py-6">
-
-      <TabGroup>
-        <TabList
-          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
-        >
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              Pending
-            </button>
-          </Tab>
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              For Pick-up
-            </button>
-          </Tab>
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              For Delivery
-            </button>
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <div class="my-3 grid gap-y-2">
-              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">Package Item: Seeds</p>
-                  <p class="font-bold">Vehicle Type: Truck</p>
-                </div>
-
-                <div class="block">
-                  <span class="font-bold">Drop Off:</span> Marikina City
-                  <p>
-                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
-                  </p>
-                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
-                  <p>
-                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-blue">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
-                  >
-                    <CubeIcon class="h-3 w-3 text-blue" />
-                  </div>
-                  <router-link to="/booking-details" class="text-sm font-semibold text-blue"
-                          >View details</router-link>
-                </div>
-              </div>
-            </div>
-          </TabPanel>
-          
-        </TabPanels>
-      </TabGroup> 
-
-      <router-link
-        to="/quick-search"
-        class="focus:outline-none fixed bottom-3 right-3 z-40 flex justify-center rounded-full border border-transparent bg-blue-light p-3 font-medium text-white hover:bg-blue focus:bg-blue"
-        ><SearchIcon class="h-5 w-5"></SearchIcon
-      ></router-link>
     </section>
 
     <!-- Customer Data Mobile -->
@@ -782,8 +376,6 @@
       </TabGroup>
       
     </section>
-
-    <!-- Driver Table Mobile
     <section v-show="role == 1" class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList

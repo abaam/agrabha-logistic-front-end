@@ -8,7 +8,7 @@
         Booking Details
         </h2>
 
-        <button v-show="role == 1"
+        <button v-show="role == 3"
           class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-700 hover:border-green-500 rounded"
           >Accept</button>
 
@@ -58,6 +58,7 @@
         </div>
 
         <div class="p-4 border rounded-lg">
+          <h3 class="font-bold">Status: <span class="text-orange-light" id="status"></span></h3>
           <div id="tracking-qr-code">
             <h3 class="font-bold">Tracking QR Code</h3>
             <a href="/trace">
@@ -69,7 +70,7 @@
             </div>
           </div>
 
-          <div id="tracking-not-available" class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 md:mt-5 shadow-md" role="alert">
+          <div id="tracking-not-available" class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 mt-5 shadow-md" role="alert">
             <div class="flex">
               <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
               <div>
@@ -207,15 +208,34 @@ export default {
         }else if(response.data.payment_status == 2){
           var payment_status = "Paid";
           $('#payment-status').attr('class', 'text-green')
-          $('.details-button').hide();
-        }else{
+
+          if (localStorage.getItem('role') == 2) {
+            $('.details-button').hide();
+          }
+        }else if(response.data.payment_status == 3){
           var payment_status = "Cancelled";
           $('#payment-status').attr('class', 'text-red')
-          $('.details-button').hide();
+          
+          if (localStorage.getItem('role') == 2) {
+            $('.details-button').hide();
+          }
         }
-        $('#payment-status').html(payment_status);
 
-        if(response.data.status == 3){
+        if(response.data.status == 1){
+          var status = "Delivered";
+          $('#status').attr('class', 'text-green')
+        }else if(response.data.status == 2){
+          var status = "To Receive";
+          $('#status').attr('class', 'text-blue')
+        }else if(response.data.status == 3){
+          var status = "To Ship";
+          $('#status').attr('class', 'text-orange')
+        }
+
+        $('#payment-status').html(payment_status);
+        $('#status').html(status);
+
+        if(response.data.status == 3 && localStorage.getItem('role') == 2){
           $('.cancel-button').show();
         }
 

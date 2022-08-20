@@ -8,8 +8,8 @@
         Booking Details
         </h2>
 
-        <button v-show="role == 3"
-          class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-700 hover:border-green-500 rounded"
+        <button v-show="role == 3" id="accept-button"
+          class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2"
           >Accept</button>
 
         <button v-show="role == 2" id="pay-button" 
@@ -176,6 +176,7 @@ export default {
   mounted(){
     this.showBookingDetails()
     $('.cancel-button').hide();
+    $('#accept-button').hide()
   },
   methods:{
     showBookingDetails(){
@@ -211,6 +212,7 @@ export default {
         }else if(response.data.payment_status == 1){
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
+          $('#accept-button').show()
         }else if(response.data.payment_status == 2){
           var payment_status = "Paid";
           $('#payment-status').attr('class', 'text-green')

@@ -39,6 +39,27 @@
                             <span>{{ menu.label }}</span>
                         </router-link>
                     </li>
+
+                    <li v-show="role == 3">
+                        <a class="flex items-center space-x-3 w-full px-3 py-2 h-12 overflow-hidden cursor-pointer text-white hover:bg-blue hover:text-grey-light rounded-md" 
+                        data-bs-toggle="collapse" data-bs-target="#collapseBooking" aria-expanded="true" aria-controls="collapseBooking">
+                            <TagIcon class="h-5 w-5"/>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Booking</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </a>
+                        <ul class="relative accordion-collapse collapse" id="collapseBooking" aria-labelledby="sidenavEx1" data-bs-parent="#sidenavExample">
+                            <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                                <router-link to="/bookings" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2 pl-11">
+                                <span>List</span>
+                                </router-link>
+                            </li>
+                            <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                                <router-link to="/payment-approval" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2 pl-11">
+                                <span>Payment Approval</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </li>
                     
                     <div class="absolute inset-x-4 bottom-5">
                         <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
@@ -62,7 +83,9 @@
 
 <script>
     import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon  } from '@heroicons/vue/outline'
-
+    import 'tw-elements';
+    import $ from "jquery";
+    
     const sidebarMenusDriver = [
         {
             href: '/dashboard',
@@ -121,11 +144,6 @@
             icon: 'ViewGridIcon'
         },
         {
-            href: '/bookings',
-            label: 'Booking',
-            icon: 'TagIcon'
-        },
-        {
             href: '/users',
             label: 'Users',
             icon: 'UsersIcon'
@@ -147,6 +165,11 @@
             return {
                 role: localStorage.getItem('role')
             };
+        },
+        mounted(){
+            if($('.accordion-collapse a').hasClass('router-link-exact-active')){
+                $('.accordion-collapse').addClass('show')
+            }
         },
     }
 </script>

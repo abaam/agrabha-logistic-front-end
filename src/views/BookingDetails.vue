@@ -16,7 +16,7 @@
           class="details-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
           >Pay</button>
 
-        <button v-show="role == 2"
+        <button v-show="role == 2" @click="cancelBooking()"
           class="details-button cancel-button bg-orange-light hover:bg-orange text-white font-bold py-2 px-8 text-lg border-b-4 border-orange hover:border-orange-light rounded"
           >Cancel</button>
       </div>
@@ -284,7 +284,27 @@ export default {
       .catch(function (error) {
         currentObj.output = error;
       });
-    }
+    },
+    cancelBooking() {
+      // Use sweetalert2
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "Your booking will be permanently cancelled!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, cancel it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal.fire(
+            'Canceled!',
+            'Your booking has been cancelled.',
+            'success'
+          )
+        }
+      })
+    },
   }
 };
 </script>

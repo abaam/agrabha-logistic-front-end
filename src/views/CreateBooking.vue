@@ -333,11 +333,11 @@ export default {
       $('#pay-button').attr('disabled', 'true');
       $('.animate-spin').show();
       setTimeout(function() { 
-        $('#btn-booking-mdl').click();
         Booking.store({booking_form})
         .then(function (response) {        
           currentObj.output = response.data;
           $('.animate-spin').hide();
+          $('#btn-booking-mdl').click();
         })
         .catch(function (error) {
           currentObj.output = error;

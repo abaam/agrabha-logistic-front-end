@@ -16,7 +16,7 @@
           class="details-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
           >Pay</button>
 
-        <button v-show="role == 2" @click="cancelBooking()"
+        <button v-show="role == 2" id="cancel-button" @click="cancelBooking()"
           class="details-button cancel-button bg-orange-light hover:bg-orange text-white font-bold py-2 px-8 text-lg border-b-4 border-orange hover:border-orange-light rounded"
           >Cancel</button>
       </div>
@@ -243,7 +243,7 @@ export default {
         $('#payment-status').html(payment_status);
         $('#status').html(status);
 
-        if(response.data.status == 3 && localStorage.getItem('role') == 2){
+        if(response.data.status == 3 && localStorage.getItem('role') == 2 && response.data.payment_status != 3){
           $('.cancel-button').show();
         }
 
@@ -287,6 +287,7 @@ export default {
     },
     cancelBooking() {
       // Use sweetalert2
+      let that = this;
       this.$swal.fire({
         title: 'Are you sure?',
         text: "Your booking will be permanently cancelled!",
@@ -294,14 +295,30 @@ export default {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, cancel it!'
+        confirmButtonText: 'Yes, cancel it!',
+        cancelButtonText: 'No'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$swal.fire(
-            'Canceled!',
-            'Your booking has been cancelled.',
-            'success'
-          )
+          let currentObj = this;
+          let booking_id = window.location.pathname.split('/').pop();
+
+          Booking.cancelBooking({booking_id})
+          .then(function (response) {
+            currentObj.output = response.data;
+
+            that.$swal.fire(
+              'Canceled!',
+              currentObj.output = response.data,
+              'success'
+            )
+
+            setTimeout(function() { 
+              location.reload(true);
+            }, 2000);
+          })
+          .catch(function (error) {
+            currentObj.output = error;
+          });
         }
       })
     },

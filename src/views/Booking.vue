@@ -1104,7 +1104,7 @@
         class="focus:outline-none fixed bottom-3 right-3 z-40 flex justify-center rounded-full border border-transparent bg-blue-light p-3 font-medium text-white hover:bg-blue focus:bg-blue"
         ><SearchIcon class="h-5 w-5"></SearchIcon
       ></router-link>
-    </section>-->
+    </section>
 
   </DashboardLayout>
 </template>

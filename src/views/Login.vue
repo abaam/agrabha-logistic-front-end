@@ -137,6 +137,7 @@
         },
         methods: {
             login(){
+                localStorage.clear();
                 let self = this
                 $('#sign_in_btn').attr('disabled', 'true');
                 $('.animate-spin').show();

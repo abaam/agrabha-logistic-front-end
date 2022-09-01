@@ -238,6 +238,9 @@ export default {
         }else if(response.data.status == 3){
           var status = "To Ship";
           $('#status').attr('class', 'text-orange')
+        }else if(response.data.payment_status == 3){
+          var status = "Cancelled";
+          $('#status').attr('class', 'text-red')
         }
 
         $('#payment-status').html(payment_status);

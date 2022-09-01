@@ -121,10 +121,10 @@
                         <div class="text-sm">{{ booking.vehicle_type }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.drop_off }}</div>
+                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.drop_off }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.pick_up }}</div>
+                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.pick_up }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.date_time }}</div>
@@ -154,6 +154,15 @@
                           >
                             <p class="text-sm font-semibold text-white">
                               To Ship
+                            </p>
+                          </div>
+                        </div>
+                        <div v-if="booking.status == 4">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-red-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-white">
+                              Cancelled
                             </p>
                           </div>
                         </div>
@@ -260,10 +269,10 @@
                         <div class="text-sm">{{ booking.vehicle_type }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.drop_off }}</div>
+                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.drop_off }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.pick_up }}</div>
+                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.pick_up }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.date_time }}</div>
@@ -293,6 +302,15 @@
                           >
                             <p class="text-sm font-semibold text-white">
                               To Ship
+                            </p>
+                          </div>
+                        </div>
+                        <div v-if="booking.status == 4">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-red-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-white">
+                              Cancelled
                             </p>
                           </div>
                         </div>
@@ -399,10 +417,10 @@
                         <div class="text-sm">{{ booking.vehicle_type }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.drop_off }}</div>
+                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.drop_off }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.pick_up }}</div>
+                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.pick_up }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
                         <div class="text-sm">{{ booking.date_time }}</div>
@@ -432,6 +450,15 @@
                           >
                             <p class="text-sm font-semibold text-white">
                               To Ship
+                            </p>
+                          </div>
+                        </div>
+                        <div v-if="booking.status == 4">
+                          <div
+                            class="flex w-auto items-center justify-center rounded-full bg-red-light py-0.5 px-1"
+                          >
+                            <p class="text-sm font-semibold text-white">
+                              Cancelled
                             </p>
                           </div>
                         </div>

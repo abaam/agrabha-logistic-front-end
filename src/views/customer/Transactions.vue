@@ -199,7 +199,7 @@
     </section>
 
     <!-- Customer Data Mobile -->
-    <section v-show="role == 2" class="relative grid px-3 md:hidden md:p-6 md:py-6">
+    <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
           class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
@@ -301,7 +301,13 @@
                   </p>
                   <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
                   <p>
-                  <span class="font-bold">Payment Method:</span> <span>{{ booking.payment_method }}</span>
+                    <span class="font-bold">Payment Method:</span> 
+                  <span v-if="booking.payment_method == 0">
+                    Paymaya
+                  </span>
+                  <span v-else>
+                    Gcash
+                  </span>
                   </p>
                 </div>
 
@@ -349,7 +355,13 @@
                   </p>
                   <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
                   <p>
-                  <span class="font-bold">Payment Method:</span> <span>{{ booking.payment_method }}</span>
+                    <span class="font-bold">Payment Method:</span> 
+                  <span v-if="booking.payment_method == 0">
+                    Paymaya
+                  </span>
+                  <span v-else>
+                    Gcash
+                  </span>
                   </p>
                 </div>
 
@@ -385,62 +397,6 @@
       </TabGroup>
       
     </section>
-    <section v-show="role == 1" class="relative grid px-3 md:hidden md:p-6 md:py-6">
-      <TabGroup>
-        <TabList
-          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
-        >
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              Pending
-            </button>
-          </Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <div class="my-3 grid gap-y-2">
-              <div class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">Package Item: Seeds</p>
-                  <p class="font-bold">Vehicle Type: Truck</p>
-                </div>
-
-                <div class="block">
-                  <span class="font-bold">Drop Off:</span> Marikina City
-                  <p>
-                  <span class="font-bold">Pick Up:</span> <span>Albay</span>
-                  </p>
-                  <span class="font-bold">Date/Time:</span> June 27, 2022 12:00 PM
-                  <p>
-                  <span class="font-bold">Payment Method:</span> <span>Cash on Delivery</span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-blue">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
-                  >
-                    <CubeIcon class="h-3 w-3 text-blue" />
-                  </div>
-                  <p class="text-sm font-semibold text-blue">Pending</p>
-                </div>
-              </div>
-            </div>
-          </TabPanel>
-          
-        </TabPanels>
-      </TabGroup> 
-
-      <router-link
-        to="/bookings/create"
-        class="focus:outline-none fixed bottom-3 right-3 z-40 flex justify-center rounded-full border border-transparent bg-blue-light p-3 font-medium text-white hover:bg-blue focus:bg-blue"
-        ><SearchIcon class="h-5 w-5"></SearchIcon
-      ></router-link>
-    </section>-->
 
   </DashboardLayout>
 </template>
@@ -581,41 +537,59 @@ export default {
     },
 
     fetchToShip() {
-      axios.get(process.env.VUE_APP_API + `bookings/transactions`, {
-              withCredentials: true,
-              headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
-              "Access-Control-Allow-Origin": "*"
-              }
-            }).then((response) => {
-        this.to_ship = response.data.to_ship;
+      axios.get(process.env.VUE_APP_API + `bookings`, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then((response) => {
+        if (this.role == 1) {
+          this.to_ship = response.data.to_ship;
+        }else if (this.role == 2) {
+          this.to_ship = response.data.to_ship;
+        }else if (this.role == 3) {
+          this.to_ship = response.data.to_ship_admin;
+        }
       });
     },
 
     fetchToReceive() {
-      axios.get(process.env.VUE_APP_API + `bookings/transactions`, {
-              withCredentials: true,
-              headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
-              "Access-Control-Allow-Origin": "*"
-              }
-            }).then((response) => {
-        this.to_receive = response.data.to_receive;
+      axios.get(process.env.VUE_APP_API + `bookings`, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then((response) => {
+        if (this.role == 1) {
+          this.to_receive = response.data.to_receive;
+        }else if (this.role == 2) {
+          this.to_receive = response.data.to_receive;
+        }else if (this.role == 3) {
+          this.to_receive = response.data.to_receive_admin;
+        }
       });
     },
 
     fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `bookings/transactions`, {
-              withCredentials: true,
-              headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
-              "Access-Control-Allow-Origin": "*"
-              }
-            }).then((response) => {
-        this.delivered = response.data.delivered;
+      axios.get(process.env.VUE_APP_API + `bookings`, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then((response) => {
+        if (this.role == 1) {
+          this.delivered = response.data.delivered;
+        }else if (this.role == 2) {
+          this.delivered = response.data.delivered;
+        }else if (this.role == 3) {
+          this.delivered = response.data.delivered_admin;
+        }
       });
     },
   },

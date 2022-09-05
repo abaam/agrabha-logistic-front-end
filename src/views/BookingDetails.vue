@@ -175,8 +175,6 @@ export default {
   },
   mounted(){
     this.showBookingDetails()
-    $('.cancel-button').hide();
-    $('#accept-button').hide()
   },
   methods:{
     showBookingDetails(){
@@ -212,6 +210,7 @@ export default {
         }else if(response.data.payment_status == 1){
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
+        }else if(response.data.payment_status == 1 && role == 3){
           $('#accept-button').show()
         }else if(response.data.payment_status == 2){
           var payment_status = "Paid";
@@ -316,7 +315,7 @@ export default {
             )
 
             setTimeout(function() { 
-              location.reload(true);
+              currentObj.$router.push('/transactions');
             }, 2000);
           })
           .catch(function (error) {

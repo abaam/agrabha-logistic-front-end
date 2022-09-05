@@ -116,7 +116,13 @@ const routes = [
     path: '/users',
     name: 'Users',
     component: () => import ('../views/admin/Users.vue'),
-    meta: { authOnly: true, driver: true, role: 3 }
+    meta: { authOnly: true, role: 3 }
+  },
+  {
+    path: '/payment-approval',
+    name: 'Pending Approval',
+    component: () => import ('../views/admin/PendingApproval.vue'),
+    meta: { authOnly: true, role: 3 }
   },
 ]
 

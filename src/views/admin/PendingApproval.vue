@@ -3,15 +3,8 @@
     <section class="hidden px-3 py-6 md:block md:p-6">
       <div class="mb-6 flex items-center justify-between">
         <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
-          Bookings
+          Pending Approvals
         </h2>
-
-        <!-- Customer -->
-        <router-link v-show="role == 2"
-          to="/bookings/create"
-          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >Create Booking</router-link
-        >
       </div>
 
       <div class="hidden gap-y-3 rounded-md bg-white py-6 shadow md:grid">
@@ -98,7 +91,7 @@
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Status
+                        Booking Status
                       </th>
                       <th scope="col" class="relative px-6 py-3">
                         <span class="sr-only">Edit</span>
@@ -179,7 +172,7 @@
                       <td colspan="10" class="p-6">
                         <img
                           class="mx-auto w-24"
-                          src="../../public/svg/no_data.svg"
+                          src="../../../public/svg/no_data.svg"
                           alt="No records found"
                         />
                         <p class="mt-4 block text-center">No record found.</p>
@@ -208,15 +201,7 @@
       </div>
     </section>
 
-    <!-- Data Mobile -->
-    <div class="mb-6 px-3 md:p-6 flex justify-end md:invisible">
-      <router-link v-show="role == 2"
-        to="/bookings/create"
-        class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded"
-        >Create Booking</router-link
-      >
-    </div>
-
+    <!-- Customer Data Mobile -->
     <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
@@ -290,7 +275,7 @@
               <div class="px-3 py-6 text-center">
                 <img
                   class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
+                  src="../../../public/svg/no_delivery.svg"
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
@@ -344,7 +329,7 @@
               <div class="px-3 py-6 text-center">
                 <img
                   class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
+                  src="../../../public/svg/no_delivery.svg"
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
@@ -398,7 +383,7 @@
               <div class="px-3 py-6 text-center">
                 <img
                   class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
+                  src="../../../public/svg/no_delivery.svg"
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
@@ -462,7 +447,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings?page=${pageNum}&entries=${this.show_entries}`, {
+              `bookings/payment-approval?page=${pageNum}&entries=${this.show_entries}`, {
               withCredentials: true,  
               headers: {
               'Content-Type': 'application/json',
@@ -471,17 +456,9 @@ export default {
               }
             }
           )
-          .then((response) => { 
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+          .then((response) => {
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       } else {
         axios
@@ -497,16 +474,8 @@ export default {
             }
           )
           .then((response) => {
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     },
@@ -516,7 +485,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&page=booking&role=${this.role}&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&page=pending_approval&entries=${this.show_entries}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -526,16 +495,8 @@ export default {
             }
           )
           .then((response) => {
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     }),
@@ -544,7 +505,7 @@ export default {
       if (this.search == "") {
         axios
           .get(
-            process.env.VUE_APP_API + "bookings?entries=" + event.target.value, {
+            process.env.VUE_APP_API + "bookings/payment-approval?entries=" + event.target.value, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -554,16 +515,8 @@ export default {
             }
           )
           .then((response) => {
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
             this.show_entries = event.target.value;
           });
       } else {
@@ -580,16 +533,8 @@ export default {
             }
           )
           .then((response) => {
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     },

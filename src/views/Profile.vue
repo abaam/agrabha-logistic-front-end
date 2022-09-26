@@ -443,6 +443,10 @@
 
 <script>
 import { ref } from "vue";
+import $ from "jquery";
+import 'tw-elements';
+import _ from "lodash";
+import axios from "axios";
 import DashboardLayout from "./DashboardLayout.vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import ButtonSolidBlue from "../components/buttons/ButtonSolidBlue.vue";
@@ -466,6 +470,12 @@ export default {
       showAddressInput,
     };
   },
+  data() {
+    
+  },
+  mounted() {
+    this.showUserProfile();
+  },
   methods: {
     toggleName() {
       this.showNameInput = !this.showNameInput;
@@ -482,6 +492,31 @@ export default {
     toggleAddress() {
       this.showAddressInput = !this.showAddressInput;
     },
+    showUserProfile(){
+      axios.get(process.env.VUE_APP_API + 'users/profile', {
+        withCredentials: true,  
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then(response=>{
+        // console.log(response.data);
+        // $('#package-item').html('Item: ' + response.data.package_item);
+        // $('#package-item').html('Item: ' + response.data.package_item);
+        // $('#package-quantity').html('Quantity: ' + response.data.package_quantity + ' ' + response.data.package_unit);
+        // $('#package-note').html('Note: ' + response.data.package_note);
+        // $('#receiver-name').html('Name: ' + response.data.receiver_name);
+        // $('#contact-number').html('Contact Number: ' + response.data.receiver_contact);
+        // $('#vehicle-type').html('Vehicle Type: ' + response.data.vehicle_type);
+        // $('#pick-up').html('Pick-up: ' + response.data.pick_up);
+        // $('#drop-off').html('Drop Off: ' + response.data.drop_off);
+        // $('#date-time').html('Date & Time: ' + response.data.date_time);
+        // $('#payment-total').html('Total: ₱ ' + response.data.payment_total);
+      }).catch(error=>{
+          console.log(error)
+      })
+    }
   },
   components: {
     DashboardLayout,

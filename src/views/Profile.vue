@@ -50,7 +50,7 @@
                         <span class="mb-1 block text-sm text-grey-dark"
                           >Name</span
                         >
-                        <p class="block font-semibold">John Doe</p>
+                        <p class="block font-semibold">{{ profile.full_name }}</p>
                       </div>
                       <button
                         @click="toggleName"
@@ -60,7 +60,7 @@
                       </button>
                     </div>
 
-                    <form action="" class="" v-if="showNameInput">
+                    <form v-if="showNameInput" @submit.prevent="storeName">
                       <div
                         class="grid w-full lg:grid-cols-2 lg:gap-x-2 xl:grid-cols-4"
                       >
@@ -76,6 +76,7 @@
                             name="first_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="First Name"
+                            v-model="profile.first_name"
                           />
                         </div>
                         <div class="mb-2">
@@ -90,6 +91,7 @@
                             name="middle_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Middle Name"
+                            v-model="profile.middle_name"
                           />
                         </div>
                         <div class="mb-2">
@@ -104,6 +106,8 @@
                             name="last_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Last Name"
+                            v-model="profile.last_name"
+                            
                           />
                         </div>
                         <div class="mb-2">
@@ -118,6 +122,7 @@
                             name="extension_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Extension (ex. Jr/Sr/I/II/III)"
+                            v-model="profile.name_extension"
                           />
                         </div>
                       </div>
@@ -180,7 +185,7 @@
                           >Email address</span
                         >
                         <p class="block font-semibold">
-                          john.doe@testemail.com
+                          {{ profile.temp_email }}
                         </p>
                       </div>
                       <button
@@ -191,7 +196,7 @@
                       </button>
                     </div>
 
-                    <form action="" class="" v-if="showEmailInput">
+                    <form v-if="showEmailInput" @submit.prevent="storeEmail">
                       <div class="grid w-full">
                         <div class="mb-2">
                           <label
@@ -205,6 +210,7 @@
                             name="email_address"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Email address"
+                            v-model="profile.email"
                           />
                         </div>
                       </div>
@@ -223,7 +229,7 @@
                         <span class="mb-1 block text-sm text-grey-dark"
                           >Mobile number</span
                         >
-                        <p class="block font-semibold">09999999999</p>
+                        <p class="block font-semibold">{{ profile.temp_mobile_number }}</p>
                       </div>
                       <button
                         @click="toggleMobile"
@@ -247,6 +253,7 @@
                             name="mobile_number"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Mobile number"
+                            v-model="profile.mobile_number"
                           />
                         </div>
                       </div>
@@ -266,8 +273,7 @@
                           >Permanent Address</span
                         >
                         <p class="block font-semibold leading-5">
-                          #015 P-3 Sumlang Lake, Barangay Sumlang, Camalig,
-                          Albay, 4502
+                          {{ profile.address }}
                         </p>
                       </div>
                       <button
@@ -294,6 +300,7 @@
                             name="house_number"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="House/Lot No."
+                            :value="profile.house_number"
                           />
                         </div>
                         <div class="mb-2">
@@ -308,6 +315,7 @@
                             name="street_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Street Name"
+                            :value="profile.street"
                           />
                         </div>
                         <div class="mb-2">
@@ -322,6 +330,7 @@
                             name="barangay"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Barangay"
+                            :value="profile.barangay"
                           />
                         </div>
                         <div class="mb-2">
@@ -336,6 +345,7 @@
                             name="municipality"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="City/Municipality"
+                            :value="profile.city"
                           />
                         </div>
                         <div class="mb-2">
@@ -350,6 +360,7 @@
                             name="province"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Province"
+                            :value="profile.province"
                           />
                         </div>
                         <div class="mb-2">
@@ -364,6 +375,7 @@
                             name="zip_code"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Zip Code"
+                            :value="profile.zip_code"
                           />
                         </div>
                       </div>
@@ -447,6 +459,7 @@ import $ from "jquery";
 import 'tw-elements';
 import _ from "lodash";
 import axios from "axios";
+import Profile from "../api/profile";
 import DashboardLayout from "./DashboardLayout.vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import ButtonSolidBlue from "../components/buttons/ButtonSolidBlue.vue";
@@ -471,7 +484,15 @@ export default {
     };
   },
   data() {
-    
+    return {
+      profile: [],
+      name: {
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        name_extension: ''
+      }
+    }
   },
   mounted() {
     this.showUserProfile();
@@ -501,21 +522,56 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then(response=>{
-        // console.log(response.data);
-        // $('#package-item').html('Item: ' + response.data.package_item);
-        // $('#package-item').html('Item: ' + response.data.package_item);
-        // $('#package-quantity').html('Quantity: ' + response.data.package_quantity + ' ' + response.data.package_unit);
-        // $('#package-note').html('Note: ' + response.data.package_note);
-        // $('#receiver-name').html('Name: ' + response.data.receiver_name);
-        // $('#contact-number').html('Contact Number: ' + response.data.receiver_contact);
-        // $('#vehicle-type').html('Vehicle Type: ' + response.data.vehicle_type);
-        // $('#pick-up').html('Pick-up: ' + response.data.pick_up);
-        // $('#drop-off').html('Drop Off: ' + response.data.drop_off);
-        // $('#date-time').html('Date & Time: ' + response.data.date_time);
-        // $('#payment-total').html('Total: ₱ ' + response.data.payment_total);
+        if(response.data.length !== 0) {
+          this.profile = response.data;
+          this.profile['full_name'] = response.data.first_name + ' '+ response.data.middle_name.charAt(0) +'. ' + response.data.last_name +' ' + response.data.name_extension;
+          this.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
+          this.profile['temp_email'] = response.data.email;
+          this.profile['temp_mobile_number'] = response.data.mobile_number;
+          // $.trim(this.profile['address']);
+        }
       }).catch(error=>{
           console.log(error)
       })
+    },
+    storeName() {
+      let user = this.profile;
+      let currentObj = this;
+      Profile.storeName({user})
+        .then(function (response) {        
+          // currentObj.output = response.data;
+          // $('.animate-spin').hide();
+          // $('#btn-booking-mdl').click();
+          console.log(response);
+          currentObj.profile = response.data;
+          currentObj.profile['full_name'] = response.data.first_name + ' '+ response.data.middle_name.charAt(0) +'. ' + response.data.last_name +' ' + response.data.name_extension;
+          currentObj.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
+          currentObj.profile['temp_email'] = response.data.email;
+          currentObj.profile['temp_mobile_number'] = response.data.mobile_number;
+          currentObj.toggleName();
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
+    },
+    storeEmail() {
+      let user = this.profile;
+      let currentObj = this;
+      Profile.storeEmail({user})
+        .then(function (response) {        
+          // currentObj.output = response.data;
+          // $('.animate-spin').hide();
+          // $('#btn-booking-mdl').click();
+          currentObj.profile = response.data;
+          currentObj.profile['full_name'] = response.data.first_name + ' '+ response.data.middle_name.charAt(0) +'. ' + response.data.last_name +' ' + response.data.name_extension;
+          currentObj.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
+          currentObj.profile['temp_email'] = response.data.email;
+          currentObj.profile['temp_mobile_number'] = response.data.mobile_number;
+          currentObj.toggleEmail();
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
     }
   },
   components: {

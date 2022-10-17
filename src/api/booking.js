@@ -18,5 +18,17 @@ export default {
     await Csrf.getCookie();
 
     return Api.post('api/bookings/cancelBooking', form);
+  },
+
+  async approvePayment(form) {
+    await Csrf.getCookie();
+
+    return Api.post('api/bookings/approvePayment', form);
+  },
+
+  async acceptBooking(form) {
+    await Csrf.getCookie();
+
+    return Api.post('api/bookings/acceptBooking', form);
   }
 };

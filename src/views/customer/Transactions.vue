@@ -139,7 +139,7 @@
                             </p>
                           </div>
                         </div>
-                        <div v-if="booking.status == 3">
+                        <div v-if="booking.status == 3 || booking.status == 5">
                           <div
                             class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >

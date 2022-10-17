@@ -497,6 +497,7 @@ export default {
           .then((response) => {
             this.pagination = response.data.bookings.pagination;
             this.bookings = response.data.bookings.collection;
+            console.log(response);
           });
       }
     }),

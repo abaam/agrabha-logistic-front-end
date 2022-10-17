@@ -8,9 +8,13 @@
         Booking Details
         </h2>
 
-        <button v-show="role == 3" id="accept-button"
+        <button v-show="role == 1" id="accept-button" @click="acceptBooking()"
           class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2"
           >Accept</button>
+
+        <button v-show="role == 3" id="approve-payment"
+          class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#approve_payment"
+          >Approve Payment</button>
 
         <button v-show="role == 2" id="pay-button" 
           class="details-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
@@ -58,7 +62,14 @@
         </div>
 
         <div class="p-4 border rounded-lg">
-          <h3 class="font-bold">Status: <span class="text-orange-light" id="status"></span></h3>
+          <div class="flex items-start justify-between">
+            <h3 class="font-bold">Status: <span class="text-orange-light" id="status"></span></h3>
+            <div v-show="role == 1">
+              <span id="shipping-info-change" 
+              class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
+              hidden>Edit</span>
+            </div>
+          </div>
           <div id="tracking-qr-code">
             <h3 class="font-bold">Tracking QR Code</h3>
             <a href="/trace">
@@ -75,7 +86,7 @@
               <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
               <div>
                 <p class="font-bold">Tracking not available.</p>
-                <p class="text-sm">Once your item has been picked up, this will be accessible.</p>
+                <p class="text-sm">Once the item has been picked up, this will be accessible.</p>
               </div>
             </div>
           </div>
@@ -86,7 +97,7 @@
       </div>
 
       <div class="mb-6 px-3 py-6 md:p-6 flex items-center justify-center md:hidden">
-        <button v-show="role == 1"
+        <button
           class="bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-700 hover:border-green-500 rounded"
           >Accept</button>
 
@@ -148,6 +159,94 @@
           </form>
         </div>
       </div>
+
+      <!-- Approve Payment Modal -->
+      <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="approve_payment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+          <form @submit="approvePayment">
+            <div
+              class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+              <div
+                class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                  Transferred from:
+                </h5>
+                <button type="button"
+                  class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                  data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body relative p-4">
+                <div class="flex flex-wrap -mx-3 mb-6">
+                  <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                      First Name
+                    </label>
+                    <input 
+                      name="first_name" 
+                      required 
+                      v-model="sales.first_name" 
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                      id="grid-last-name" 
+                      type="text">
+                  </div>
+                  <div class="w-full md:w-1/2 px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                      Last Name
+                    </label>
+                    <input 
+                      name="last_name" 
+                      required 
+                      v-model="sales.last_name" 
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                      id="grid-last-name" 
+                      type="text">
+                  </div>
+                </div>
+                <div class="flex flex-wrap -mx-3 mb-6">
+                  <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                      Amount
+                    </label>
+                    <input 
+                      name="amount" 
+                      required 
+                      v-model="sales.amount" 
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                      id="grid-last-name" 
+                      type="text">
+                  </div>
+                  <div class="w-full px-3">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                      Reference Number
+                    </label>
+                    <input 
+                      name="ref_number" 
+                      required 
+                      v-model="sales.ref_number" 
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 eading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                      id="grid-last-name" 
+                      type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="bg-indigo-900 text-center py-4 lg:px-4">
+                <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                  <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">Note</span>
+                  <span class="font-semibold mr-2 text-left flex-auto">Please input the payer's information.</span>
+                </div>
+              </div>
+              <div
+                class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                <button type="button"
+                  class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                  data-bs-dismiss="modal">Later</button>
+                <button type="submit"
+                  class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Approve</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
   </DashboardLayout>
 </template>
@@ -170,7 +269,9 @@ export default {
   },
   data() {
       return {
-          role: localStorage.getItem('role')
+          role: localStorage.getItem('role'),
+          user_id: localStorage.getItem('user_id'), 
+          sales: []
       };
   },
   mounted(){
@@ -211,13 +312,22 @@ export default {
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
         }else if(response.data.payment_status == 1 && role == 3){
-          $('#accept-button').show()
+          $('#approve-payment').show()
         }else if(response.data.payment_status == 2){
           var payment_status = "Paid";
+          $('#pay-button').hide()
           $('#payment-status').attr('class', 'text-green')
 
           if (localStorage.getItem('role') == 2) {
             $('.details-button').hide();
+          }
+
+          if (localStorage.getItem('role') == 2) {
+            $('.details-button').hide();
+          }
+
+          if (localStorage.getItem('role') == 3) {
+            $('#approve-payment').hide();
           }
         }else if(response.data.payment_status == 3){
           var payment_status = "Cancelled";
@@ -240,6 +350,12 @@ export default {
         }else if(response.data.payment_status == 3){
           var status = "Cancelled";
           $('#status').attr('class', 'text-red')
+        }else if(response.data.status == 5){
+          var status = "To Ship";
+          $('#status').attr('class', 'text-orange')
+          
+          $('#shipping-info-change').show();
+          $('#accept-button').hide();
         }
 
         $('#payment-status').html(payment_status);
@@ -287,6 +403,29 @@ export default {
         currentObj.output = error;
       });
     },
+    approvePayment(e) {
+      e.preventDefault();
+      let sale = this.sales;
+      let currentObj = this;
+      let booking_id = window.location.pathname.split('/').pop();
+      
+      Booking.approvePayment({
+          booking_id: booking_id,
+          first_name: this.sales.first_name,
+          last_name: this.sales.last_name,
+          amount: this.sales.amount,
+          ref_number: this.sales.ref_number
+      })
+      .then(function (response) {
+        location.reload(true);
+        
+        currentObj.output = response.data;
+      })
+      .catch(function (error) {
+        currentObj.output = error;
+        console.log(error)
+      });
+    },
     cancelBooking() {
       // Use sweetalert2
       let that = this;
@@ -316,6 +455,46 @@ export default {
 
             setTimeout(function() { 
               currentObj.$router.push('/transactions');
+            }, 2000);
+          })
+          .catch(function (error) {
+            currentObj.output = error;
+          });
+        }
+      })
+    },
+    acceptBooking() {
+      // Use sweetalert2
+      let that = this;
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "The booking will be permanently accepted!",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, accept it!',
+        cancelButtonText: 'No'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let currentObj = this;
+          let booking_id = window.location.pathname.split('/').pop();
+
+          Booking.acceptBooking({
+            booking_id: booking_id,
+            driver_id: this.user_id
+          })
+          .then(function (response) {
+            currentObj.output = response.data;
+
+            that.$swal.fire(
+              'Accepted!',
+              currentObj.output = response.data,
+              'success'
+            )
+
+            setTimeout(function() { 
+              location.reload(true);
             }, 2000);
           })
           .catch(function (error) {

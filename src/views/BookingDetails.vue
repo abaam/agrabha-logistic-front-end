@@ -62,37 +62,86 @@
         </div>
 
         <div class="p-4 border rounded-lg">
-          <div class="flex items-start justify-between">
-            <h3 class="font-bold">Status: <span class="text-orange-light" id="status"></span></h3>
-            <div v-show="role == 1">
-              <span id="shipping-info-change" 
-              class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
-              hidden>Edit</span>
-            </div>
-          </div>
-          <div id="tracking-qr-code">
-            <h3 class="font-bold">Tracking QR Code</h3>
-            <a href="/trace">
-              <img class="mx-auto w-60 self-center" src="../../public/img/qrcode_lab.agrabah.ph.png" alt="Agrabah Logistics">
-            </a>
-            <div class="flex justify-center space-x-4">
-              <ButtonOutlineBlue buttonClass="" buttonText="Copy URL"/>
-              <ButtonOutlineGreen buttonClass="" buttonText="Download QR"/>
-            </div>
-          </div>
-
-          <div id="tracking-not-available" class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 mt-5 shadow-md" role="alert">
-            <div class="flex">
-              <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
-              <div>
-                <p class="font-bold">Tracking not available.</p>
-                <p class="text-sm">Once the item has been picked up, this will be accessible.</p>
+          <form @submit="updateTracking">
+            <input type="hidden" id="hdn-receiver-name" v-model="shipment.receiver_name">
+            <div class="flex items-start justify-between">
+              <h3 class="font-bold" id="shipment-status">Status: 
+              <span class="text-orange-light" id="status">
+              </span>
+              </h3>
+              <select id="shipping-status-field" 
+                name="status" 
+                v-model="shipment.status"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected disabled>Choose a shipping status</option>
+                <option value="3">To Ship</option>
+                <option value="2">To Receive</option>
+                <option value="1">Delivered</option>
+              </select>
+              <div v-show="role == 1">
+                <span id="shipping-info-change" 
+                class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
+                hidden>Edit</span>
               </div>
             </div>
-          </div>
-            
-          <!-- <br>
-          <h3 class="font-bold">Status: <span class="text-blue-light">For Pick-up</span></h3> -->
+            <div id="tracking-qr-code">
+              <h3 class="font-bold flex justify-center mt-5">Tracking QR Code</h3>
+              <a href="/trace" class="flex justify-center mt-5 mb-5">
+                <qrcode-vue :value="value" :size="size" level="H" />
+              </a>
+              <div class="flex justify-center space-x-4">
+                <ButtonOutlineBlue buttonClass="" buttonText="Copy URL"/>
+                <ButtonOutlineGreen buttonClass="" buttonText="Download QR"/>
+              </div>
+            </div>
+
+            <div id="tracking-not-available" class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 mt-5 shadow-md" role="alert">
+              <div class="flex">
+                <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                <div>
+                  <p class="font-bold">Tracking not available.</p>
+                  <p class="text-sm">Once the item has been picked up, this will be accessible.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap -mx-3 mt-5" id="tracking-status">
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                  Status (tracking)
+                </label>
+                <select id="shipment-status-select" 
+                  name="tracking_status" 
+                  v-model="shipment.tracking_status"
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                  <option value="Item has been picked up by our driver" selected>Picked up</option>
+                  <option value="Item has arrived at: " selected>Arrived at</option>
+                  <option value="Item has departed from: ">Departed from</option>
+                  <option value="Item is out for delivery">Out for delivery</option>
+                  <option value="Item has been delivered">Delivered</option>
+                </select>
+              </div>
+              <div class="w-full md:w-1/2 px-3" id="shipment-location-field">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                  Location
+                </label>
+                <input 
+                  name="location" 
+                  v-model="shipment.location" 
+                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                  id="shipment-location" 
+                  type="text">
+              </div>
+            </div>
+
+            <div class="inline-flex w-full space-x-4 mt-10" id="shipping-status-buttons">
+              <button type="submit" id="shipping-status-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</button>
+              <span id="shipping-status-cancel" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</span>
+            </div>
+              
+            <!-- <br>
+            <h3 class="font-bold">Status: <span class="text-blue-light">For Pick-up</span></h3> -->
+          </form>
         </div>
       </div>
 
@@ -260,22 +309,50 @@ import Booking from "../api/booking";
 import DashboardLayout from "@/views/DashboardLayout.vue";
 import ButtonOutlineBlue from "@/components/buttons/ButtonOutlineBlue.vue";
 import ButtonOutlineGreen from "@/components/buttons/ButtonOutlineGreen.vue";
+import { Field, ErrorMessage } from "vee-validate";
+import 'flowbite';
+import { loadScript } from "vue-plugin-load-script";
+import QrcodeVue from 'qrcode.vue'
 
 import { CashIcon, CheckCircleIcon  } from '@heroicons/vue/outline'
 
+const absoluteURL = window.location.origin;
+
 export default {
   components: {
-    DashboardLayout, CheckCircleIcon, CashIcon, ButtonOutlineBlue, ButtonOutlineGreen
+    DashboardLayout, CheckCircleIcon, CashIcon, ButtonOutlineBlue, ButtonOutlineGreen, QrcodeVue
   },
   data() {
       return {
           role: localStorage.getItem('role'),
           user_id: localStorage.getItem('user_id'), 
-          sales: []
+          sales: [],
+          shipment: {
+            status:"3",
+            tracking_status:"Item has been picked up by our driver",
+            receiver_name: $('#hdn-receiver-name').val(),
+            location: '',
+            current_url: absoluteURL
+          },
+          value: 'https://example.com',
+          size: 200
       };
   },
   mounted(){
     this.showBookingDetails()
+
+    loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
+    .then(() => {
+      const originInput = document.getElementById("shipment-location");
+
+      // Specify just the place data fields that you need.
+      const originAutocomplete = new google.maps.places.Autocomplete(
+        originInput,
+        { 
+          componentRestrictions: {country: "ph"} 
+        }
+      );
+    })
   },
   methods:{
     showBookingDetails(){
@@ -298,6 +375,7 @@ export default {
         $('#drop-off').html('Drop Off: ' + response.data.drop_off);
         $('#date-time').html('Date & Time: ' + response.data.date_time);
         $('#payment-total').html('Total: ₱ ' + response.data.payment_total);
+        $('#hdn-receiver-name').val(response.data.receiver_name);
 
         if(response.data.payment_method == 0){
           var payment_method = "Paymaya";
@@ -384,6 +462,40 @@ export default {
           $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
         }
 
+        $("#shipping-status-field").hide()
+        $("#shipping-status-buttons").hide()
+        $("#tracking-status").hide()
+        $("#tracking-qr-code").hide()
+
+        $("#shipping-info-change").click(function() {
+          $("#shipment-status").hide()
+          $("#shipping-status-field").show()
+          $("#shipping-status-buttons").show()
+          $("#shipping-info-change").hide()
+          $("#tracking-status").show()
+          $("#tracking-not-available").hide()
+          $('#shipment-location-field').hide()
+        });
+
+        $("#shipping-status-cancel").click(function() {
+          $("#shipping-info-change").show()
+          $("#shipping-status-buttons").hide()
+          $("#shipment-status").show()
+          $("#shipping-status-field").hide()
+          $("#tracking-status").hide()
+          $("#tracking-not-available").show()
+        });
+
+        $('#shipment-status-select').on('change', function() {
+          var selected_status = $(this).find(":selected").val();
+          if(selected_status.includes("picked up") || selected_status.includes("out for delivery")
+          || selected_status.includes("delivered")){
+            $('#shipment-location-field').hide()
+          } else {
+            $('#shipment-location-field').show()
+          }
+        });
+
       }).catch(error=>{
           console.log(error)
       })
@@ -415,6 +527,31 @@ export default {
           last_name: this.sales.last_name,
           amount: this.sales.amount,
           ref_number: this.sales.ref_number
+      })
+      .then(function (response) {
+        location.reload(true);
+        
+        currentObj.output = response.data;
+      })
+      .catch(function (error) {
+        currentObj.output = error;
+        console.log(error)
+      });
+    },
+    updateTracking(e) {
+      e.preventDefault();
+      let sale = this.sales;
+      let currentObj = this;
+      let booking_id = window.location.pathname.split('/').pop();
+      
+      Booking.updateTracking({
+          booking_id: booking_id,
+          status: this.shipment.status,
+          tracking_status: this.shipment.tracking_status,
+          location: this.shipment.location,
+          driver_id: this.user_id,
+          receiver_name: this.shipment.receiver_name,
+          url: this.shipment.current_url
       })
       .then(function (response) {
         location.reload(true);

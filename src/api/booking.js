@@ -30,5 +30,11 @@ export default {
     await Csrf.getCookie();
 
     return Api.post('api/bookings/acceptBooking', form);
+  },
+
+  async updateTracking(form) {
+    await Csrf.getCookie();
+
+    return Api.post('api/bookings/updateTracking', form);
   }
 };

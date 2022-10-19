@@ -157,48 +157,105 @@
           
 
           <!-- Modal -->
-          <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true" ref="modal">
-            <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+          <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="pay_info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg relative w-auto pointer-events-none">
               <form @submit="payBooking">
                 <div
                   class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                   <div
                     class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                     <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
-                      Scan the QR Code
+                      Scan the QR Code To Pay
                     </h5>
                     <button type="button"
                       class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
                       data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body relative p-4">
-                    <h3 class="font-bold flex justify-center items-center text-xl">Paymaya</h3>
-                    <img class="mx-auto w-60 self-center" src="../../public/img/paymaya-qr.png" alt="Agrabah Logistics">
-                    <div class="border-t border-gray-200">
-                      <dl>
-                        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-lg font-medium text-gray-500">Account Name</dt>
-                          <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Agrabah</dd>
-                        </div>
-                        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                          <dt class="text-lg font-medium text-gray-500">Account Number</dt>
-                          <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
-                        </div>
-                      </dl>
+                    <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                      <div>
+                        <h3 class="font-bold flex justify-center items-center text-xl">Paymaya</h3>
+                        <img class="mx-auto w-52 self-center" src="" alt="Agrabah Logistics" id="payment_method_qr">
+                      </div>
+                      <div class="border-t border-gray-200 mt-5">
+                        <dl>
+                          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-medium text-gray-500">Account Name</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Agrabah</dd>
+                          </div>
+                          <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-medium text-gray-500">Account Number</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
+                          </div>
+                        </dl>
+                      </div>
                     </div>
                   </div>
-                  <div class="bg-indigo-900 text-center py-4 lg:px-4">
-                    <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-                      <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">Note</span>
-                      <span class="font-semibold mr-2 text-left flex-auto">When paying using Gcash or Paymaya, use your registered mobile number.</span>
+                  <div
+                    class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                    <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalLabel">
+                      Transferred from:
+                    </h5>
+                  </div>
+                  <div class="modal-body relative p-4">
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                          First Name
+                        </label>
+                        <input 
+                          name="first_name" 
+                          required 
+                          v-model="sales.first_name" 
+                          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                          id="grid-last-name" 
+                          type="text">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                          Last Name
+                        </label>
+                        <input 
+                          name="last_name" 
+                          required 
+                          v-model="sales.last_name" 
+                          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                          id="grid-last-name" 
+                          type="text">
+                      </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                          Amount
+                        </label>
+                        <input 
+                          name="amount" 
+                          required 
+                          v-model="sales.amount" 
+                          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                          id="grid-last-name" 
+                          type="text">
+                      </div>
+                      <div class="w-full md:w-1/2 px-3">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                          Reference Number
+                        </label>
+                        <input 
+                          name="ref_number" 
+                          required 
+                          v-model="sales.ref_number" 
+                          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 eading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                          id="grid-last-name" 
+                          type="text">
+                      </div>
                     </div>
                   </div>
                   <div
                     class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                     <button type="button"
                       class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
-                      data-bs-dismiss="modal" @click="redirectBooking">Later</button>
+                      data-bs-dismiss="modal">Later</button>
                     <button type="submit"
                       class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">Done</button>
                   </div>
@@ -317,7 +374,9 @@ export default {
   },
   data() {
       return {
-          role: localStorage.getItem('role')
+          role: localStorage.getItem('role'),
+          user_id: localStorage.getItem('user_id'),
+          sales: []
       };
   },
   methods: {
@@ -349,7 +408,13 @@ export default {
       let currentObj = this;
       let booking_id = localStorage.getItem('booking_id');
       
-      Booking.payBooking({booking_id})
+      Booking.payBooking({
+          booking_id: booking_id,
+          first_name: this.sales.first_name,
+          last_name: this.sales.last_name,
+          amount: this.sales.amount,
+          ref_number: this.sales.ref_number
+      })
       .then(function (response) {
         window.location.replace(window.location.origin + '/booking-details/' + localStorage.getItem('booking_id'));
         currentObj.output = response.data;

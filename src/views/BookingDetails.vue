@@ -63,21 +63,11 @@
 
         <div class="p-4 border rounded-lg">
           <form @submit="updateTracking">
-            <input type="hidden" id="hdn-receiver-name" v-model="shipment.receiver_name">
             <div class="flex items-start justify-between">
               <h3 class="font-bold" id="shipment-status">Status: 
               <span class="text-orange-light" id="status">
               </span>
               </h3>
-              <select id="shipping-status-field" 
-                name="status" 
-                v-model="shipment.status"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected disabled>Choose a shipping status</option>
-                <option value="3">To Ship</option>
-                <option value="2">To Receive</option>
-                <option value="1">Delivered</option>
-              </select>
               <div v-show="role == 1">
                 <span id="shipping-info-change" 
                 class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue"
@@ -86,7 +76,7 @@
             </div>
             <div id="tracking-qr-code">
               <h3 class="font-bold flex justify-center mt-5">Tracking QR Code</h3>
-              <a href="/trace" class="flex justify-center mt-5 mb-5">
+              <a :href="value" class="flex justify-center mt-5 mb-5">
                 <qrcode-vue :value="value" :size="size" level="H" />
               </a>
               <div class="flex justify-center space-x-4">
@@ -125,12 +115,18 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                   Location
                 </label>
-                <input 
-                  name="location" 
-                  v-model="shipment.location" 
-                  class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                <div class="flex">
+                  <input 
+                  type="text"
+                  placeholder="Get your location here"
+                  v-model="shipment.location"
                   id="shipment-location" 
-                  type="text">
+                  ref="autocomplete"
+                  class="rounded-none rounded-l-lg appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                  <span @click="locatorButtonPressed" class="inline-flex items-center px-3 cursor-pointer text-sm text-gray-900 bg-gray-200 rounded-r-md border border-r-0 border-gray-300 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                    📍
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -386,19 +382,20 @@ export default {
           user_id: localStorage.getItem('user_id'), 
           sales: [],
           shipment: {
-            status:"3",
             tracking_status:"Item has been picked up by our driver",
-            receiver_name: $('#hdn-receiver-name').val(),
-            location: '',
-            current_url: absoluteURL
+            receiver_name: localStorage.getItem('Receiver Name'),
+            location: $('#shipment-location').val(),
+            current_url: absoluteURL,
+            pick_up_location: localStorage.getItem('Pick-up Location'),
+            drop_off_location: localStorage.getItem('Drop-off Location')
           },
-          value: 'https://example.com',
+          value: localStorage.getItem('QR Code URL'),
           size: 200
       };
   },
   mounted(){
-    this.showBookingDetails()
-
+    this.showBookingDetails(),
+    
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
     .then(() => {
       const originInput = document.getElementById("shipment-location");
@@ -410,6 +407,11 @@ export default {
           componentRestrictions: {country: "ph"} 
         }
       );
+      
+      originAutocomplete.addListener("place_changed", () => {
+        var place = originAutocomplete.getPlace();
+        this.shipment.location = place.formatted_address
+      })
     })
   },
   methods:{
@@ -422,34 +424,43 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then(response=>{
-        $('#package-item').html('Item: ' + response.data.package_item);
-        $('#package-item').html('Item: ' + response.data.package_item);
-        $('#package-quantity').html('Quantity: ' + response.data.package_quantity + ' ' + response.data.package_unit);
-        $('#package-note').html('Note: ' + response.data.package_note);
-        $('#receiver-name').html('Name: ' + response.data.receiver_name);
-        $('#contact-number').html('Contact Number: ' + response.data.receiver_contact);
-        $('#vehicle-type').html('Vehicle Type: ' + response.data.vehicle_type);
-        $('#pick-up').html('Pick-up: ' + response.data.pick_up);
-        $('#drop-off').html('Drop Off: ' + response.data.drop_off);
-        $('#date-time').html('Date & Time: ' + response.data.date_time);
-        $('#payment-total').html('Total: ₱ ' + response.data.payment_total);
-        $('#hdn-receiver-name').val(response.data.receiver_name);
+        $('#package-item').html('Item: ' + response.data.booking.package_item);
+        $('#package-item').html('Item: ' + response.data.booking.package_item);
+        $('#package-quantity').html('Quantity: ' + response.data.booking.package_quantity + ' ' + response.data.booking.package_unit);
+        $('#package-note').html('Note: ' + response.data.booking.package_note);
+        $('#receiver-name').html('Name: ' + response.data.booking.receiver_name);
+        $('#contact-number').html('Contact Number: ' + response.data.booking.receiver_contact);
+        $('#vehicle-type').html('Vehicle Type: ' + response.data.booking.vehicle_type);
+        $('#pick-up').html('Pick-up: ' + response.data.booking.pick_up);
+        $('#drop-off').html('Drop Off: ' + response.data.booking.drop_off);
+        $('#date-time').html('Date & Time: ' + response.data.booking.date_time);
+        $('#payment-total').html('Total: ₱ ' + response.data.booking.payment_total);
 
-        if(response.data.payment_method == 0){
+        localStorage.setItem('Pick-up Location', response.data.booking.pick_up)
+        localStorage.setItem('Drop-off Location', response.data.booking.drop_off)
+        localStorage.setItem('Receiver Name', response.data.booking.receiver_name)
+
+        if(!response.data.booking.tracking_id){
+          localStorage.setItem('QR Code URL', 'https://example.com')
+        } else {
+          localStorage.setItem('QR Code URL', response.data.tracking.url)
+        }
+
+        if(response.data.booking.payment_method == 0){
           var payment_method = "Paymaya";
         }else{
           var payment_method = "Gcash";
         }
         $('#payment-method').html('Payment Method: ' + payment_method);
 
-        if(response.data.payment_status == 0){
+        if(response.data.booking.payment_status == 0){
           var payment_status = "Pending";
-        }else if(response.data.payment_status == 1){
+        }else if(response.data.booking.payment_status == 1){
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
-        }else if(response.data.payment_status == 1 && role == 3){
+        }else if(response.data.booking.payment_status == 1 && role == 3){
           $('#approve-payment').show()
-        }else if(response.data.payment_status == 2){
+        }else if(response.data.booking.payment_status == 2){
           var payment_status = "Paid";
           $('#pay-button').hide()
           $('#payment-status').attr('class', 'text-green')
@@ -465,7 +476,7 @@ export default {
           if (localStorage.getItem('role') == 3) {
             $('#approve-payment').hide();
           }
-        }else if(response.data.payment_status == 3){
+        }else if(response.data.booking.payment_status == 3){
           var payment_status = "Cancelled";
           $('#payment-status').attr('class', 'text-red')
           
@@ -474,19 +485,19 @@ export default {
           }
         }
 
-        if(response.data.status == 1){
+        if(response.data.booking.status == 1){
           var status = "Delivered";
           $('#status').attr('class', 'text-green')
-        }else if(response.data.status == 2){
+        }else if(response.data.booking.status == 2){
           var status = "To Receive";
           $('#status').attr('class', 'text-blue')
-        }else if(response.data.status == 3){
+        }else if(response.data.booking.status == 3){
           var status = "To Ship";
           $('#status').attr('class', 'text-orange')
-        }else if(response.data.payment_status == 3){
+        }else if(response.data.booking.payment_status == 3){
           var status = "Cancelled";
           $('#status').attr('class', 'text-red')
-        }else if(response.data.status == 5){
+        }else if(response.data.booking.status == 5){
           var status = "To Ship";
           $('#status').attr('class', 'text-orange')
           
@@ -497,51 +508,61 @@ export default {
         $('#payment-status').html(payment_status);
         $('#status').html(status);
 
-        if(response.data.status == 3 && localStorage.getItem('role') == 2 && response.data.payment_status != 3){
+        if(response.data.booking.status == 3 && localStorage.getItem('role') == 2 && response.data.booking.payment_status != 3){
           $('.cancel-button').show();
         }
 
-        if(response.data.tracking_id == null){
+        if(response.data.booking.tracking_id == null){
           $('#tracking-qr-code').hide();
           $('#tracking-not-available').show();
         }else{
           $('#tracking-qr-code').show();
           $('#tracking-not-available').hide();
+          $("#shipping-info-change").show()
         }
 
-        if (response.data.payment_status == 1 || response.data.payment_status == 2) {
+        if (response.data.booking.payment_status == 1 || response.data.booking.payment_status == 2) {
           $('#pay-button').hide();
           $('.booking-details-header').addClass('justify-between');
         }
 
-        if (response.data.payment_method == 0) {
+        if (response.data.booking.payment_method == 0) {
           $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.png');
         }else{
           $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
         }
 
-        $("#shipping-status-field").hide()
         $("#shipping-status-buttons").hide()
         $("#tracking-status").hide()
-        $("#tracking-qr-code").hide()
+        $("#shipping-info-change").show()
 
         $("#shipping-info-change").click(function() {
-          $("#shipment-status").hide()
-          $("#shipping-status-field").show()
           $("#shipping-status-buttons").show()
           $("#shipping-info-change").hide()
           $("#tracking-status").show()
           $("#tracking-not-available").hide()
           $('#shipment-location-field').hide()
+          $('#tracking-qr-code').hide();
         });
 
         $("#shipping-status-cancel").click(function() {
           $("#shipping-info-change").show()
           $("#shipping-status-buttons").hide()
-          $("#shipment-status").show()
-          $("#shipping-status-field").hide()
           $("#tracking-status").hide()
           $("#tracking-not-available").show()
+          $('#tracking-qr-code').show();
+
+          if(response.data.booking.tracking_id == null){
+            $('#tracking-qr-code').hide();
+            $('#tracking-not-available').show();
+          }else{
+            $('#tracking-qr-code').show();
+            $('#tracking-not-available').hide();
+          }
+
+          $('#shipment-status-select option').prop('selected', function() {
+              return this.defaultSelected;
+          });
         });
 
         $('#shipment-status-select').on('change', function() {
@@ -558,6 +579,36 @@ export default {
           console.log(error)
       })
     },
+    locatorButtonPressed() {
+      navigator.geolocation.getCurrentPosition(
+          position => {
+            this.getStreetAddressFrom(position.coords.latitude, position.coords.longitude)
+          },
+          error => {
+            console.log(error.message);
+          },
+      )
+    },
+    async getStreetAddressFrom(lat, long) {
+      try {
+          var {
+            data
+          } = await axios.get(
+            "https://maps.googleapis.com/maps/api/geocode/json?latlng=" +
+            lat +
+            "," +
+            long +
+            "&key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A"
+          );
+          if (data.error_message) {
+            console.log(data.error_message)
+          } else {
+            this.shipment.location = data.results[0].formatted_address;
+          }
+      } catch (error) {
+          console.log(error.message);
+      }
+    },
     payBooking(e) {
       e.preventDefault();
       let currentObj = this;
@@ -573,7 +624,7 @@ export default {
       .then(function (response) {
         location.reload(true);
         
-        currentObj.output = response.data;
+        currentObj.output = response.data.booking;
       })
       .catch(function (error) {
         currentObj.output = error;
@@ -587,17 +638,21 @@ export default {
       
       Booking.updateTracking({
           booking_id: booking_id,
-          status: this.shipment.status,
           tracking_status: this.shipment.tracking_status,
           location: this.shipment.location,
           driver_id: this.user_id,
           receiver_name: this.shipment.receiver_name,
-          url: this.shipment.current_url
+          url: this.shipment.current_url,
+          pick_up_location : this.shipment.pick_up_location,
+          drop_off_location : this.shipment.drop_off_location
       })
       .then(function (response) {
+        // localStorage.removeItem("Pick-up Location");
+        // localStorage.removeItem("Drop-off Location");
+        // localStorage.removeItem("Receiver Name");
         location.reload(true);
         
-        currentObj.output = response.data;
+        currentObj.output = response.data.booking;
       })
       .catch(function (error) {
         currentObj.output = error;
@@ -623,11 +678,11 @@ export default {
 
           Booking.cancelBooking({booking_id})
           .then(function (response) {
-            currentObj.output = response.data;
+            currentObj.output = response.data.booking;
 
             that.$swal.fire(
               'Canceled!',
-              currentObj.output = response.data,
+              currentObj.output = response.data.booking,
               'success'
             )
 
@@ -663,11 +718,11 @@ export default {
             driver_id: this.user_id
           })
           .then(function (response) {
-            currentObj.output = response.data;
+            currentObj.output = response.data.booking;
 
             that.$swal.fire(
               'Accepted!',
-              currentObj.output = response.data,
+              currentObj.output = response.data.booking,
               'success'
             )
 
@@ -700,11 +755,11 @@ export default {
 
           Booking.approvePayment({booking_id})
           .then(function (response) {
-            currentObj.output = response.data;
+            currentObj.output = response.data.booking;
 
             that.$swal.fire(
               'Accepted!',
-              currentObj.output = response.data,
+              currentObj.output = response.data.booking,
               'success'
             )
 

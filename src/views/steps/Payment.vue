@@ -46,13 +46,31 @@
         name="gcash"
       />
     </div>
+    <div class="">
+      <label
+        for="cash-on-delivery"
+        class="flex h-20 w-full cursor-pointer items-center justify-between rounded-md border border-grey-light px-6 py-5"
+      >
+        <div class="flex items-center justify-start space-x-4">
+          <TruckIcon
+            class="h-7 w-8"
+          />
+          <span class="block font-semibold">Cash On Delivery</span>
+        </div>
+        <Field :rules="isRequired" type="radio" as="input" id="cash-on-delivery" name="payment_method" value="Cash On Delivery" />
+      </label>
+      <ErrorMessage
+        class="my-1 block text-sm font-semibold text-purple"
+        name="cash_on_delivery"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
 import { Field, ErrorMessage } from "vee-validate";
-import { CreditCardIcon } from "@heroicons/vue/outline";
+import { CreditCardIcon, TruckIcon } from "@heroicons/vue/outline";
 
 export default {
   setup() {
@@ -60,6 +78,7 @@ export default {
   },
   components: {
     CreditCardIcon,
+    TruckIcon,
     Field,
     ErrorMessage,
   },

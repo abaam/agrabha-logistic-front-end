@@ -416,6 +416,24 @@
           name="gcash"
         />
       </div>
+      <div class="">
+        <label
+          for="cash-on-delivery"
+          class="flex h-20 w-full cursor-pointer items-center justify-between rounded-md border border-grey-light px-6 py-5"
+        >
+          <div class="flex items-center justify-start space-x-4">
+            <TruckIcon
+              class="h-7 w-8"
+            />
+            <span class="block font-semibold">Cash On Delivery</span>
+          </div>
+          <Field :rules="isRequired" type="radio" as="input" id="cash-on-delivery" name="payment_method" value="Cash On Delivery" />
+        </label>
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="cash_on_delivery"
+        />
+      </div>
     </div>
     <div class="inline-flex w-full space-x-4" id="payment-method-buttons">
       <span id="payment-method-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</span>

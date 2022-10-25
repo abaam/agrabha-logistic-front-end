@@ -201,25 +201,25 @@
                     <div class="flex flex-wrap -mx-3 mb-6">
                       <div class="w-full md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                          First Name
+                          Full Name
                         </label>
                         <input 
-                          name="first_name" 
+                          name="full_name" 
                           required 
-                          v-model="sales.first_name" 
+                          v-model="sales.full_name" 
                           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                           id="grid-last-name" 
                           type="text">
                       </div>
                       <div class="w-full md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                          Last Name
+                          Mobile Number
                         </label>
                         <input 
-                          name="last_name" 
+                          name="mobile_number" 
                           required 
-                          v-model="sales.last_name" 
-                          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                          v-model="sales.mobile_number" 
+                          class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded mb-3 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                           id="grid-last-name" 
                           type="text">
                       </div>
@@ -394,9 +394,21 @@ export default {
       setTimeout(function() { 
         Booking.store({booking_form})
         .then(function (response) {        
+          var payment_method_input = JSON.parse(localStorage['booking_form'])[15]['value'];
           currentObj.output = response.data;
-          $('.animate-spin').hide();
-          $('#btn-booking-mdl').click();
+          if(payment_method_input == 'Cash On Delivery'){
+            $('.animate-spin').hide();
+            window.location.replace(window.location.origin + '/booking-details/' + localStorage.getItem('booking_id'));
+          } else {
+            if (payment_method_input == 'Paymaya') {
+              $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.png');
+            } else if (payment_method_input == 'GCash') {
+              $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
+            }
+
+            $('.animate-spin').hide();
+            $('#btn-booking-mdl').click();
+          }
         })
         .catch(function (error) {
           currentObj.output = error;
@@ -410,8 +422,8 @@ export default {
       
       Booking.payBooking({
           booking_id: booking_id,
-          first_name: this.sales.first_name,
-          last_name: this.sales.last_name,
+          full_name: this.sales.full_name,
+          mobile_number: this.sales.mobile_number,
           amount: this.sales.amount,
           ref_number: this.sales.ref_number
       })

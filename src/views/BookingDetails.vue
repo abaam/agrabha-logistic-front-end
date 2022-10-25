@@ -9,15 +9,15 @@
         </h2>
 
         <button v-show="role == 1" id="accept-button" @click="acceptBooking()"
-          class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2"
+          class="details-button accept-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2"
           >Accept</button>
 
         <button v-show="role == 3" id="approve-payment" @click="approvePayment()"
-          class="details-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2"
+          class="details-button approve-payment bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded ml-auto mr-2"
           >Approve Payment</button>
 
         <button v-show="role == 2" id="pay-button" 
-          class="details-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
+          class="details-button pay-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded ml-auto mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
           >Pay</button>
 
         <button v-show="role == 2" id="cancel-button" @click="cancelBooking()"
@@ -58,7 +58,7 @@
           <p id="payment-total"></p>
 
           <br>
-          <h3 class="font-bold">Payment Status: <span class="text-orange-light" id="payment-status"></span></h3>
+          <h3 class="font-bold" id="payment-status-details">Payment Status: <span class="text-orange-light" id="payment-status"></span></h3>
         </div>
 
         <div class="p-4 border rounded-lg">
@@ -128,6 +128,20 @@
                   </span>
                 </div>
               </div>
+              <div class="w-full md:w-1/2 px-3" id="shipment-amount">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                  Amount
+                </label>
+                <div class="flex">
+                  <input 
+                  type="text"
+                  placeholder="Input amount received"
+                  v-model="shipment.amount"
+                  id="shipment-amount" 
+                  ref="autocomplete"
+                  class="rounded-none rounded-l-lg appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                </div>
+              </div>
             </div>
 
             <div class="inline-flex w-full space-x-4 mt-10" id="shipping-status-buttons">
@@ -142,16 +156,20 @@
       </div>
 
       <div class="mb-6 px-3 py-6 md:p-6 flex items-center justify-center md:hidden">
-        <button
-          class="bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-700 hover:border-green-500 rounded"
+        <button v-show="role == 1" id="accept-button" @click="acceptBooking()"
+          class="details-button accept-button bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded"
           >Accept</button>
 
+        <button v-show="role == 3" id="approve-payment" @click="approvePayment()"
+          class="details-button approve-payment bg-green hover:bg-green-light text-white font-bold py-2 px-8 text-lg border-b-4 border-green-light hover:border-green rounded"
+          >Approve Payment</button>
+
         <button v-show="role == 2" id="pay-button" 
-          class="bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded mr-2" data-bs-toggle="modal" data-bs-target="#pay_info"
+          class="details-button pay-button bg-blue-light hover:bg-blue text-white font-bold py-2 px-8 text-lg border-b-4 border-blue hover:border-blue-light rounded" data-bs-toggle="modal" data-bs-target="#pay_info"
           >Pay</button>
 
-        <button v-show="role == 2"
-          class="bg-orange-light hover:bg-orange text-white font-bold py-2 px-8 text-lg border-b-4 border-orange hover:border-orange-light rounded"
+        <button v-show="role == 2" id="cancel-button" @click="cancelBooking()"
+          class="details-button cancel-button bg-orange-light hover:bg-orange text-white font-bold py-2 px-8 text-lg border-b-4 border-orange hover:border-orange-light rounded"
           >Cancel</button>
       </div>
 
@@ -200,24 +218,24 @@
                 <div class="flex flex-wrap -mx-3 mb-6">
                   <div class="w-full md:w-1/2 px-3">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                      First Name
+                      Full Name
                     </label>
                     <input 
-                      name="first_name" 
+                      name="full_name" 
                       required 
-                      v-model="sales.first_name" 
-                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                      v-model="sales.full_name" 
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded mb-3 py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                       id="grid-last-name" 
                       type="text">
                   </div>
                   <div class="w-full md:w-1/2 px-3">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                      Last Name
+                      Mobile Number
                     </label>
                     <input 
-                      name="last_name" 
+                      name="mobile_number" 
                       required 
-                      v-model="sales.last_name" 
+                      v-model="sales.mobile_number" 
                       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
                       id="grid-last-name" 
                       type="text">
@@ -383,13 +401,13 @@ export default {
           sales: [],
           shipment: {
             tracking_status:"Item has been picked up by our driver",
-            receiver_name: localStorage.getItem('Receiver Name'),
+            receiver_name: '',
             location: $('#shipment-location').val(),
             current_url: absoluteURL,
-            pick_up_location: localStorage.getItem('Pick-up Location'),
-            drop_off_location: localStorage.getItem('Drop-off Location')
+            pick_up_location: '',
+            drop_off_location: ''
           },
-          value: localStorage.getItem('QR Code URL'),
+          value: '',
           size: 200
       };
   },
@@ -436,20 +454,21 @@ export default {
         $('#date-time').html('Date & Time: ' + response.data.booking.date_time);
         $('#payment-total').html('Total: ₱ ' + response.data.booking.payment_total);
 
-        localStorage.setItem('Pick-up Location', response.data.booking.pick_up)
-        localStorage.setItem('Drop-off Location', response.data.booking.drop_off)
-        localStorage.setItem('Receiver Name', response.data.booking.receiver_name)
-
-        if(!response.data.booking.tracking_id){
-          localStorage.setItem('QR Code URL', 'https://example.com')
-        } else {
-          localStorage.setItem('QR Code URL', response.data.tracking.url)
-        }
+        this.shipment.pick_up_location = response.data.booking.pick_up
+        this.shipment.drop_off_location = response.data.booking.drop_off
+        this.shipment.receiver_name = response.data.booking.receiver_name
+        this.value = response.data.qr_code.url
 
         if(response.data.booking.payment_method == 0){
           var payment_method = "Paymaya";
-        }else{
+        } else if(response.data.booking.payment_method == 1){
           var payment_method = "Gcash";
+        }else{
+          var payment_method = "Cash On Delivery";
+          $('.pay-button').hide();
+          $('#payment-status-details').hide();
+          $('.approve-payment').hide();
+          $('#cancel-button').addClass('ml-auto mr-2')
         }
         $('#payment-method').html('Payment Method: ' + payment_method);
 
@@ -459,10 +478,10 @@ export default {
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
         }else if(response.data.booking.payment_status == 1 && role == 3){
-          $('#approve-payment').show()
+          $('.approve-payment').show()
         }else if(response.data.booking.payment_status == 2){
           var payment_status = "Paid";
-          $('#pay-button').hide()
+          $('.pay-button').hide()
           $('#payment-status').attr('class', 'text-green')
 
           if (localStorage.getItem('role') == 2) {
@@ -474,7 +493,7 @@ export default {
           }
 
           if (localStorage.getItem('role') == 3) {
-            $('#approve-payment').hide();
+            $('.approve-payment').hide();
           }
         }else if(response.data.booking.payment_status == 3){
           var payment_status = "Cancelled";
@@ -501,8 +520,8 @@ export default {
           var status = "To Ship";
           $('#status').attr('class', 'text-orange')
           
-          $('#shipping-info-change').show();
-          $('#accept-button').hide();
+          $("#shipping-info-change").show()
+          $('.accept-button').hide();
         }
 
         $('#payment-status').html(payment_status);
@@ -512,17 +531,18 @@ export default {
           $('.cancel-button').show();
         }
 
-        if(response.data.booking.tracking_id == null){
+        if(response.data.booking_has_tracking == 'false'){
           $('#tracking-qr-code').hide();
           $('#tracking-not-available').show();
         }else{
           $('#tracking-qr-code').show();
           $('#tracking-not-available').hide();
           $("#shipping-info-change").show()
+          $('.accept-button').hide();
         }
 
         if (response.data.booking.payment_status == 1 || response.data.booking.payment_status == 2) {
-          $('#pay-button').hide();
+          $('.pay-button').hide();
           $('.booking-details-header').addClass('justify-between');
         }
 
@@ -534,7 +554,6 @@ export default {
 
         $("#shipping-status-buttons").hide()
         $("#tracking-status").hide()
-        $("#shipping-info-change").show()
 
         $("#shipping-info-change").click(function() {
           $("#shipping-status-buttons").show()
@@ -551,7 +570,7 @@ export default {
           $("#tracking-status").hide()
           $("#tracking-not-available").show()
           $('#tracking-qr-code').show();
-
+  
           if(response.data.booking.tracking_id == null){
             $('#tracking-qr-code').hide();
             $('#tracking-not-available').show();
@@ -565,15 +584,26 @@ export default {
           });
         });
 
+        $('#shipment-location-field').hide()
+        $('#shipment-amount').hide()
         $('#shipment-status-select').on('change', function() {
           var selected_status = $(this).find(":selected").val();
-          if(selected_status.includes("picked up") || selected_status.includes("out for delivery")
-          || selected_status.includes("delivered")){
+          if(selected_status.includes("delivered") && payment_method == "Cash On Delivery"){
+            $('#shipment-amount').show()
             $('#shipment-location-field').hide()
-          } else {
+          } else if(selected_status.includes("arrived") || selected_status.includes("departed")){
+            $('#shipment-amount').hide()
             $('#shipment-location-field').show()
+          } else {
+            $('#shipment-amount').hide()
+            $('#shipment-location-field').hide()
           }
         });
+
+        if(response.data.booking.status == 1){
+          $("#shipping-info-change").hide()
+          $(".accept-button").hide()
+        }
 
       }).catch(error=>{
           console.log(error)
@@ -616,8 +646,8 @@ export default {
       
       Booking.payBooking({
           booking_id: booking_id,
-          first_name: this.sales.first_name,
-          last_name: this.sales.last_name,
+          full_name: this.sales.full_name,
+          mobile_number: this.sales.mobile_number,
           amount: this.sales.amount,
           ref_number: this.sales.ref_number
       })
@@ -644,7 +674,8 @@ export default {
           receiver_name: this.shipment.receiver_name,
           url: this.shipment.current_url,
           pick_up_location : this.shipment.pick_up_location,
-          drop_off_location : this.shipment.drop_off_location
+          drop_off_location : this.shipment.drop_off_location,
+          amount: this.shipment.amount
       })
       .then(function (response) {
         // localStorage.removeItem("Pick-up Location");

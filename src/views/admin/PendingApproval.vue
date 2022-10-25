@@ -1,5 +1,5 @@
 <template>
-  <DashboardLayout navClass="border-b-0" mobileTitle="Bookings">
+  <DashboardLayout navClass="border-b-0" mobileTitle="Pending Approvals">
     <section class="hidden px-3 py-6 md:block md:p-6">
       <div class="mb-6 flex items-center justify-between">
         <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
@@ -201,7 +201,7 @@
       </div>
     </section>
 
-    <!-- Customer Data Mobile -->
+    <!-- Admin Data Mobile -->
     <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
@@ -541,7 +541,7 @@ export default {
     },
 
     fetchToShip() {
-      axios.get(process.env.VUE_APP_API + `bookings`, {
+      axios.get(process.env.VUE_APP_API + `bookings/payment-approval`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -549,18 +549,12 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then((response) => {
-        if (this.role == 1) {
-          this.to_ship = response.data.to_ship;
-        }else if (this.role == 2) {
-          this.to_ship = response.data.to_ship;
-        }else if (this.role == 3) {
-          this.to_ship = response.data.to_ship_admin;
-        }
+        this.to_ship = response.data.to_ship;
       });
     },
 
     fetchToReceive() {
-      axios.get(process.env.VUE_APP_API + `bookings`, {
+      axios.get(process.env.VUE_APP_API + `bookings/payment-approval`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -568,18 +562,12 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then((response) => {
-        if (this.role == 1) {
-          this.to_receive = response.data.to_receive;
-        }else if (this.role == 2) {
-          this.to_receive = response.data.to_receive;
-        }else if (this.role == 3) {
-          this.to_receive = response.data.to_receive_admin;
-        }
+        this.to_receive = response.data.to_receive;
       });
     },
 
     fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `bookings`, {
+      axios.get(process.env.VUE_APP_API + `bookings/payment-approval`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -587,13 +575,7 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then((response) => {
-        if (this.role == 1) {
-          this.delivered = response.data.delivered;
-        }else if (this.role == 2) {
-          this.delivered = response.data.delivered;
-        }else if (this.role == 3) {
-          this.delivered = response.data.delivered_admin;
-        }
+        this.delivered = response.data.delivered;
       });
     },
   },

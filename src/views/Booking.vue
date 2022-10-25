@@ -230,20 +230,12 @@
               To Ship
             </button>
           </Tab>
-          <Tab v-slot="{ selected }" as="template">
+          <Tab v-slot="{ selected }" as="template" v-show="role == 2">
             <button
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
               To Receive
-            </button>
-          </Tab>
-          <Tab v-slot="{ selected }" as="template">
-            <button
-              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
-              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
-            >
-              To Pay
             </button>
           </Tab>
         </TabList>
@@ -269,8 +261,11 @@
                   <span v-if="booking.payment_method == 0">
                     Paymaya
                   </span>
-                  <span v-else>
+                  <span v-else-if="booking.payment_method == 1">
                     Gcash
+                  </span>
+                  <span v-else>
+                    Cash On Delivery
                   </span>
                   </p>
                 </div>
@@ -302,7 +297,7 @@
               </div>
             </div>
           </TabPanel>
-          <TabPanel>
+          <TabPanel v-show="role == 2">
             <div v-if="to_receive != ''" class="my-3 grid gap-y-2">
               <div v-for="booking in to_receive"
                 :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
@@ -323,8 +318,11 @@
                   <span v-if="booking.payment_method == 0">
                     Paymaya
                   </span>
-                  <span v-else>
+                  <span v-else-if="booking.payment_method == 1">
                     Gcash
+                  </span>
+                  <span v-else>
+                    Cash On Delivery
                   </span>
                   </p>
                 </div>
@@ -352,60 +350,6 @@
                 </h6>
                 <p class="block leading-6 text-grey-dark">
                   You'll see all your bookings to be received here.
-                </p>
-              </div>
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div v-if="delivered != ''" class="my-3 grid gap-y-2">
-              <div v-for="booking in delivered"
-                :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
-              >
-                <div class="flex items-center justify-between">
-                  <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
-                  <p class="font-bold">Vehicle Type: {{ booking.vehicle_type }}</p>
-                </div>
-
-                <div class="block">
-                  <span class="font-bold">Drop Off:</span> {{ booking.drop_off }}
-                  <p>
-                  <span class="font-bold">Pick Up:</span> <span>{{ booking.pick_up }}</span>
-                  </p>
-                  <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
-                  <p>
-                    <span class="font-bold">Payment Method:</span> 
-                  <span v-if="booking.payment_method == 0">
-                    Paymaya
-                  </span>
-                  <span v-else>
-                    Gcash
-                  </span>
-                  </p>
-                </div>
-
-                <div class="flex items-center space-x-1 text-blue">
-                  <div
-                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
-                  >
-                    <CubeIcon class="h-3 w-3 text-blue" />
-                  </div>
-                  <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-sm font-semibold text-blue"
-                          >View details</router-link>
-                </div>
-              </div>
-            </div>
-            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
-              <div class="px-3 py-6 text-center">
-                <img
-                  class="mx-auto w-48"
-                  src="../../public/svg/no_delivery.svg"
-                  alt=""
-                />
-                <h6 class="mt-8 block text-xl font-semibold">
-                  No bookings yet?
-                </h6>
-                <p class="block leading-6 text-grey-dark">
-                  You'll see all your bookings to be delivered here.
                 </p>
               </div>
             </div>
@@ -441,7 +385,6 @@ export default {
       bookings: [],
       to_ship: [],
       to_receive: [],
-      delivered: [],
       search: "",
       show_entries: "5",
       role: localStorage.getItem('role')
@@ -450,8 +393,7 @@ export default {
   created() {
     this.fetchBookings(),
       this.fetchToShip(),
-      this.fetchToReceive(),
-      this.fetchDelivered();
+      this.fetchToReceive()
   },
   methods: {
     fetchBookings() {
@@ -604,7 +546,7 @@ export default {
         }
       }).then((response) => {
         if (this.role == 1) {
-          this.to_ship = response.data.to_ship;
+          this.to_ship = response.data.to_ship_driver;
         }else if (this.role == 2) {
           this.to_ship = response.data.to_ship;
         }else if (this.role == 3) {
@@ -623,30 +565,11 @@ export default {
         }
       }).then((response) => {
         if (this.role == 1) {
-          this.to_receive = response.data.to_receive;
+          this.to_receive = response.data.to_receive_driver;
         }else if (this.role == 2) {
           this.to_receive = response.data.to_receive;
         }else if (this.role == 3) {
           this.to_receive = response.data.to_receive_admin;
-        }
-      });
-    },
-
-    fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `bookings`, {
-        withCredentials: true,
-        headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
-        "Access-Control-Allow-Origin": "*"
-        }
-      }).then((response) => {
-        if (this.role == 1) {
-          this.delivered = response.data.delivered;
-        }else if (this.role == 2) {
-          this.delivered = response.data.delivered;
-        }else if (this.role == 3) {
-          this.delivered = response.data.delivered_admin;
         }
       });
     },

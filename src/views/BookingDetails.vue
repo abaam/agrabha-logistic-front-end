@@ -405,7 +405,8 @@ export default {
             location: $('#shipment-location').val(),
             current_url: absoluteURL,
             pick_up_location: '',
-            drop_off_location: ''
+            drop_off_location: '',
+            amount: ''
           },
           value: '',
           size: 200
@@ -458,6 +459,7 @@ export default {
         this.shipment.drop_off_location = response.data.booking.drop_off
         this.shipment.receiver_name = response.data.booking.receiver_name
         this.value = response.data.qr_code.url
+        this.shipment.amount = response.data.booking.payment_total
 
         if(response.data.booking.payment_method == 0){
           var payment_method = "Paymaya";
@@ -678,9 +680,6 @@ export default {
           amount: this.shipment.amount
       })
       .then(function (response) {
-        // localStorage.removeItem("Pick-up Location");
-        // localStorage.removeItem("Drop-off Location");
-        // localStorage.removeItem("Receiver Name");
         location.reload(true);
         
         currentObj.output = response.data.booking;

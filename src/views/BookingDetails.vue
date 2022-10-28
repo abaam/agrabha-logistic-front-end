@@ -406,7 +406,8 @@ export default {
             current_url: absoluteURL,
             pick_up_location: '',
             drop_off_location: '',
-            amount: ''
+            amount: '',
+            payment_method: ''
           },
           value: '',
           size: 200
@@ -473,6 +474,7 @@ export default {
           $('#cancel-button').addClass('ml-auto mr-2')
         }
         $('#payment-method').html('Payment Method: ' + payment_method);
+        this.shipment.payment_method = payment_method;
 
         if(response.data.booking.payment_status == 0){
           var payment_status = "Pending";
@@ -677,7 +679,8 @@ export default {
           url: this.shipment.current_url,
           pick_up_location : this.shipment.pick_up_location,
           drop_off_location : this.shipment.drop_off_location,
-          amount: this.shipment.amount
+          amount: this.shipment.amount,
+          payment_method: this.shipment.payment_method
       })
       .then(function (response) {
         location.reload(true);

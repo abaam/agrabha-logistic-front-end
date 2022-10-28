@@ -429,7 +429,8 @@ export default {
           full_name: this.sales.full_name,
           mobile_number: this.sales.mobile_number,
           amount: this.sales.amount,
-          ref_number: this.sales.ref_number
+          ref_number: this.sales.ref_number,
+          payment_method: JSON.parse(localStorage['booking_form'])[15]['value']
       })
       .then(function (response) {
         window.location.replace(window.location.origin + '/booking-details/' + localStorage.getItem('booking_id'));

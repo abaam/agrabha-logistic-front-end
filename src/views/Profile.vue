@@ -485,7 +485,20 @@ export default {
   },
   data() {
     return {
-      profile: [],
+      profile: {
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        name_extension: '',
+        photo: '',
+        email: '',
+        house_number: '',
+        street: '',
+        barangay: '',
+        city: '',
+        province: '',
+        zip_code: ''
+      },
       name: {
         first_name: '',
         middle_name: '',
@@ -523,12 +536,53 @@ export default {
         }
       }).then(response=>{
         if(response.data.length !== 0) {
-          this.profile = response.data;
-          this.profile['full_name'] = response.data.first_name + ' '+ response.data.middle_name.charAt(0) +'. ' + response.data.last_name +' ' + response.data.name_extension;
-          this.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
-          this.profile['temp_email'] = response.data.email;
-          this.profile['temp_mobile_number'] = response.data.mobile_number;
-          // $.trim(this.profile['address']);
+          let data_response = response.data;
+          if(Object.keys(response.data).length > 1) {
+            this.profile = response.data;
+            if(response.data.middle_name == '') {
+              var middle_name = '';
+            } else {
+              var middle_name = response.data.middle_name.charAt(0) +'. ';
+            }
+            var house_number = "";
+            var street = "";
+            var barangay = "";
+            var city = "";
+            var province = "";
+            var zip_code= "";
+
+            if(response.data.house_number != "") {
+              house_number = response.data.house_number + ', ';
+            }
+
+            if(response.data.street != "") {
+              street = response.data.street + ', ';;
+            }
+
+            if(response.data.barangay != "") {
+              barangay = response.data.barangay + ', ';;
+            }
+
+            if(response.data.city != "") {
+              city = response.data.city + ', ';;
+            }
+
+            if(response.data.province != "") {
+              province = response.data.province + ', ';;
+            }
+
+            if(response.data.zip_code != "") {
+              zip_code = response.data.zip_code + ', ';;
+            }
+
+            this.profile['full_name'] = response.data.first_name + ' '+ middle_name + response.data.last_name +' ' + response.data.name_extension;
+            this.profile['address'] = house_number +  street + barangay + city + province + zip_code;
+            this.profile['address'] = this.profile['address'].replace(/,\s*$/, "");
+            this.profile['temp_email'] = response.data.email;
+            this.profile['temp_mobile_number'] = response.data.mobile_number;
+          } else {
+            this.profile['temp_mobile_number'] = response.data.mobile_number;
+          }
         }
       }).catch(error=>{
           console.log(error)
@@ -542,12 +596,19 @@ export default {
           // currentObj.output = response.data;
           // $('.animate-spin').hide();
           // $('#btn-booking-mdl').click();
-          console.log(response);
+          // console.log(response);
           currentObj.profile = response.data;
-          currentObj.profile['full_name'] = response.data.first_name + ' '+ response.data.middle_name.charAt(0) +'. ' + response.data.last_name +' ' + response.data.name_extension;
-          currentObj.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
-          currentObj.profile['temp_email'] = response.data.email;
-          currentObj.profile['temp_mobile_number'] = response.data.mobile_number;
+          // if(response.data.middle_name == '') {
+          //     var middle_name = '';
+          //   } else {
+          //     var middle_name = response.data.middle_name.charAt(0) +'. ';
+          //   }
+          // currentObj.profile['full_name'] = response.data.first_name + ' '+ middle_name + response.data.last_name +' ' + response.data.name_extension;
+          // currentObj.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
+          // currentObj.profile['temp_email'] = response.data.email;
+          // currentObj.profile['temp_mobile_number'] = response.data.mobile_number;
+          // currentObj.toggleName();
+          currentObj.buildData(currentObj.profile);
           currentObj.toggleName();
         })
         .catch(function (error) {
@@ -562,16 +623,23 @@ export default {
           // currentObj.output = response.data;
           // $('.animate-spin').hide();
           // $('#btn-booking-mdl').click();
-          currentObj.profile = response.data;
-          currentObj.profile['full_name'] = response.data.first_name + ' '+ response.data.middle_name.charAt(0) +'. ' + response.data.last_name +' ' + response.data.name_extension;
-          currentObj.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
-          currentObj.profile['temp_email'] = response.data.email;
-          currentObj.profile['temp_mobile_number'] = response.data.mobile_number;
+          currentObj.buildData(currentObj.profile);
           currentObj.toggleEmail();
         })
         .catch(function (error) {
           currentObj.output = error;
         });
+    },
+    buildData(user_profile) {
+      if(user_profile.middle_name == '') {
+          var middle_name = '';
+        } else {
+          var middle_name = user_profile.middle_name.charAt(0) +'. ';
+        }
+      this.profile['full_name'] = user_profile.first_name + ' '+ middle_name + user_profile.last_name +' ' + user_profile.name_extension;
+      this.profile['address'] = user_profile.house_number + ' ' + user_profile.street + ', ' + user_profile.barangay + ', '+ user_profile.city + ', '+ user_profile.province + ', '+ user_profile.zip_code; 
+      this.profile['temp_email'] = user_profile.email;
+      this.profile['temp_mobile_number'] = user_profile.mobile_number;
     }
   },
   components: {

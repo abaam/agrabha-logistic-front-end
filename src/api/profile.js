@@ -4,7 +4,7 @@ import Csrf from './csrf';
 export default {
     async storeName(form) {
         await Csrf.getCookie();
-    
+        console.log(form);
         return Api.post('api/users/storeName', form);
     },
 

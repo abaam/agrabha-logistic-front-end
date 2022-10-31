@@ -230,7 +230,7 @@
               To Ship
             </button>
           </Tab>
-          <Tab v-slot="{ selected }" as="template" v-show="role == 2">
+          <Tab v-slot="{ selected }" as="template" v-show="role == 2 || role == 3">
             <button
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
@@ -297,7 +297,7 @@
               </div>
             </div>
           </TabPanel>
-          <TabPanel v-show="role == 2">
+          <TabPanel v-show="role == 2 || role == 3">
             <div v-if="to_receive != ''" class="my-3 grid gap-y-2">
               <div v-for="booking in to_receive"
                 :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"

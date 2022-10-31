@@ -79,6 +79,18 @@
                                         </router-link>
                                     </li>
                                 </ul>
+                                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                                    <router-link to="/transactions" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                                    <RefreshIcon class="h-5 w-5"/>
+                                    <span>Transactions</span>
+                                    </router-link>
+                                </li>
+                                <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                                    <router-link to="/sales" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                                    <ChartBarIcon class="h-5 w-5"/>
+                                    <span>Sales</span>
+                                    </router-link>
+                                </li>
                             </li>
                         </ul>
                     </div>
@@ -124,7 +136,7 @@
 <script>
     import axios from 'axios';
     import { ref } from 'vue'
-    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon, UsersIcon } from '@heroicons/vue/outline'
+    import { ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon, UsersIcon, ChartBarIcon } from '@heroicons/vue/outline'
     import { TransitionRoot, TransitionChild, Dialog, DialogOverlay } from '@headlessui/vue'
 
     const sidebarMenusDriver = [
@@ -203,7 +215,7 @@
             }
         },
         components: {
-            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon, UsersIcon
+            ArrowLeftIcon, ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, TransitionRoot, TransitionChild, Dialog, DialogOverlay, ShieldCheckIcon, UserCircleIcon, BookOpenIcon, SearchIcon, CashIcon, UsersIcon, ChartBarIcon
         },
         data() {
             return {

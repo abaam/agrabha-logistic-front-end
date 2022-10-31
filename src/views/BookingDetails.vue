@@ -52,13 +52,21 @@
           <p id="date-time"></p>
         </div>
 
-        <div  class="p-4 border rounded-lg">
-          <h3 class="font-bold">Payment</h3>
+        <div class="p-4 border rounded-lg">
+          <div class="flex items-start justify-between">
+            <h3 class="font-bold">Payment</h3>
+            <div v-show="role == 3">
+              <span id="view-payment-details" 
+              class="cursor-pointer text-sm font-semibold uppercase text-blue-light hover:text-blue focus:text-blue" @click="viewPaymentDetails"
+              >View Details</span>
+            </div>
+          </div>
           <p id="payment-method"></p>
           <p id="payment-total"></p>
-
           <br>
-          <h3 class="font-bold" id="payment-status-details">Payment Status: <span class="text-orange-light" id="payment-status"></span></h3>
+          <h3 class="font-bold" id="payment-status-details">Payment Status: 
+            <span class="text-orange-light" id="payment-status"></span>
+          </h3>
         </div>
 
         <div class="p-4 border rounded-lg">
@@ -368,6 +376,62 @@
           </form>
         </div>
       </div>
+
+      <!-- View Payment Modal -->
+      <button type="button"
+        class="hidden inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        data-bs-toggle="modal" data-bs-target="#view-payment-details-modal" id="btn-view-payment-details">
+        Launch static backdrop modal
+      </button>
+
+      <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="view-payment-details-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+          <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+            <div class="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+              <h5 class="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
+                Payment Details
+              </h5>
+              <button type="button"
+                class="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body relative p-4">
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3">
+                  <dt class="text-lg font-medium text-gray-500">Reference Number</dt>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ payment.ref_id }}</dd>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                  <dt class="text-lg font-medium text-gray-500">Full Name</dt>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ payment.full_name }}</dd>
+                </div>
+              </div>
+              <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3">
+                  <dt class="text-lg font-medium text-gray-500">Mobile Number</dt>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ payment.mobile }}</dd>
+                </div>
+                <div class="w-full md:w-1/2 px-3">
+                  <dt class="text-lg font-medium text-gray-500">Amount</dt>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ payment.amount }}</dd>
+                </div>
+                <div class="w-full px-3 mt-6">
+                  <dt class="text-lg font-medium text-gray-500">Date of Transaction</dt>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{moment(payment.date).format('LLLL')}}</dd>
+                </div>
+              </div>
+            </div>
+            <div
+              class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+              <button type="button"
+                class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                data-bs-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   </DashboardLayout>
 </template>
@@ -385,6 +449,7 @@ import { Field, ErrorMessage } from "vee-validate";
 import 'flowbite';
 import { loadScript } from "vue-plugin-load-script";
 import QrcodeVue from 'qrcode.vue'
+import moment from 'moment'
 
 import { CashIcon, CheckCircleIcon  } from '@heroicons/vue/outline'
 
@@ -410,8 +475,18 @@ export default {
             payment_method: ''
           },
           value: '',
-          size: 200
+          size: 200,
+          payment: {
+            ref_id:'',
+            full_name: '',
+            mobile: '',
+            amount: '',
+            date: ''
+          }
       };
+  },
+  created() {
+    this.moment = moment
   },
   mounted(){
     this.showBookingDetails(),
@@ -471,6 +546,7 @@ export default {
           $('.pay-button').hide();
           $('#payment-status-details').hide();
           $('.approve-payment').hide();
+          $('#view-payment-details').hide();
           $('#cancel-button').addClass('ml-auto mr-2')
         }
         $('#payment-method').html('Payment Method: ' + payment_method);
@@ -483,6 +559,7 @@ export default {
           $('#payment-status').attr('class', 'text-blue')
         }else if(response.data.booking.payment_status == 1 && role == 3){
           $('.approve-payment').show()
+          $('#view-payment-details').show();
         }else if(response.data.booking.payment_status == 2){
           var payment_status = "Paid";
           $('.pay-button').hide()
@@ -805,7 +882,30 @@ export default {
           });
         }
       })
-    }
+    },
+    viewPaymentDetails(e) {
+      e.preventDefault();
+      let currentObj = this;
+      let booking_id = window.location.pathname.split('/').pop();
+      axios.get(process.env.VUE_APP_API + `bookings/payment/details/${booking_id}`, {
+        withCredentials: true,  
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then(response=>{     
+        $('#btn-view-payment-details').click();
+        this.payment.ref_id = response.data.sale.ref_number
+        this.payment.full_name = response.data.sale.full_name
+        this.payment.mobile = response.data.sale.mobile_number
+        this.payment.amount = response.data.sale.amount
+        this.payment.date = response.data.sale.created_at
+      })
+      .catch(function (error) {
+        currentObj.output = error;
+      });
+    },
   }
 };
 </script>

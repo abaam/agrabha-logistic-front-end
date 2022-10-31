@@ -35,11 +35,11 @@
             </h2>
         </div> -->
         <div class="p-7 w-full">
-          <div class="md:mx-auto overflow-y-auto">
-            <h3 class="text-lg font-bold mb-6" v-if="wallet">All Transaction Details</h3>
-            <p class="block leading-6 text-grey-dark" v-else>
-              You'll see all your transactions here.
-            </p>
+        <h3 class="text-lg font-bold mb-6" v-if="sale">All Transaction Details</h3>
+          <p class="block leading-6 text-grey-dark" v-else>
+            You'll see all your transactions here.
+          </p>
+          <div class="md:mx-auto overflow-y-auto max-h-72">
             <table class="min-w-full" id="tbl-wallet">
               <tbody>
                 <tr class="border-b" v-for="wallet in sale">

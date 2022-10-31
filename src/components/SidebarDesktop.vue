@@ -59,6 +59,18 @@
                                 </router-link>
                             </li>
                         </ul>
+                        <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                            <router-link to="/transactions" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <RefreshIcon class="h-5 w-5"/>
+                            <span>Transactions</span>
+                            </router-link>
+                        </li>
+                        <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
+                            <router-link to="/sales" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <ChartBarIcon class="h-5 w-5"/>
+                            <span>Sales</span>
+                            </router-link>
+                        </li>
                     </li>
                     
                     <div class="absolute inset-x-4 bottom-5">
@@ -82,7 +94,7 @@
 </template>
 
 <script>
-    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon  } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon, ChartBarIcon  } from '@heroicons/vue/outline'
     import 'tw-elements';
     import $ from "jquery";
     
@@ -159,7 +171,7 @@
             }
         },
         components: {
-            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon
+            ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, ShieldCheckIcon, UserCircleIcon, SearchIcon, CashIcon, UsersIcon, ChartBarIcon
         },
         data() {
             return {

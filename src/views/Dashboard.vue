@@ -89,7 +89,7 @@
     import SidebarMobile from "../components/SidebarMobile"
     import Navbar from "../components/Navbar"
 
-    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, SearchIcon, CashIcon, UserCircleIcon, ShieldCheckIcon, UsersIcon  } from '@heroicons/vue/outline'
+    import { ViewGridIcon, RefreshIcon, TagIcon, TruckIcon, SearchIcon, CashIcon, UserCircleIcon, ShieldCheckIcon, UsersIcon, ChartBarIcon  } from '@heroicons/vue/outline'
 
     const MenusDriver = [
         {
@@ -159,6 +159,16 @@
             icon: 'UsersIcon'
         },
         {
+            href: '/sales',
+            label: 'Sales',
+            icon: 'ChartBarIcon'
+        },
+        {
+            href: '/transactions',
+            label: 'transactions',
+            icon: 'RefreshIcon'
+        },
+        {
             href: '/profile',
             label: 'Profile',
             icon: 'UserCircleIcon'
@@ -189,11 +199,12 @@
                 CashIcon,
                 UserCircleIcon,
                 ShieldCheckIcon,
-                UsersIcon
+                UsersIcon,
+                ChartBarIcon
             }
         },
         components: {
-            UserMenu, SidebarDesktop, SidebarMobile, Navbar, ViewGridIcon, TagIcon, TruckIcon, RefreshIcon, SearchIcon, CashIcon, UserCircleIcon, ShieldCheckIcon, UsersIcon
+            UserMenu, SidebarDesktop, SidebarMobile, Navbar, ViewGridIcon, TagIcon, TruckIcon, RefreshIcon, SearchIcon, CashIcon, UserCircleIcon, ShieldCheckIcon, UsersIcon, ChartBarIcon
         },
         data() {
             return {

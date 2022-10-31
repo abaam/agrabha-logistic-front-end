@@ -187,6 +187,10 @@
                             <dt class="text-lg font-medium text-gray-500">Account Number</dt>
                             <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
                           </div>
+                          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <dt class="text-lg font-medium text-gray-500">Amount To Pay</dt>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" id="amount-to-pay"></dd>
+                          </div>
                         </dl>
                       </div>
                     </div>
@@ -425,7 +429,8 @@ export default {
           full_name: this.sales.full_name,
           mobile_number: this.sales.mobile_number,
           amount: this.sales.amount,
-          ref_number: this.sales.ref_number
+          ref_number: this.sales.ref_number,
+          payment_method: JSON.parse(localStorage['booking_form'])[15]['value']
       })
       .then(function (response) {
         window.location.replace(window.location.origin + '/booking-details/' + localStorage.getItem('booking_id'));

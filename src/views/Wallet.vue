@@ -13,7 +13,8 @@
         <div class="grid md:grid-cols-6 gap-3 p-4 pl-7 pr-7 bg-green-lighter bg-opacity-200 rounded-t-lg">
           <!-- Description -->
           <div class="col-span-3 text-green">
-            <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl"> ₱520.00 </h2>
+            <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl" v-if="balance"> ₱ {{ balance }} </h2>
+            <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl" v-else> ₱ 0</h2>
             <p class="text-lg"> Current Wallet Balance </p>
           </div>
 
@@ -35,66 +36,30 @@
         </div> -->
         <div class="p-7 w-full">
           <div class="md:mx-auto overflow-y-auto">
-            <h3 class="text-lg font-bold mb-6">All Transaction Details</h3>
-            <table class="min-w-full">
+            <h3 class="text-lg font-bold mb-6" v-if="wallet">All Transaction Details</h3>
+            <p class="block leading-6 text-grey-dark" v-else>
+              You'll see all your transactions here.
+            </p>
+            <table class="min-w-full" id="tbl-wallet">
               <tbody>
-                <tr class="bg-gray-100 border-b">
+                <tr class="border-b" v-for="wallet in sale">
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <CheckCircleIcon class="h-8 w-8 text-green-light"/>
                   </td>
                   <td class="text-l text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">June 29, 2022</p>
-                    Delivery Payment
+                    <p class="text-lg font-bold text-blue">{{moment(wallet.created_at).format('LL')}}</p>
+                    <span v-if="wallet.payment_method == 0">
+                      Paymaya
+                    </span>
+                    <span v-else-if="wallet.payment_method == 1">
+                      Gcash
+                    </span>
+                    <span v-else>
+                      Cash On Delivery
+                    </span>
                   </td>
                   <td class="text-xl text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">₱2,000.00</p>
-                  </td>
-                </tr>
-                <tr class="bg-gray-100 border-b">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <CheckCircleIcon class="h-8 w-8 text-green-light"/>
-                  </td>
-                  <td class="text-l text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">June 29, 2022</p>
-                    Delivery Payment
-                  </td>
-                  <td class="text-xl text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">₱2,000.00</p>
-                  </td>
-                </tr>
-                <tr class="bg-gray-100 border-b">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <CheckCircleIcon class="h-8 w-8 text-green-light"/>
-                  </td>
-                  <td class="text-l text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">June 29, 2022</p>
-                    Delivery Payment
-                  </td>
-                  <td class="text-xl text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">₱2,000.00</p>
-                  </td>
-                </tr>
-                <tr class="bg-white border-b">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <CheckCircleIcon class="h-8 w-8 text-green-light"/>
-                  </td>
-                  <td class="text-l text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">June 26, 2022</p>
-                    Delivery Payment
-                  </td>
-                  <td class="text-xl text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">₱1,500.00</p>
-                  </td>
-                </tr><tr class="bg-gray-100 border-b">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <CheckCircleIcon class="h-8 w-8 text-green-light"/>
-                  </td>
-                  <td class="text-l text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">June 24, 2022</p>
-                    Delivery Payment
-                  </td>
-                  <td class="text-xl text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">₱4,875.00</p>
+                    <p class="text-lg font-bold text-blue">₱ {{ wallet.amount }}</p>
                   </td>
                 </tr>
               </tbody>
@@ -110,14 +75,50 @@
 </template>
 
 <script>
+import $ from "jquery";
 import _ from "lodash";
 import DashboardLayout from "@/views/DashboardLayout.vue";
-
+import axios from "axios";
+import moment from 'moment'
 import { CashIcon, CheckCircleIcon, ArchiveIcon  } from '@heroicons/vue/outline'
+
+$( document ).ready(function() {
+  $('#tbl-wallet tr:odd').addClass('bg-white')
+  $('#tbl-wallet tr:even').addClass('bg-gray-100')
+});
 
 export default {
   components: {
     DashboardLayout, CheckCircleIcon, CashIcon, ArchiveIcon
   },
+
+  data() {
+    return {
+      driver_id: localStorage.getItem('user_id'),
+      sale: '',
+      balance: ''
+    };
+  },
+
+  created() {
+    this.fetchWallet(this.driver_id),
+    this.moment = moment
+  },
+
+  methods: {
+    fetchWallet(driver_id) {
+      axios.get(process.env.VUE_APP_API + "sales?id=" + driver_id, {
+        withCredentials: true,
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then((response) => {
+        this.sale = response.data.sales;
+        this.balance = response.data.balance;
+      });
+    }
+  }
 };
 </script>

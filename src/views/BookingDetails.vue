@@ -405,7 +405,9 @@ export default {
             location: $('#shipment-location').val(),
             current_url: absoluteURL,
             pick_up_location: '',
-            drop_off_location: ''
+            drop_off_location: '',
+            amount: '',
+            payment_method: ''
           },
           value: '',
           size: 200
@@ -458,6 +460,7 @@ export default {
         this.shipment.drop_off_location = response.data.booking.drop_off
         this.shipment.receiver_name = response.data.booking.receiver_name
         this.value = response.data.qr_code.url
+        this.shipment.amount = response.data.booking.payment_total
 
         if(response.data.booking.payment_method == 0){
           var payment_method = "Paymaya";
@@ -471,6 +474,7 @@ export default {
           $('#cancel-button').addClass('ml-auto mr-2')
         }
         $('#payment-method').html('Payment Method: ' + payment_method);
+        this.shipment.payment_method = payment_method;
 
         if(response.data.booking.payment_status == 0){
           var payment_status = "Pending";
@@ -675,12 +679,10 @@ export default {
           url: this.shipment.current_url,
           pick_up_location : this.shipment.pick_up_location,
           drop_off_location : this.shipment.drop_off_location,
-          amount: this.shipment.amount
+          amount: this.shipment.amount,
+          payment_method: this.shipment.payment_method
       })
       .then(function (response) {
-        // localStorage.removeItem("Pick-up Location");
-        // localStorage.removeItem("Drop-off Location");
-        // localStorage.removeItem("Receiver Name");
         location.reload(true);
         
         currentObj.output = response.data.booking;

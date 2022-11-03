@@ -366,6 +366,9 @@
           src=""
           class="w-8 rounded"
         />
+        <TruckIcon
+          class="h-7 w-8 cod-logo"
+        />
         <div class="grid">
           <span class="block font-semibold" id="payment-method"></span>
           <!-- <span class="block">09*****8520</span> -->
@@ -870,7 +873,7 @@ export default {
 
         $('#vehicle-type-input').val(booking_form.get('vehicle_form'));
       });
-
+      
       $("#payment-method-change").click(function() {
         let booking_form = new Map();
         JSON.parse(localStorage['booking_form']).forEach(item => {
@@ -990,6 +993,7 @@ export default {
         }
       });
 
+      $(".cod-logo").hide();
       $("#payment-method-save").click(function(e) {        
         var payment_method_input = $('input[name="payment_method"]:checked').val();
         let booking_form_array = JSON.parse(localStorage['booking_form']);
@@ -1005,9 +1009,16 @@ export default {
         })
 
         if (booking_form.get('payment_method') == 'Paymaya') {
+          $("#payment-logo").show();
+          $(".cod-logo").hide();
           var payment_logo = "/img/paymaya-logo.png"
-        } else {
+        } else if (booking_form.get('payment_method') == 'GCash') {
+          $("#payment-logo").show();
+          $(".cod-logo").hide();
           var payment_logo = "/img/gcash-logo.png"
+        } else {
+          $("#payment-logo").hide();
+          $(".cod-logo").show();
         }
 
         $('#payment-logo').attr('src', payment_logo);

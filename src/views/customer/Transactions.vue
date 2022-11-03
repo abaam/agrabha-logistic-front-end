@@ -400,7 +400,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/transactions/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`, {
               withCredentials: true,  
               headers: {
               'Content-Type': 'application/json',
@@ -421,7 +421,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/transactions/search?q=${this.search}&page=transaction&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&page=transaction&entries=${this.show_entries}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -459,7 +459,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/transactions/search?q=${this.search}&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&entries=${this.show_entries}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',

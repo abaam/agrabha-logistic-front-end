@@ -107,7 +107,7 @@ export default {
 
   methods: {
     fetchWallet(driver_id) {
-      axios.get(process.env.VUE_APP_API + "sales?id=" + driver_id, {
+      axios.get(process.env.VUE_APP_API + "sales/wallet?id=" + driver_id, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',

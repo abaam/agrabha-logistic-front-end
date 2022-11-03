@@ -440,14 +440,14 @@ export default {
           )
           .then((response) => {
             if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
+              this.pagination = response.data.bookings.pagination;
+              this.bookings = response.data.bookings.collection;
             }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
+              this.pagination = response.data.bookings.pagination;
+              this.bookings = response.data.bookings.collection;
             }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
+              this.pagination = response.data.bookings.pagination;
+              this.bookings = response.data.bookings.collection;
             }
           });
       }
@@ -468,16 +468,8 @@ export default {
             }
           )
           .then((response) => {
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     }),
@@ -522,16 +514,8 @@ export default {
             }
           )
           .then((response) => {
-            if (this.role == 1) {
-              this.pagination = response.data.bookings_driver.pagination;
-              this.bookings = response.data.bookings_driver.collection;
-            }else if (this.role == 2) {
-              this.pagination = response.data.bookings_customer.pagination;
-              this.bookings = response.data.bookings_customer.collection;
-            }else if (this.role == 3) {
-              this.pagination = response.data.bookings_admin.pagination;
-              this.bookings = response.data.bookings_admin.collection;
-            }
+            this.pagination = response.data.bookings.pagination;
+            this.bookings = response.data.bookings.collection;
           });
       }
     },

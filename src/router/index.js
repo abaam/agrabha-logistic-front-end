@@ -124,6 +124,12 @@ const routes = [
     component: () => import ('../views/admin/PendingApproval.vue'),
     meta: { authOnly: true, admin: true, role: 3 }
   },
+  {
+    path: '/sales',
+    name: 'Sales',
+    component: () => import ('../views/admin/Sales.vue'),
+    meta: { authOnly: true, admin: true, role: 3 }
+  },
 ]
 
 const router = createRouter({

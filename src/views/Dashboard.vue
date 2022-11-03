@@ -165,7 +165,7 @@
         },
         {
             href: '/transactions',
-            label: 'transactions',
+            label: 'Transactions',
             icon: 'RefreshIcon'
         },
         {

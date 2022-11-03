@@ -413,7 +413,7 @@
                 </div>
                 <div class="w-full md:w-1/2 px-3">
                   <dt class="text-lg font-medium text-gray-500">Amount</dt>
-                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ payment.amount }}</dd>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ String(payment.amount).replace(/(.)(?=(\d{3})+$)/g,'$1,') }}</dd>
                 </div>
                 <div class="w-full px-3 mt-6">
                   <dt class="text-lg font-medium text-gray-500">Date of Transaction</dt>

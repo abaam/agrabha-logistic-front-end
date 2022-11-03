@@ -1,9 +1,9 @@
 <template>
-  <DashboardLayout navClass="border-b-0" mobileTitle="Pending Approvals">
+  <DashboardLayout navClass="border-b-0" mobileTitle="Sales">
     <section class="hidden px-3 py-6 md:block md:p-6">
       <div class="mb-6 flex items-center justify-between">
         <h2 class="block text-xl font-bold leading-6 md:text-2xl lg:text-3xl">
-          Pending Approvals
+          Sales
         </h2>
       </div>
 
@@ -31,8 +31,8 @@
             <input
               type="text"
               v-model="search"
-              @keyup="searchBooking"
-              @keyup.enter="fetchBookings"
+              @keyup="searchSales"
+              @keyup.enter="fetchSales"
               class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-900 focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
             />
           </div>
@@ -49,121 +49,64 @@
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Package Item
+                        Booking ID
                       </th>
                       <th
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Receiver's Name
+                        Payee's Full Name
                       </th>
                       <th
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Receiver's Contact
+                        Payee's Mobile Number
                       </th>
                       <th
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Vehicle Type
+                        Amount
                       </th>
                       <th
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Drop Off
+                        Reference Number
                       </th>
                       <th
                         scope="col"
                         class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
                       >
-                        Pick Up
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Date/Time
-                      </th>
-                      <th
-                        scope="col"
-                        class="whitespace-nowrap px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider"
-                      >
-                        Booking Status
-                      </th>
-                      <th scope="col" class="relative px-6 py-3">
-                        <span class="sr-only">Edit</span>
+                        Payment Method
                       </th>
                     </tr>
                   </thead>
-                  <tbody class="divide-y divide-grey-light bg-white" v-if="bookings != ''">
-                    <tr v-for="booking in bookings" :key="booking.booking_id">
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.package_item }}</div>
+                  <tbody class="divide-y divide-grey-light bg-white" v-if="sales != ''">
+                    <tr v-for="sale in sales" :key="sale.booking_id">
+                        <td class="whitespace-nowrap px-6 py-4">
+                        <div class="text-sm">{{ sale.booking_id }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.receiver_name }}</div>
+                        <div class="text-sm" v-if="sale.full_name">{{ sale.full_name }}</div>
+                        <div class="text-sm" v-else>N/A</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.receiver_contact }}</div>
+                        <div class="text-sm" v-if="sale.mobile_number">{{ sale.mobile_number }}</div>
+                        <div class="text-sm" v-else>N/A</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.vehicle_type }}</div>
+                        <div class="text-sm">{{ sale.amount }}</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.drop_off }}</div>
+                        <div class="text-sm" v-if="sale.ref_number">{{ sale.ref_number }}</div>
+                        <div class="text-sm" v-else>N/A</div>
                       </td>
                       <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm truncate text-ellipsis w-60">{{ booking.pick_up }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4">
-                        <div class="text-sm">{{ booking.date_time }}</div>
-                      </td>
-                      <td class="whitespace-nowrap px-6 py-4 w-48">
-                        <div v-if="booking.status == 1">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-green-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-white">
-                              Delivered
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.status == 2">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-blue-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-white">
-                              To Receive
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.status == 3">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-white">
-                              To Ship
-                            </p>
-                          </div>
-                        </div>
-                        <div v-if="booking.status == 4">
-                          <div
-                            class="flex w-auto items-center justify-center rounded-full bg-red-light py-0.5 px-1"
-                          >
-                            <p class="text-sm font-semibold text-white">
-                              Cancelled
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="whitespace-nowrap px-6 py-4 text-right text-sm"
-                      >
-                        <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-blue-light hover:text-blue"
-                          >View details</router-link>
+                        <div class="text-sm" v-if="sale.payment_method == 0">Paymaya</div>
+                        <div class="text-sm" v-else-if="sale.payment_method == 1">GCash</div>
+                        <div class="text-sm" v-else>Cash On Delivery</div>
                       </td>
                     </tr>
                   </tbody>
@@ -187,7 +130,7 @@
 
         <div
           class="flex items-center justify-between px-6 md:flex-col md:space-y-2 lg:flex-row lg:space-y-0"
-          v-if="bookings != ''"
+          v-if="sales != ''"
         >
           <p>
             Showing <span>{{ entries }}</span> to
@@ -195,7 +138,7 @@
             <span>{{ pagination.total }}</span> entries
           </p>
           <div>
-            <pagination :pagination="pagination" @paginate="fetchBookings" />
+            <pagination :pagination="pagination" @paginate="fetchSales" />
           </div>
         </div>
       </div>
@@ -212,36 +155,43 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              To Ship
+              Paymaya
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              GCash
+            </button>
+          </Tab>
+          <Tab v-slot="{ selected }" as="template">
+            <button
+              :class="[selected ? 'border-blue text-blue' : 'bg-white']"
+              class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
+            >
+              Cash On Delivery
             </button>
           </Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <div v-if="to_ship != ''" class="my-3 grid gap-y-2">
-              <div v-for="booking in to_ship"
-                :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+            <div v-if="paymaya != ''" class="my-3 grid gap-y-2">
+              <div v-for="sale in paymaya"
+                :key="sale.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
-                  <p class="font-semibold">Package Item: {{ booking.package_item }}</p>
-                  <p class="font-bold">Vehicle Type: {{ booking.vehicle_type }}</p>
+                  <p class="font-semibold">Booking ID: {{ sale.booking_id }}</p>
+                  <p class="font-bold">Reference #: {{ sale.ref_number }}</p>
                 </div>
 
                 <div class="block">
-                  <span class="font-bold">Drop Off:</span> {{ booking.drop_off }}
+                  <span class="font-bold">Full Name:</span> {{ sale.full_name }}
                   <p>
-                  <span class="font-bold">Pick Up:</span> <span>{{ booking.pick_up }}</span>
+                  <span class="font-bold">Mobile Number:</span> <span>{{ sale.mobile_number }}</span>
                   </p>
-                  <span class="font-bold">Date/Time:</span> {{ booking.date_time }}
-                  <p>
-                  <span class="font-bold">Payment Method:</span> 
-                  <span v-if="booking.payment_method == 0">
-                    Paymaya
-                  </span>
-                  <span v-else>
-                    Gcash
-                  </span>
-                  </p>
+                  <span class="font-bold">Amount:</span> {{ sale.amount }}
                 </div>
 
                 <div class="flex items-center space-x-1 text-blue">
@@ -250,7 +200,7 @@
                   >
                     <CubeIcon class="h-3 w-3 text-blue" />
                   </div>
-                  <router-link :to='{name:"Booking Details",params:{id:booking.booking_id}}' class="text-sm font-semibold text-blue"
+                  <router-link :to='{name:"Booking Details",params:{id:sale.booking_id}}' class="text-sm font-semibold text-blue"
                           >View details</router-link>
                 </div>
               </div>
@@ -263,10 +213,100 @@
                   alt=""
                 />
                 <h6 class="mt-8 block text-xl font-semibold">
-                  No bookings yet?
+                  No Sales yet?
                 </h6>
                 <p class="block leading-6 text-grey-dark">
-                  You'll see all your bookings to be shipped here.
+                  You'll see all your sales here.
+                </p>
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div v-if="gcash != ''" class="my-3 grid gap-y-2">
+              <div v-for="sale in gcash"
+                :key="sale.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Booking ID: {{ sale.booking_id }}</p>
+                  <p class="font-bold">Reference #: {{ sale.ref_number }}</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Full Name:</span> {{ sale.full_name }}
+                  <p>
+                  <span class="font-bold">Mobile Number:</span> <span>{{ sale.mobile_number }}</span>
+                  </p>
+                  <span class="font-bold">Amount:</span> {{ sale.amount }}
+                </div>
+
+                <div class="flex items-center space-x-1 text-blue">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-blue" />
+                  </div>
+                  <router-link :to='{name:"Booking Details",params:{id:sale.booking_id}}' class="text-sm font-semibold text-blue"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
+              <div class="px-3 py-6 text-center">
+                <img
+                  class="mx-auto w-48"
+                  src="../../../public/svg/no_delivery.svg"
+                  alt=""
+                />
+                <h6 class="mt-8 block text-xl font-semibold">
+                  No Sales yet?
+                </h6>
+                <p class="block leading-6 text-grey-dark">
+                  You'll see all your sales here.
+                </p>
+              </div>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div v-if="cash_on_delivery != ''" class="my-3 grid gap-y-2">
+              <div v-for="sale in cash_on_delivery"
+                :key="sale.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
+              >
+                <div class="flex items-center justify-between">
+                  <p class="font-semibold">Booking ID: {{ sale.booking_id }}</p>
+                  <p class="font-bold">Reference #: {{ sale.ref_number }}</p>
+                </div>
+
+                <div class="block">
+                  <span class="font-bold">Full Name:</span> {{ sale.full_name }}
+                  <p>
+                  <span class="font-bold">Mobile Number:</span> <span>{{ sale.mobile_number }}</span>
+                  </p>
+                  <span class="font-bold">Amount:</span> {{ sale.amount }}
+                </div>
+
+                <div class="flex items-center space-x-1 text-blue">
+                  <div
+                    class="flex h-5 w-5 items-center justify-center rounded-full bg-blue-light"
+                  >
+                    <CubeIcon class="h-3 w-3 text-blue" />
+                  </div>
+                  <router-link :to='{name:"Booking Details",params:{id:sale.booking_id}}' class="text-sm font-semibold text-blue"
+                          >View details</router-link>
+                </div>
+              </div>
+            </div>
+            <div v-else class="my-20 grid h-96 place-items-center gap-1 px-3">
+              <div class="px-3 py-6 text-center">
+                <img
+                  class="mx-auto w-48"
+                  src="../../../public/svg/no_delivery.svg"
+                  alt=""
+                />
+                <h6 class="mt-8 block text-xl font-semibold">
+                  No Sales yet?
+                </h6>
+                <p class="block leading-6 text-grey-dark">
+                  You'll see all your sales here.
                 </p>
               </div>
             </div>
@@ -299,23 +339,23 @@ export default {
     return {
       offset: 4,
       pagination: {},
-      bookings: [],
-      to_ship: [],
-      to_receive: [],
-      delivered: [],
+      sales: [],
+      paymaya: [],
+      gcash: [],
+      cash_on_delivery: [],
       search: "",
       show_entries: "5",
       role: localStorage.getItem('role')
     };
   },
   created() {
-    this.fetchBookings(),
-      this.fetchToShip(),
-      this.fetchToReceive(),
-      this.fetchDelivered();
+    this.fetchSales(),
+    this.fetchPaymaya(),
+    this.fetchGCash(),
+    this.fetchCashOnDelivery();
   },
   methods: {
-    fetchBookings() {
+    fetchSales() {
       let current_page = this.pagination.current_page;
       let pageNum = current_page ? current_page : 1;
 
@@ -323,7 +363,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/payment-approval?page=${pageNum}&entries=${this.show_entries}`, {
+              `sales?page=${pageNum}&entries=${this.show_entries}`, {
               withCredentials: true,  
               headers: {
               'Content-Type': 'application/json',
@@ -333,14 +373,14 @@ export default {
             }
           )
           .then((response) => {
-            this.pagination = response.data.bookings.pagination;
-            this.bookings = response.data.bookings.collection;
+            this.pagination = response.data.sales.pagination;
+            this.sales = response.data.sales.collection;
           });
       } else {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`, {
+              `sales/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`, {
               withCredentials: true,  
               headers: {
               'Content-Type': 'application/json',
@@ -350,18 +390,18 @@ export default {
             }
           )
           .then((response) => {
-            this.pagination = response.data.bookings.pagination;
-            this.bookings = response.data.bookings.collection;
+            this.pagination = response.data.sales.pagination;
+            this.sales = response.data.sales.collection;
           });
       }
     },
 
-    searchBooking: _.debounce(function () {
+    searchSales: _.debounce(function () {
       if (this.search != "") {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&page=pending_approval&entries=${this.show_entries}`, {
+              `sales/search?q=${this.search}&page=sales&entries=${this.show_entries}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -371,8 +411,8 @@ export default {
             }
           )
           .then((response) => {
-            this.pagination = response.data.bookings.pagination;
-            this.bookings = response.data.bookings.collection;
+            this.pagination = response.data.sales.pagination;
+            this.sales = response.data.sales.collection;
             console.log(response);
           });
       }
@@ -382,7 +422,7 @@ export default {
       if (this.search == "") {
         axios
           .get(
-            process.env.VUE_APP_API + "bookings/payment-approval?entries=" + event.target.value, {
+            process.env.VUE_APP_API + "sales?entries=" + event.target.value, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -392,15 +432,15 @@ export default {
             }
           )
           .then((response) => {
-            this.pagination = response.data.bookings.pagination;
-            this.bookings = response.data.bookings.collection;
+            this.pagination = response.data.sales.pagination;
+            this.sales = response.data.sales.collection;
             this.show_entries = event.target.value;
           });
       } else {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&entries=${this.show_entries}`, {
+              `sales/search?q=${this.search}&entries=${this.show_entries}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -410,14 +450,14 @@ export default {
             }
           )
           .then((response) => {
-            this.pagination = response.data.bookings.pagination;
-            this.bookings = response.data.bookings.collection;
+            this.pagination = response.data.sales.pagination;
+            this.sales = response.data.sales.collection;
           });
       }
     },
 
-    fetchToShip() {
-      axios.get(process.env.VUE_APP_API + `bookings/payment-approval`, {
+    fetchPaymaya() {
+      axios.get(process.env.VUE_APP_API + `sales`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -425,12 +465,12 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then((response) => {
-        this.to_ship = response.data.to_ship;
+        this.paymaya = response.data.paymaya;
       });
     },
 
-    fetchToReceive() {
-      axios.get(process.env.VUE_APP_API + `bookings/payment-approval`, {
+    fetchGCash() {
+      axios.get(process.env.VUE_APP_API + `sales`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -438,12 +478,12 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then((response) => {
-        this.to_receive = response.data.to_receive;
+        this.gcash = response.data.gcash;
       });
     },
 
-    fetchDelivered() {
-      axios.get(process.env.VUE_APP_API + `bookings/payment-approval`, {
+    fetchCashOnDelivery() {
+      axios.get(process.env.VUE_APP_API + `sales`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -451,7 +491,7 @@ export default {
         "Access-Control-Allow-Origin": "*"
         }
       }).then((response) => {
-        this.delivered = response.data.delivered;
+        this.cash_on_delivery = response.data.delivered;
       });
     },
   },

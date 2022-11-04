@@ -12,5 +12,11 @@ export default {
       await Csrf.getCookie();
   
       return Api.post('api/users/storeEmail', form);
-  },
+    },
+
+    async storeAddress(form) {
+      await Csrf.getCookie();
+  
+      return Api.post('api/users/storeAddress', form);
+    },
 };

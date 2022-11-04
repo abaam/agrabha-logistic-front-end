@@ -284,7 +284,7 @@
                       </button>
                     </div>
 
-                    <form action="" class="" v-if="showAddressInput">
+                    <form v-if="showAddressInput" @submit.prevent="storeAddress">
                       <div
                         class="grid lg:grid-cols-2 lg:gap-x-2 xl:grid-cols-3"
                       >
@@ -300,7 +300,7 @@
                             name="house_number"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="House/Lot No."
-                            :value="profile.house_number"
+                            v-model="profile.house_number"
                           />
                         </div>
                         <div class="mb-2">
@@ -315,7 +315,7 @@
                             name="street_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Street Name"
-                            :value="profile.street"
+                            v-model="profile.street"
                           />
                         </div>
                         <div class="mb-2">
@@ -330,7 +330,7 @@
                             name="barangay"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Barangay"
-                            :value="profile.barangay"
+                            v-model="profile.barangay"
                           />
                         </div>
                         <div class="mb-2">
@@ -345,7 +345,7 @@
                             name="municipality"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="City/Municipality"
-                            :value="profile.city"
+                            v-model="profile.city"
                           />
                         </div>
                         <div class="mb-2">
@@ -360,7 +360,7 @@
                             name="province"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Province"
-                            :value="profile.province"
+                            v-model="profile.province"
                           />
                         </div>
                         <div class="mb-2">
@@ -375,7 +375,7 @@
                             name="zip_code"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
                             placeholder="Zip Code"
-                            :value="profile.zip_code"
+                            v-model="profile.zip_code"
                           />
                         </div>
                       </div>
@@ -625,6 +625,18 @@ export default {
           // $('#btn-booking-mdl').click();
           currentObj.buildData(currentObj.profile);
           currentObj.toggleEmail();
+        })
+        .catch(function (error) {
+          currentObj.output = error;
+        });
+    },
+    storeAddress() {
+      let user = this.profile;
+      let currentObj = this;
+      Profile.storeAddress({user})
+        .then(function (response) {
+          currentObj.buildData(currentObj.profile);
+          currentObj.toggleAddress();
         })
         .catch(function (error) {
           currentObj.output = error;

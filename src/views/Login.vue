@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center min-h-screen bg-grey bg-opacity-20">
         <div class="w-0 lg:w-1/3">
-            <img class="min-h-screen object-cover z-0" src="img/login-image.png" alt="">
+            <img class="min-h-screen object-cover z-0" src="img/login-image-3.jpg" alt="">
         </div>
         <div class="w-full lg:w-2/3 px-4 md:px-8 lg:px-12 max-w-4xl p-10 mx-auto bg-white rounded-md shadow-md hover:shadow-2xl">
             <router-link to="/">

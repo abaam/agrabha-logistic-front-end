@@ -73,7 +73,7 @@
                 })
                 .then((response) => {
                     if(response.data.success){
-                        localStorage.clear();
+                        // localStorage.clear();
                         localStorage.setItem('auth', 'true');
                         localStorage.setItem('role', response.data.role);
                         this.$router.push('/dashboard');
@@ -98,18 +98,17 @@
                 })
                 .then((response) => {
                     if(response.data.success){
-                        // localStorage.clear();
-                        // localStorage.setItem('auth', 'true');
-                        // localStorage.setItem('role', response.data.role);
-                        // this.$router.push('/dashboard');
                         createToast(response.data.message,
                         {
                             type: 'success',
                             transition: 'bounce',
                         })
                     }else{
-                        // self.invalidOTP = response.data.message;
-                        // self.alertOpen = true;
+                        createToast(response.data.message,
+                        {
+                            type: 'danger',
+                            transition: 'bounce',
+                        })
                     }
                 })
                 .catch(function (error) {

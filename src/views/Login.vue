@@ -169,6 +169,7 @@
                     } else {
                         localStorage.setItem('Phone Number', response.data.phone_number);
                         localStorage.setItem('user_id', response.data.id);
+                        localStorage.setItem('user_id', response.data.id);
                         
                         createToast('Logged-in! Your account needs to be verified.',
                         {

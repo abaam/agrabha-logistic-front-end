@@ -40,6 +40,8 @@
 <script>
     import Navigation from "../components/Navigation.vue";
     import ButtonSolidBlue from "../components/buttons/ButtonSolidBlue.vue";
+    import { createToast } from 'mosha-vue-toastify';
+    import 'mosha-vue-toastify/dist/style.css'
     import { Form } from "vee-validate";
     import { reactive } from "vue";
     import axios from 'axios';
@@ -100,6 +102,11 @@
                         // localStorage.setItem('auth', 'true');
                         // localStorage.setItem('role', response.data.role);
                         // this.$router.push('/dashboard');
+                        createToast(response.data.message,
+                        {
+                            type: 'success',
+                            transition: 'bounce',
+                        })
                     }else{
                         // self.invalidOTP = response.data.message;
                         // self.alertOpen = true;
@@ -108,6 +115,11 @@
                 .catch(function (error) {
                     if (error.response) {
                         // self.invalidOTP = error.response.data.message;
+                        createToast(error.response.data.message,
+                        {
+                            type: 'danger',
+                            transition: 'bounce',
+                        })
                     }
                 });
             },

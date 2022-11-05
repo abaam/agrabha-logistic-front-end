@@ -174,7 +174,7 @@
                   <div class="modal-body relative p-4">
                     <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                       <div>
-                        <h3 class="font-bold flex justify-center items-center text-xl">Paymaya</h3>
+                        <h3 class="font-bold flex justify-center items-center text-xl" id="payment_method_text"></h3>
                         <img class="mx-auto w-52 self-center" src="" alt="Agrabah Logistics" id="payment_method_qr">
                       </div>
                       <div class="border-t border-gray-200 mt-5">
@@ -185,7 +185,7 @@
                           </div>
                           <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-medium text-gray-500">Account Number</dt>
-                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
+                            <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" id="account_number"></dd>
                           </div>
                           <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                             <dt class="text-lg font-medium text-gray-500">Amount To Pay</dt>
@@ -406,8 +406,12 @@ export default {
           } else {
             if (payment_method_input == 'Paymaya') {
               $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.png');
+              $('#payment_method_text').html('Paymaya');
+              $('#account_number').html('09087702170');
             } else if (payment_method_input == 'GCash') {
               $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
+              $('#payment_method_text').html('GCash');
+              $('#account_number').html('09156819270');
             }
 
             $('.animate-spin').hide();

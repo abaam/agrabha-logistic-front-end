@@ -60,7 +60,7 @@
                       </button>
                     </div>
 
-                    <form v-if="showNameInput" @submit.prevent="storeName">
+                    <Form @submit="storeName()" v-if="showNameInput" :validation-schema="schema" v-slot="{ errors }">
                       <div
                         class="grid w-full lg:grid-cols-2 lg:gap-x-2 xl:grid-cols-4"
                       >
@@ -70,14 +70,16 @@
                             class="block text-sm font-semibold"
                             >First Name</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="first-name"
                             name="first_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['first_name'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                             placeholder="First Name"
                             v-model="profile.first_name"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="first_name" />
                         </div>
                         <div class="mb-2">
                           <label
@@ -100,15 +102,16 @@
                             class="block text-sm font-semibold"
                             >Last Name</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="last-name"
                             name="last_name"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['last_name'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                             placeholder="Last Name"
                             v-model="profile.last_name"
-                            
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="last_name" />
                         </div>
                         <div class="mb-2">
                           <label
@@ -133,7 +136,7 @@
                           buttonText="Save"
                         />
                       </div>
-                    </form>
+                    </Form>
                   </div>
                   <div class="grid gap-4 py-6">
                     <div class="flex items-center justify-between">
@@ -196,7 +199,7 @@
                       </button>
                     </div>
 
-                    <form v-if="showEmailInput" @submit.prevent="storeEmail">
+                    <Form @submit="storeEmail" v-if="showEmailInput" :validation-schema="email_schema" v-slot="{ errors }">
                       <div class="grid w-full">
                         <div class="mb-2">
                           <label
@@ -204,14 +207,16 @@
                             class="block text-sm font-semibold"
                             >Email address</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="email-address"
-                            name="email_address"
+                            name="email"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
-                            placeholder="Email address"
+                            :class="errors['email'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
+                            placeholder="Email Address"
                             v-model="profile.email"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="email" />
                         </div>
                       </div>
 
@@ -221,7 +226,7 @@
                           buttonText="Save"
                         />
                       </div>
-                    </form>
+                    </Form>
                   </div>
                   <div class="grid gap-4 py-6">
                     <div class="flex items-center justify-between">
@@ -463,26 +468,12 @@ import Profile from "../api/profile";
 import DashboardLayout from "./DashboardLayout.vue";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import ButtonSolidBlue from "../components/buttons/ButtonSolidBlue.vue";
+import { reactive } from "vue";
+import * as yup from "yup";
+import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {
   name: "Profile",
-  setup() {
-    const isOpen = ref(true);
-    const showNameInput = ref(false);
-    const showEmailInput = ref(false);
-    const showMobileInput = ref(false);
-    const showAddressInput = ref(false);
-    const showPhotoInput = ref(false);
-
-    return {
-      isOpen,
-      showNameInput,
-      showPhotoInput,
-      showEmailInput,
-      showMobileInput,
-      showAddressInput,
-    };
-  },
   data() {
     return {
       profile: {
@@ -506,6 +497,52 @@ export default {
         name_extension: ''
       }
     }
+  },
+  setup() {
+    const isOpen = ref(true);
+    const showNameInput = ref(false);
+    const showEmailInput = ref(false);
+    const showMobileInput = ref(false);
+    const showAddressInput = ref(false);
+    const showPhotoInput = ref(false);
+
+    const schema = yup.object().shape({
+    first_name: yup
+        .string()
+        .required("First name is required"),
+    last_name: yup
+        .string()
+        .required("Last name is required")
+    });
+
+    const email_schema = yup.object().shape({
+    email: yup
+        .string()
+        .required("Email address is required"),
+    });
+
+    return {
+      isOpen,
+      showNameInput,
+      showPhotoInput,
+      showEmailInput,
+      showMobileInput,
+      showAddressInput,
+      schema,
+      email_schema,
+    };
+  },
+  components: {
+    DashboardLayout,
+    TabGroup,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel,
+    ButtonSolidBlue,
+    Form,
+    Field,
+    ErrorMessage
   },
   mounted() {
     this.showUserProfile();
@@ -686,15 +723,6 @@ export default {
       this.profile['temp_email'] = user_profile.email;
       this.profile['temp_mobile_number'] = user_profile.mobile_number;
     }
-  },
-  components: {
-    DashboardLayout,
-    TabGroup,
-    TabList,
-    Tab,
-    TabPanels,
-    TabPanel,
-    ButtonSolidBlue,
   },
 };
 </script>

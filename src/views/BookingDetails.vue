@@ -207,7 +207,7 @@
                     <dl>
                       <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-lg font-medium text-gray-500">Account Name</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">Agrabah</dd>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" id="account_name"></dd>
                       </div>
                       <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-lg font-medium text-gray-500">Account Number</dt>
@@ -644,13 +644,15 @@ export default {
         }
 
         if (response.data.booking.payment_method == 0) {
-          $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.png');
+          $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.jpg');
           $('#payment_method_text').html('Paymaya');
           $('#account_number').html('09087702170');
+          $('#account_name').html('Joselito Ocol Jr');
         }else{
           $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
           $('#payment_method_text').html('GCash');
           $('#account_number').html('09156819270');
+          $('#account_name').html('Joselito Jr O.');
         }
 
         $("#shipping-status-buttons").hide()

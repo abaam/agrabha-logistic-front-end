@@ -130,6 +130,12 @@ const routes = [
     component: () => import ('../views/admin/Sales.vue'),
     meta: { authOnly: true, admin: true, role: 3 }
   },
+  {
+    path: '/admin/transactions',
+    name: 'Transactions',
+    component: () => import ('../views/admin/Transactions.vue'),
+    meta: { authOnly: true, admin: true, role: 3 }
+  },
 ]
 
 const router = createRouter({

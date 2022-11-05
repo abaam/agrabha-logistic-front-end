@@ -43,6 +43,7 @@
         <!-- ... -->
         <div class="p-4 border rounded-lg">
           <h3 class="font-bold">Vehicle</h3>
+          <p id="driver-name"></p>
           <p id="vehicle-type"></p>
 
           <br>
@@ -88,7 +89,7 @@
                 <qrcode-vue :value="value" :size="size" level="H" />
               </a>
               <div class="flex justify-center space-x-4">
-                <ButtonOutlineBlue buttonClass="" buttonText="Copy URL"/>
+                <ButtonOutlineBlue @click="copyTrackingUrl(this.value)" id="copy-tracking-url" type="button" buttonText="Copy URL"/>
                 <ButtonOutlineGreen buttonClass="" buttonText="Download QR"/>
               </div>
             </div>
@@ -199,7 +200,7 @@
               <div class="modal-body relative p-4">
                 <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                   <div>
-                    <h3 class="font-bold flex justify-center items-center text-xl">Paymaya</h3>
+                    <h3 class="font-bold flex justify-center items-center text-xl" id="payment_method_text"></h3>
                     <img class="mx-auto w-52 self-center" src="" alt="Agrabah Logistics" id="payment_method_qr">
                   </div>
                   <div class="border-t border-gray-200 mt-5">
@@ -210,7 +211,11 @@
                       </div>
                       <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-lg font-medium text-gray-500">Account Number</dt>
-                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">09186846547</dd>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" id="account_number"></dd>
+                      </div>
+                      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-lg font-medium text-gray-500">Amount To Pay</dt>
+                        <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" id="amount-to-pay"></dd>
                       </div>
                     </dl>
                   </div>
@@ -413,7 +418,8 @@
                 </div>
                 <div class="w-full md:w-1/2 px-3">
                   <dt class="text-lg font-medium text-gray-500">Amount</dt>
-                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2">{{ String(payment.amount).replace(/(.)(?=(\d{3})+$)/g,'$1,') }}</dd>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" v-if="payment.amount.includes(',')">{{ payment.amount }}</dd>
+                  <dd class="mt-1 text-lg text-gray-900 sm:mt-0 sm:col-span-2" v-else>{{ String(payment.amount).replace(/(.)(?=(\d{3})+$)/g,'$1,') }}</dd>
                 </div>
                 <div class="w-full px-3 mt-6">
                   <dt class="text-lg font-medium text-gray-500">Date of Transaction</dt>
@@ -525,11 +531,13 @@ export default {
         $('#package-note').html('Note: ' + response.data.booking.package_note);
         $('#receiver-name').html('Name: ' + response.data.booking.receiver_name);
         $('#contact-number').html('Contact Number: ' + response.data.booking.receiver_contact);
+        $('#driver-name').html('Driver Name: ' + response.data.booking.driver_name);
         $('#vehicle-type').html('Vehicle Type: ' + response.data.booking.vehicle_type);
         $('#pick-up').html('Pick-up: ' + response.data.booking.pick_up);
         $('#drop-off').html('Drop Off: ' + response.data.booking.drop_off);
         $('#date-time').html('Date & Time: ' + response.data.booking.date_time);
         $('#payment-total').html('Total: ₱ ' + response.data.booking.payment_total);
+        $('#amount-to-pay').html('₱ ' + response.data.booking.payment_total);
 
         this.shipment.pick_up_location = response.data.booking.pick_up
         this.shipment.drop_off_location = response.data.booking.drop_off
@@ -565,16 +573,18 @@ export default {
           $('.pay-button').hide()
           $('#payment-status').attr('class', 'text-green')
 
-          if (localStorage.getItem('role') == 2) {
-            $('.details-button').hide();
+          if (localStorage.getItem('role') == 1) {
+            $('#driver-name').hide()
           }
 
           if (localStorage.getItem('role') == 2) {
             $('.details-button').hide();
+            $('#driver-name').hide()
           }
 
           if (localStorage.getItem('role') == 3) {
             $('.approve-payment').hide();
+            $('#driver-name').show()
           }
         }else if(response.data.booking.payment_status == 3){
           var payment_status = "Cancelled";
@@ -629,8 +639,12 @@ export default {
 
         if (response.data.booking.payment_method == 0) {
           $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.png');
+          $('#payment_method_text').html('Paymaya');
+          $('#account_number').html('09087702170');
         }else{
           $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
+          $('#payment_method_text').html('GCash');
+          $('#account_number').html('09156819270');
         }
 
         $("#shipping-status-buttons").hide()
@@ -786,7 +800,10 @@ export default {
           let currentObj = this;
           let booking_id = window.location.pathname.split('/').pop();
 
-          Booking.cancelBooking({booking_id})
+          Booking.cancelBooking({
+            booking_id: booking_id,
+            driver_id: this.user_id
+          })
           .then(function (response) {
             currentObj.output = response.data.booking;
 
@@ -906,6 +923,14 @@ export default {
         currentObj.output = error;
       });
     },
+    async copyTrackingUrl(URL) {
+      try {
+        await navigator.clipboard.writeText(URL);
+        $('#copy-tracking-url').html('Copied!');
+      } catch($e) {
+        alert('Cannot copy');
+      }
+    }
   }
 };
 </script>

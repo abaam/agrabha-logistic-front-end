@@ -60,7 +60,7 @@
                             </li>
                         </ul>
                         <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                            <router-link to="/transactions" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <router-link to="/admin/transactions" active-class="bg-blue rounded" class="flex items-center space-x-3 w-full px-3 py-2">
                             <RefreshIcon class="h-5 w-5"/>
                             <span>Transactions</span>
                             </router-link>

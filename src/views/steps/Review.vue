@@ -14,75 +14,128 @@
       </div>
     </div>
     <div class="mb-4 flex items-center gap-2 h-96" id="map"></div>
-    <div class="relative mb-4">
-      <Field
-        type="text"
-        as="input"
-        id="origin-input"
-        name="pick_up"
-        placeholder="Pick Up"
-        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-      />
-      <Field
-        type="hidden"
-        as="input"
-        id="origin-input-lat"
-        name="pick_up_lat"
-        placeholder="Pick Up Latitude"
-        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-      />
-      <Field
-        type="hidden"
-        as="input"
-        id="origin-input-lng"
-        name="pick_up_lng"
-        placeholder="Pick Up Longitude"
-        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-      />
-      <label
-        for="pick-up"
-        class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
-        >Pick Up</label
-      >
-      <ErrorMessage
-        class="my-1 block text-sm font-semibold text-purple"
-        name="pick_up"
-      />
+    <div id="complete-address-details">
+      <div class="mb-2 flex items-center justify-between">
+        <p>Pick Up Complete Address</p>
+        <p id="pick-up-complete-address"></p>
+      </div>
+      <div class="mb-2 flex items-center justify-between">
+        <p>Drop Off Complete Address</p>
+        <p id="drop-off-complete-address"></p>
+      </div>
     </div>
-    <div class="relative mb-4">
-      <Field
-        type="text"
-        as="input"
-        id="destination-input"
-        name="drop_off"
-        placeholder="Drop Off"
-        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-      />
-      <Field
-        type="hidden"
-        as="input"
-        id="destination-input-lat"
-        name="drop_off_lat"
-        placeholder="Drop Off Latitude"
-        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-      />
-      <Field
-        type="hidden"
-        as="input"
-        id="destination-input-lng"
-        name="drop_off_lng"
-        placeholder="Drop Off Longitude"
-        class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-      />
-      <label
-        for="drop-off"
-        class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
-        >Drop Off</label
-      >
-      <ErrorMessage
-        class="my-1 block text-sm font-semibold text-purple"
-        name="drop_off"
-      />
+    <div id="complete-address-details-input">
+      <div class="relative mb-4">
+        <Field
+          type="text"
+          as="input"
+          id="origin-input"
+          name="pick_up"
+          placeholder="Pick Up"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <Field
+          type="hidden"
+          as="input"
+          id="origin-input-lat"
+          name="pick_up_lat"
+          placeholder="Pick Up Latitude"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <Field
+          type="hidden"
+          as="input"
+          id="origin-input-lng"
+          name="pick_up_lng"
+          placeholder="Pick Up Longitude"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <label
+          for="origin-input"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Pick Up</label
+        >
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="pick_up"
+        />
+      </div>
+      <div class="relative mb-4">
+          <Field
+          :rules="isRequired"
+          type="text"
+          as="input"
+          id="origin-complete-address"
+          name="pick_up_complete_address"
+          placeholder="Complete Address"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <label
+          for="origin-complete-address"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Complete Address</label
+        >
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="pick_up_complete_address"
+        />
+      </div>  
+      <hr class="mb-4">
+      <div class="relative mb-4">
+        <Field
+          type="text"
+          as="input"
+          id="destination-input"
+          name="drop_off"
+          placeholder="Drop Off"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <Field
+          type="hidden"
+          as="input"
+          id="destination-input-lat"
+          name="drop_off_lat"
+          placeholder="Drop Off Latitude"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <Field
+          type="hidden"
+          as="input"
+          id="destination-input-lng"
+          name="drop_off_lng"
+          placeholder="Drop Off Longitude"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <label
+          for="destination-input"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Drop Off</label
+        >
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="drop_off"
+        />
+      </div>
+      <div class="relative mb-4">
+        <Field
+          :rules="isRequired"
+          type="text"
+          as="input"
+          id="destination-complete-address"
+          name="drop_off_complete_address"
+          placeholder="Complete Address"
+          class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
+        />
+        <label
+          for="destination-complete-address"
+          class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+          >Complete Address</label
+        >
+        <ErrorMessage
+          class="my-1 block text-sm font-semibold text-purple"
+          name="drop_off_complete_address"
+        />
+      </div>
     </div>
     <div class="inline-flex w-full space-x-4" id="location-buttons">
       <span id="location-save" class="cursor-pointer mb-4 flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</span>
@@ -655,10 +708,7 @@ function haversineDistance(mk1, mk2) {
 }
 
 function hideDestinationInputs(){
-  $('#origin-input').hide();
-  $('#destination-input').hide();
-  $("[for='pick-up']").hide();
-  $("[for='drop-off']").hide();
+  $("#complete-address-details-input").hide();
   $("#location-buttons").hide();
 }
 
@@ -680,6 +730,20 @@ function hideVehicleInputs(){
 function hidePaymentMethodInputs(){
   $("#payment-method-details-input").hide();
   $("#payment-method-buttons").hide();
+}
+
+function hideCompleteAddressInputs(){
+  $("#complete-address-details-input").hide();
+}
+
+function retrieveCompleteAddress(){
+  let booking_form = new Map();
+  JSON.parse(localStorage['booking_form']).forEach(item => {
+      booking_form.set(item.name, item.value);
+  })
+
+  $('#pick-up-complete-address').html(booking_form.get('pick_up_complete_address'));
+  $('#drop-off-complete-address').html(booking_form.get('drop_off_complete_address'));
 }
 
 function retrievePackage(){
@@ -743,6 +807,7 @@ export default {
     hideReceiverInputs()
     hideVehicleInputs()
     hidePaymentMethodInputs()
+    hideCompleteAddressInputs()
 
     loadScript("https://polyfill.io/v3/polyfill.min.js?features=default")
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
@@ -809,7 +874,7 @@ export default {
         $('#pay-button').html('<svg class="inline mr-2 w-8 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-green-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'
                       +  '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>'
                       +  '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>'
-                      +  '</svg>PAY ₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
+                      +  '</svg>Save');
       }
 
       $('.animate-spin').hide();
@@ -817,15 +882,19 @@ export default {
       $("#location-change").click(function() {
         setupPlaceChangedListener(originAutocomplete, "ORIG");
         setupPlaceChangedListener(destinationAutocomplete, "DEST");
-        $('#origin-input').show();
-        $('#destination-input').show();
-        $("[for='pick-up']").show();
-        $("[for='drop-off']").show();
-        $("#location-buttons").show();
         $("#location-change").hide();
+        $("#complete-address-details").hide();
+        $("#location-buttons").show();
+        $("#complete-address-details-input").show();
 
-        $('#origin-input').val('')
-        $('#destination-input').val('')
+        // $('#origin-input').val(booking_form.get('pick_up'))
+        // $('#destination-input').val(booking_form.get('drop_off'))
+        // $('#origin-input-lat').val(booking_form.get('pick_up_lat'))
+        // $('#origin-input-lng').val(booking_form.get('pick_up_lng'))
+        $('#origin-complete-address').val(booking_form.get('pick_up_complete_address'))
+        // $('#destination-input-lat').val(booking_form.get('drop_off_lat'))
+        // $('#destination-input-lng').val(booking_form.get('drop_off_lng'))
+        $('#destination-complete-address').val(booking_form.get('drop_off_complete_address'))
       });
 
       $("#package-change").click(function() {
@@ -893,19 +962,24 @@ export default {
       $("#location-save").click(function(e) {        
         var origin_input = $('#origin-input').val();
         var destination_input = $('#destination-input').val();
+        var origin_complete_address_input = $('#origin-complete-address').val();
+        var destination_complete_address_input = $('#destination-complete-address').val();
 
-        if(origin_input !== '' && destination_input !== ''){
+        if(origin_input !== '' && destination_input !== '' && origin_complete_address_input && destination_complete_address_input){
           let booking_form = JSON.parse(localStorage['booking_form']);
           booking_form[8]['value'] = origin_input;
           booking_form[9]['value'] = $('#origin-input-lat').val();
           booking_form[10]['value'] = $('#origin-input-lng').val();
-          booking_form[11]['value'] = destination_input;
-          booking_form[12]['value'] = $('#destination-input-lat').val();
-          booking_form[13]['value'] = $('#destination-input-lng').val();
+          booking_form[11]['value'] = $('#origin-complete-address').val();
+          booking_form[12]['value'] = destination_input;
+          booking_form[13]['value'] = $('#destination-input-lat').val();
+          booking_form[14]['value'] = $('#destination-input-lng').val();
+          booking_form[15]['value'] = $('#destination-complete-address').val();
           
           localStorage['booking_form'] = JSON.stringify(booking_form);
           hideDestinationInputs()
           $("#location-change").show();
+          $("#complete-address-details").show();
 
           var originMarker = new google.maps.Marker({
             draggable: false,
@@ -930,7 +1004,7 @@ export default {
           booking_form[16]['value'] = parseFloat(distance * 200).toLocaleString();
           localStorage['booking_form'] = JSON.stringify(booking_form);
         } else {
-          alert("Please select an option from the dropdown list.");
+          alert("All fields are required.");
         }
       });
 
@@ -997,7 +1071,7 @@ export default {
       $("#payment-method-save").click(function(e) {        
         var payment_method_input = $('input[name="payment_method"]:checked').val();
         let booking_form_array = JSON.parse(localStorage['booking_form']);
-        booking_form_array[15]['value'] = payment_method_input;
+        booking_form_array[17]['value'] = payment_method_input;
           
         localStorage['booking_form'] = JSON.stringify(booking_form_array);
         hidePaymentMethodInputs()
@@ -1034,7 +1108,7 @@ export default {
           $('#pay-button').html('<svg class="inline mr-2 w-8 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-green-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">'
                         +  '<path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>'
                         +  '<path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>'
-                        +  '</svg>PAY ₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
+                        +  '</svg>Save');
         }
 
         $('.animate-spin').hide();
@@ -1043,7 +1117,7 @@ export default {
       $("#location-cancel").click(function(e) {        
         initializeMap()
         hideDestinationInputs()
-        $("#location-change").show();
+        $("#location-change").show()
       });
 
       $("#package-cancel").click(function(e) {        
@@ -1080,6 +1154,7 @@ export default {
     retrieveReceiversInfo()
     retrieveVehicleType()
     retrievePaymentMethod()
+    retrieveCompleteAddress()
 
     if (booking_form.get('payment_method') == 'Paymaya') {
       var payment_logo = "/img/paymaya-logo.png"

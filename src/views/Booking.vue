@@ -152,7 +152,7 @@
                             class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
                             <p class="text-sm font-semibold text-white">
-                              To Ship
+                              For Pickup
                             </p>
                           </div>
                         </div>
@@ -227,7 +227,7 @@
               :class="[selected ? 'border-blue text-blue' : 'bg-white']"
               class="w-full cursor-pointer border-b-2 border-transparent py-2 text-center text-sm font-semibold md:w-auto md:text-base"
             >
-              To Ship
+              For Pickup
             </button>
           </Tab>
           <Tab v-slot="{ selected }" as="template" v-show="role == 2 || role == 3">
@@ -241,8 +241,8 @@
         </TabList>
         <TabPanels>
           <TabPanel>
-            <div v-if="to_ship != ''" class="my-3 grid gap-y-2">
-              <div v-for="booking in to_ship"
+            <div v-if="for_pickup != ''" class="my-3 grid gap-y-2">
+              <div v-for="booking in for_pickup"
                 :key="booking.booking_id" class="grid gap-y-3 rounded-md bg-white p-3 shadow"
               >
                 <div class="flex items-center justify-between">
@@ -383,7 +383,7 @@ export default {
       offset: 4,
       pagination: {},
       bookings: [],
-      to_ship: [],
+      for_pickup: [],
       to_receive: [],
       search: "",
       show_entries: "5",
@@ -391,8 +391,8 @@ export default {
     };
   },
   created() {
-    this.fetchBookings(),
-      this.fetchToShip(),
+      this.fetchBookings(),
+      this.fetchForPickup(),
       this.fetchToReceive()
   },
   methods: {
@@ -520,7 +520,7 @@ export default {
       }
     },
 
-    fetchToShip() {
+    fetchForPickup() {
       axios.get(process.env.VUE_APP_API + `bookings`, {
         withCredentials: true,
         headers: {
@@ -530,11 +530,11 @@ export default {
         }
       }).then((response) => {
         if (this.role == 1) {
-          this.to_ship = response.data.to_ship_driver;
+          this.for_pickup = response.data.for_pickup_driver;
         }else if (this.role == 2) {
-          this.to_ship = response.data.to_ship;
+          this.for_pickup = response.data.for_pickup;
         }else if (this.role == 3) {
-          this.to_ship = response.data.to_ship_admin;
+          this.for_pickup = response.data.for_pickup_admin;
         }
       });
     },

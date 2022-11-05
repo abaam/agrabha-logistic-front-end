@@ -59,7 +59,8 @@
                     </span>
                   </td>
                   <td class="text-xl text-gray-900 font-normal px-4 py-4 whitespace-nowrap">
-                    <p class="text-lg font-bold text-blue">₱ {{ String(wallet.amount).replace(/(.)(?=(\d{3})+$)/g,'$1,') }}</p>
+                    <p class="text-lg font-bold text-blue" v-if="wallet.amount.includes(',')">₱ {{ wallet.amount }}</p>
+                    <p class="text-lg font-bold text-blue" v-else>₱ {{ String(wallet.amount).replace(/(.)(?=(\d{3})+$)/g,'$1,') }}</p>
                   </td>
                 </tr>
               </tbody>

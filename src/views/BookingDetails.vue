@@ -545,6 +545,18 @@ export default {
         this.value = response.data.qr_code.url
         this.shipment.amount = response.data.booking.payment_total
 
+        if (localStorage.getItem('role') == 1) {
+          $('#driver-name').hide()
+        }
+
+        if (localStorage.getItem('role') == 2) {
+          $('#driver-name').hide()
+        }
+
+        if (localStorage.getItem('role') == 3) {
+          $('#driver-name').show()
+        }
+
         if(response.data.booking.payment_method == 0){
           var payment_method = "Paymaya";
         } else if(response.data.booking.payment_method == 1){
@@ -573,18 +585,12 @@ export default {
           $('.pay-button').hide()
           $('#payment-status').attr('class', 'text-green')
 
-          if (localStorage.getItem('role') == 1) {
-            $('#driver-name').hide()
-          }
-
           if (localStorage.getItem('role') == 2) {
             $('.details-button').hide();
-            $('#driver-name').hide()
           }
 
           if (localStorage.getItem('role') == 3) {
             $('.approve-payment').hide();
-            $('#driver-name').show()
           }
         }else if(response.data.booking.payment_status == 3){
           var payment_status = "Cancelled";
@@ -602,13 +608,13 @@ export default {
           var status = "To Receive";
           $('#status').attr('class', 'text-blue')
         }else if(response.data.booking.status == 3){
-          var status = "To Ship";
+          var status = "For Pickup";
           $('#status').attr('class', 'text-orange')
         }else if(response.data.booking.payment_status == 3){
           var status = "Cancelled";
           $('#status').attr('class', 'text-red')
         }else if(response.data.booking.status == 5){
-          var status = "To Ship";
+          var status = "For Pickup";
           $('#status').attr('class', 'text-orange')
           
           $("#shipping-info-change").show()
@@ -842,7 +848,8 @@ export default {
 
           Booking.acceptBooking({
             booking_id: booking_id,
-            driver_id: this.user_id
+            driver_id: this.user_id,
+            payment_method: this.shipment.payment_method
           })
           .then(function (response) {
             currentObj.output = response.data.booking;

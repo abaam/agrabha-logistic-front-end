@@ -556,11 +556,11 @@ export default {
             }
 
             if(response.data.street != "") {
-              street = response.data.street + ', ';;
+              street = response.data.street + ', ';
             }
 
             if(response.data.barangay != "") {
-              barangay = response.data.barangay + ', ';;
+              barangay = response.data.barangay + ', ';
             }
 
             if(response.data.city != "") {
@@ -568,11 +568,11 @@ export default {
             }
 
             if(response.data.province != "") {
-              province = response.data.province + ', ';;
+              province = response.data.province + ', ';
             }
 
             if(response.data.zip_code != "") {
-              zip_code = response.data.zip_code + ', ';;
+              zip_code = response.data.zip_code + ', ';
             }
 
             this.profile['full_name'] = response.data.first_name + ' '+ middle_name + response.data.last_name +' ' + response.data.name_extension;
@@ -644,12 +644,45 @@ export default {
     },
     buildData(user_profile) {
       if(user_profile.middle_name == '') {
-          var middle_name = '';
-        } else {
-          var middle_name = user_profile.middle_name.charAt(0) +'. ';
-        }
+        var middle_name = '';
+      } else {
+        var middle_name = user_profile.middle_name.charAt(0) +'. ';
+      }
+
+      var house_number = "";
+      var street = "";
+      var barangay = "";
+      var city = "";
+      var province = "";
+      var zip_code= "";
+
+      if(user_profile.house_number != "") {
+        house_number = user_profile.house_number + ', ';
+      }
+
+      if(user_profile.street != "") {
+        street = user_profile.street + ', ';
+      }
+
+      if(user_profile.barangay != "") {
+        barangay = user_profile.barangay + ', ';
+      }
+
+      if(user_profile.city != "") {
+        city = user_profile.city + ', ';;
+      }
+
+      if(user_profile.province != "") {
+        province = user_profile.province + ', ';
+      }
+
+      if(user_profile.zip_code != "") {
+        zip_code = user_profile.zip_code + ', ';
+      }
+
       this.profile['full_name'] = user_profile.first_name + ' '+ middle_name + user_profile.last_name +' ' + user_profile.name_extension;
-      this.profile['address'] = user_profile.house_number + ' ' + user_profile.street + ', ' + user_profile.barangay + ', '+ user_profile.city + ', '+ user_profile.province + ', '+ user_profile.zip_code; 
+      this.profile['address'] = house_number +  street + barangay + city + province + zip_code;
+      this.profile['address'] = this.profile['address'].replace(/,\s*$/, "");
       this.profile['temp_email'] = user_profile.email;
       this.profile['temp_mobile_number'] = user_profile.mobile_number;
     }

@@ -13,6 +13,11 @@ const routes = [
     component: () => import ('../views/Tracking.vue')
   },
   {
+    path: '/tracking/:id',
+    name: 'Tracking Details',
+    component: () => import ('../views/TrackingDetails.vue')
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import ('../views/Login.vue'),

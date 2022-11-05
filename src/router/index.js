@@ -52,14 +52,14 @@ const routes = [
     meta: { authOnly: true }
   },
   {
-    path: '/transactions',
-    name: 'Transactions',
+    path: '/customer/transactions',
+    name: 'Customer Transactions',
     component: () => import ('../views/customer/Transactions.vue'),
     meta: { authOnly: true, customer: true, role: 2 }
   },
   {
-    path: '/deliveries',
-    name: 'Deliveries',
+    path: '/driver/transactions',
+    name: 'Driver Transactions',
     component: () => import ('../views/driver/Deliveries.vue'),
     meta: { authOnly: true, driver: true, role: 1 }
   },
@@ -137,7 +137,7 @@ const routes = [
   },
   {
     path: '/admin/transactions',
-    name: 'Transactions',
+    name: 'Admin Transactions',
     component: () => import ('../views/admin/Transactions.vue'),
     meta: { authOnly: true, admin: true, role: 3 }
   },

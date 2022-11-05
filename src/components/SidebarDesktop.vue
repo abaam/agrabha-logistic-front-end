@@ -120,9 +120,9 @@
             icon: 'CashIcon'
         },
         {
-            href: '/deliveries',
-            label: 'Deliveries',
-            icon: 'TruckIcon'
+            href: '/driver/transactions',
+            label: 'Transaction',
+            icon: 'RefreshIcon'
         }
     ]
 
@@ -143,7 +143,7 @@
         //     icon: 'CashIcon'
         // },
         {
-            href: '/transactions',
+            href: '/customer/transactions',
             label: 'Transactions',
             icon: 'RefreshIcon'
         }

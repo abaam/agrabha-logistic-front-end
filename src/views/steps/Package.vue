@@ -50,18 +50,23 @@
       <div class="relative">
         <Field
           :rules="isRequired"
-          type="text"
-          as="input"
+          type="input"
+          as="select"
           id="unit"
           name="package_unit"
           placeholder="Unit"
           class="peer focus:outline-none relative mt-1 block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-600 placeholder-transparent placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark"
-        />
-        <label
-          for="unit"
-          class="absolute -top-1.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-1.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
-          >Unit</label
         >
+          <option value="t">t</option>
+          <option value="Kg">Kg</option>
+          <option value="Piece">Piece</option>
+          <option value="Box">Box</option>
+        </Field>
+        <label
+        for="unit"
+        class="absolute -top-2.5 left-3 z-10 bg-white text-sm font-semibold transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:left-3 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-placeholder-shown:font-normal peer-placeholder-shown:text-grey peer-focus:-top-2.5 peer-focus:left-3 peer-focus:bg-white peer-focus:text-sm peer-focus:font-semibold peer-focus:text-gray-800"
+        >Select Unit Type</label
+      >
         <ErrorMessage
           class="my-1 block text-sm font-semibold text-purple"
           name="package_unit"
@@ -157,7 +162,7 @@ export default {
         $('#package_form input, #package_form textarea').each(function(){
           package_form.push({
             name: this.name, 
-            value:  this.value
+            value: this.value
           });
         });
         

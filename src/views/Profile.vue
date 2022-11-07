@@ -289,7 +289,7 @@
                       </button>
                     </div>
 
-                    <form v-if="showAddressInput" @submit.prevent="storeAddress">
+                    <Form v-if="showAddressInput" @submit="storeAddress" :validation-schema="address_schema" v-slot="{ errors }">
                       <div
                         class="grid lg:grid-cols-2 lg:gap-x-2 xl:grid-cols-3"
                       >
@@ -314,14 +314,16 @@
                             class="block text-sm font-semibold"
                             >Street Name</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="street-name"
-                            name="street_name"
+                            name="street"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['street'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                             placeholder="Street Name"
                             v-model="profile.street"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="street" />
                         </div>
                         <div class="mb-2">
                           <label
@@ -329,14 +331,16 @@
                             class="block text-sm font-semibold"
                             >Barangay</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="barangay"
                             name="barangay"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['barangay'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                             placeholder="Barangay"
                             v-model="profile.barangay"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="barangay" />
                         </div>
                         <div class="mb-2">
                           <label
@@ -344,14 +348,16 @@
                             class="block text-sm font-semibold"
                             >City/Municipality</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="municipality"
-                            name="municipality"
+                            name="city"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['city'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                             placeholder="City/Municipality"
                             v-model="profile.city"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="city" />
                         </div>
                         <div class="mb-2">
                           <label
@@ -359,14 +365,16 @@
                             class="block text-sm font-semibold"
                             >Province</label
                           >
-                          <input
+                          <Field
                             type="text"
                             id="province"
                             name="province"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['province'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
                             placeholder="Province"
                             v-model="profile.province"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="province" />
                         </div>
                         <div class="mb-2">
                           <label
@@ -391,7 +399,7 @@
                           buttonText="Save"
                         />
                       </div>
-                    </form>
+                    </Form>
                   </div>
                 </div>
               </div>
@@ -507,18 +515,33 @@ export default {
     const showPhotoInput = ref(false);
 
     const schema = yup.object().shape({
-    first_name: yup
-        .string()
-        .required("First name is required"),
-    last_name: yup
-        .string()
-        .required("Last name is required")
+      first_name: yup
+          .string()
+          .required("First name is required"),
+      last_name: yup
+          .string()
+          .required("Last name is required")
     });
 
     const email_schema = yup.object().shape({
-    email: yup
-        .string()
-        .required("Email address is required"),
+      email: yup
+          .string()
+          .required("Email address is required"),
+    });
+
+    const address_schema = yup.object().shape({
+      street: yup
+          .string()
+          .required("Street is required"),
+      barangay: yup
+          .string()
+          .required("Barangay is required"),
+      city: yup
+          .string()
+          .required("City/municipality is required"),
+      province: yup
+          .string()
+          .required("Province is required")
     });
 
     return {
@@ -530,6 +553,7 @@ export default {
       showAddressInput,
       schema,
       email_schema,
+      address_schema
     };
   },
   components: {

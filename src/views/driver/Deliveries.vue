@@ -144,7 +144,7 @@
                             class="flex w-auto items-center justify-center rounded-full bg-orange-light py-0.5 px-1"
                           >
                             <p class="text-sm font-semibold text-white">
-                              To Ship
+                              For Pickup
                             </p>
                           </div>
                         </div>

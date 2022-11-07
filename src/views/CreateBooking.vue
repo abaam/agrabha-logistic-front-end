@@ -176,6 +176,12 @@
                       <div>
                         <h3 class="font-bold flex justify-center items-center text-xl" id="payment_method_text"></h3>
                         <img class="mx-auto w-52 self-center" src="" alt="Agrabah Logistics" id="payment_method_qr">
+                        <div class="flex justify-center space-x-4 mt-4">
+                          <ButtonOutlineBlue type="button" buttonText="Print QR" @click="printImg()"/>
+                          <a class="flex justify-center py-2 px-4 border border-green-light text-sm font-medium rounded-md bg-white text-green-light hover:bg-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-light"
+                          id="btn-print-qr" href="#"
+                          download>Download QR</a>
+                        </div>
                       </div>
                       <div class="border-t border-gray-200 mt-5">
                         <dl>
@@ -282,6 +288,7 @@ import { ref, shallowRef, computed } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import DashboardLayout from "@/views/DashboardLayout.vue";
 import ButtonSolidBlue from "@/components/buttons/ButtonSolidBlue.vue";
+import ButtonOutlineBlue from "@/components/buttons/ButtonOutlineBlue.vue";
 import {
   CubeIcon,
   TruckIcon,
@@ -375,6 +382,7 @@ export default {
     LocationMarkerIcon,
     CreditCardIcon,
     NewspaperIcon,
+    ButtonOutlineBlue,
   },
   data() {
       return {
@@ -398,7 +406,7 @@ export default {
       setTimeout(function() { 
         Booking.store({booking_form})
         .then(function (response) {        
-          var payment_method_input = JSON.parse(localStorage['booking_form'])[15]['value'];
+          var payment_method_input = JSON.parse(localStorage['booking_form'])[17]['value'];
           currentObj.output = response.data;
           if(payment_method_input == 'Cash On Delivery'){
             $('.animate-spin').hide();
@@ -406,11 +414,13 @@ export default {
           } else {
             if (payment_method_input == 'Paymaya') {
               $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.jpg');
+              document.querySelector('#btn-print-qr').setAttribute('href', window.location.origin + '/img/print-paymaya.jpg');
               $('#payment_method_text').html('Paymaya');
               $('#account_number').html('09087702170');
               $('#account_name').html('Joselito Ocol Jr');
             } else if (payment_method_input == 'GCash') {
               $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
+              document.querySelector('#btn-print-qr').setAttribute('href', window.location.origin + '/img/print-gcash.jpg');
               $('#payment_method_text').html('GCash');
               $('#account_number').html('09156819270');
               $('#account_name').html('Joselito Jr O.');
@@ -452,6 +462,20 @@ export default {
     showModal() {
       let element = this.$refs.modal.$el
       $(element).modal('show')
+    },
+    printImg() {
+      var payment_method_input = JSON.parse(localStorage['booking_form'])[17]['value'];
+      var printWindow = window.open('', 'Print Window','width=100%');
+      printWindow.document.write('<html><head><title>Print Window</title>');
+      printWindow.document.write('</head><body ><img style="width:500px;display:block;margin-left:auto;margin-right:auto;" src=\'');
+      if(payment_method_input == 'Paymaya'){
+        printWindow.document.write(window.location.origin + '/img/print-paymaya.jpg');
+      } else {
+        printWindow.document.write(window.location.origin + '/img/print-gcash.jpg');
+      }
+      printWindow.document.write('\' /></body></html>');
+      printWindow.document.close();
+      printWindow.print();
     }
   }
 };

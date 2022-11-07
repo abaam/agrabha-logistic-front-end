@@ -86,11 +86,11 @@
             <div id="tracking-qr-code">
               <h3 class="font-bold flex justify-center mt-5">Tracking QR Code</h3>
               <a :href="value" class="flex justify-center mt-5 mb-5">
-                <qrcode-vue :value="value" :size="size" level="H" />
+                <qrcode-vue id="tracking-link" :value="value" :size="size" level="H" />
               </a>
               <div class="flex justify-center space-x-4">
                 <ButtonOutlineBlue @click="copyTrackingUrl(this.value)" id="copy-tracking-url" type="button" buttonText="Copy URL"/>
-                <ButtonOutlineGreen buttonClass="" buttonText="Download QR"/>
+                <ButtonOutlineGreen @click="downloadTracking(this.value)" type="button" buttonText="Download QR"/>
               </div>
             </div>
 
@@ -202,6 +202,12 @@
                   <div>
                     <h3 class="font-bold flex justify-center items-center text-xl" id="payment_method_text"></h3>
                     <img class="mx-auto w-52 self-center" src="" alt="Agrabah Logistics" id="payment_method_qr">
+                    <div class="flex justify-center space-x-4 mt-4">
+                      <ButtonOutlineBlue type="button" buttonText="Print QR" @click="printImg()"/>
+                      <a class="flex justify-center py-2 px-4 border border-green-light text-sm font-medium rounded-md bg-white text-green-light hover:bg-green hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-light"
+                      id="btn-print-qr" href="#"
+                      download>Download QR</a>
+                    </div>
                   </div>
                   <div class="border-t border-gray-200 mt-5">
                     <dl>
@@ -488,7 +494,8 @@ export default {
             mobile: '',
             amount: '',
             date: ''
-          }
+          },
+          payment_qr:'',
       };
   },
   created() {
@@ -645,11 +652,15 @@ export default {
 
         if (response.data.booking.payment_method == 0) {
           $('#payment_method_qr').attr('src', window.location.origin + '/img/paymaya-qr.jpg');
+          document.querySelector('#btn-print-qr').setAttribute('href', window.location.origin + '/img/print-paymaya.jpg');
+          this.payment_qr = window.location.origin + '/img/print-paymaya.jpg'
           $('#payment_method_text').html('Paymaya');
           $('#account_number').html('09087702170');
           $('#account_name').html('Joselito Ocol Jr');
         }else{
           $('#payment_method_qr').attr('src', window.location.origin + '/img/gcash-qr.jpg');
+          document.querySelector('#btn-print-qr').setAttribute('href', window.location.origin + '/img/print-gcash.jpg');
+          this.payment_qr = window.location.origin + '/img/print-gcash.jpg'
           $('#payment_method_text').html('GCash');
           $('#account_number').html('09156819270');
           $('#account_name').html('Joselito Jr O.');
@@ -939,6 +950,21 @@ export default {
       } catch($e) {
         alert('Cannot copy');
       }
+    },
+    printImg() {
+      var printWindow = window.open('', 'Print Window','width=100%');
+      printWindow.document.write('<html><head><title>Print Window</title>');
+      printWindow.document.write('</head><body ><img style="width:500px;display:block;margin-left:auto;margin-right:auto;" src=\'');
+      printWindow.document.write(this.payment_qr);
+      printWindow.document.write('\' /></body></html>');
+      printWindow.document.close();
+      printWindow.print();
+    },
+    downloadTracking(url) {
+      var link = document.createElement('a');
+      link.download = url;
+      link.href = document.getElementById('tracking-link').toDataURL()
+      link.click();
     }
   }
 };

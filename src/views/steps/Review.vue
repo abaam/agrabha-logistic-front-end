@@ -887,13 +887,7 @@ export default {
         $("#location-buttons").show();
         $("#complete-address-details-input").show();
 
-        // $('#origin-input').val(booking_form.get('pick_up'))
-        // $('#destination-input').val(booking_form.get('drop_off'))
-        // $('#origin-input-lat').val(booking_form.get('pick_up_lat'))
-        // $('#origin-input-lng').val(booking_form.get('pick_up_lng'))
         $('#origin-complete-address').val(booking_form.get('pick_up_complete_address'))
-        // $('#destination-input-lat').val(booking_form.get('drop_off_lat'))
-        // $('#destination-input-lng').val(booking_form.get('drop_off_lng'))
         $('#destination-complete-address').val(booking_form.get('drop_off_complete_address'))
       });
 

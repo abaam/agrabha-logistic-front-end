@@ -434,7 +434,7 @@
     <section class="relative grid px-3 md:hidden md:p-6 md:py-6">
       <TabGroup>
         <TabList
-          class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
+          class="sticky top-14 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:mx-0"
         >
           <Tab v-slot="{ selected }" as="template">
             <button

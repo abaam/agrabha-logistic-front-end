@@ -1,7 +1,19 @@
 <template>
     <!-- User Menu -->
     <Menu as="div" class="hidden md:flex items-center relative z-40">
-        <MenuButton>
+        <div class="mr-6 inline-flex relative w-fit">
+            <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                4
+            </span>
+            <div class="bg-blue-light flex items-center justify-center text-center rounded-lg shadow-lg">
+                <div>
+                <svg id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell" class="mx-auto text-white w-8 cursor-pointer" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <BellIcon/>
+                </svg>
+                </div>
+            </div>
+        </div>
+        <MenuButton>            
             <button class="flex space-x-4 items-center">
                 <img class="rounded-full bg-grey w-10 h-10" src="https://picsum.photos/200" alt="">
 
@@ -41,7 +53,10 @@
 <script>
     import axios from 'axios';
     import { UserCircleIcon, LogoutIcon, ChevronDownIcon } from '@heroicons/vue/outline'
+    import { BellIcon } from '@heroicons/vue/solid'
     import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue"
+    import 'tw-elements';
+    import { loadScript, unloadScript } from "vue-plugin-load-script";
 
     const userMenus = [
         {
@@ -64,7 +79,7 @@
         },
 
         components: {
-            Menu, MenuButton, MenuItems, MenuItem, UserCircleIcon, LogoutIcon, ChevronDownIcon
+            Menu, MenuButton, MenuItems, MenuItem, UserCircleIcon, LogoutIcon, ChevronDownIcon, BellIcon
         },
 
         methods: {
@@ -101,6 +116,9 @@
             //         window.location.href = "/login"
             //     }
             // }
+
+            unloadScript("https://unpkg.com/flowbite@1.5.3/dist/flowbite.js")
+            loadScript("https://unpkg.com/flowbite@1.5.3/dist/flowbite.js")
 
             const timeoutInMS = 900000;
             let timeoutId;

@@ -50,7 +50,7 @@
         components: { Navigation, ButtonSolidBlue, Form },
         data() {
             return {
-                phone_number: localStorage.getItem('Phone Number'),
+                phone_number: localStorage.getItem('phone_number'),
                 invalidOTP: '',
                 alertOpen: true
             };

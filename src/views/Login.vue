@@ -167,7 +167,7 @@
                             self.$router.push('/dashboard');
                         }, 2000);
                     } else {
-                        localStorage.setItem('Phone Number', response.data.phone_number);
+                        localStorage.setItem('phone_number', response.data.phone_number);
                         localStorage.setItem('user_id', response.data.id);
                         localStorage.setItem('user_id', response.data.id);
                         

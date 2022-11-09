@@ -160,7 +160,9 @@
                     register_as: this.state.register_as
                 })
                 .then((response) => {
-                    localStorage.setItem('Phone Number', response.data.phone_number);
+                    console.log(response)
+                    localStorage.setItem('phone_number', response.data.user.phone_number);
+                    localStorage.setItem('user_id', response.data.user.id);
                     createToast("Great! You're successfully registered.",
                     {
                         type: 'info',
@@ -168,7 +170,7 @@
                     })
 
                     setTimeout(function () {
-                        self.$router.push("/verification");
+                        self.$router.push('/verification');
                     }, 2000);
                 })
                 .catch(function (error) {

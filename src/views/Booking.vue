@@ -530,11 +530,11 @@ export default {
         }
       }).then((response) => {
         if (this.role == 1) {
-          this.for_pickup = response.data.for_pickup_driver;
+          this.for_pickup = response.data.for_pick_up_driver;
         }else if (this.role == 2) {
-          this.for_pickup = response.data.for_pickup;
+          this.for_pickup = response.data.for_pick_up;
         }else if (this.role == 3) {
-          this.for_pickup = response.data.for_pickup_admin;
+          this.for_pickup = response.data.for_pick_up_admin;
         }
       });
     },

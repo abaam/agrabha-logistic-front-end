@@ -113,11 +113,11 @@
                   name="tracking_status" 
                   v-model="shipment.tracking_status"
                   class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                  <option value="Item has been picked up by our driver" selected>Picked up</option>
-                  <option value="Item has arrived at: " selected>Arrived at</option>
-                  <option value="Item has departed from: ">Departed from</option>
-                  <option value="Item is out for delivery">Out for delivery</option>
-                  <option value="Item has been delivered">Delivered</option>
+                  <option value="Picked up" selected>Picked up</option>
+                  <option value="Arrived at" selected>Arrived at</option>
+                  <option value="Departed from">Departed from</option>
+                  <option value="Out for delivery">Out for delivery</option>
+                  <option value="Delivered">Delivered</option>
                 </select>
               </div>
               <div class="w-full md:w-1/2 px-3" id="shipment-location-field">
@@ -477,7 +477,7 @@ export default {
           user_id: localStorage.getItem('user_id'), 
           sales: [],
           shipment: {
-            tracking_status:"Item has been picked up by our driver",
+            tracking_status:"Picked up",
             receiver_name: '',
             location: $('#shipment-location').val(),
             current_url: absoluteURL,
@@ -502,7 +502,8 @@ export default {
     this.moment = moment
   },
   mounted(){
-    this.showBookingDetails(),
+    this.showBookingDetails();
+    this.getBookingStatus();
     
     loadScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyM1P3tN2XIcXX0u6BMz2NHwlwQuYz4A&libraries=places")
     .then(() => {
@@ -965,6 +966,24 @@ export default {
       link.download = url;
       link.href = document.getElementById('tracking-link').toDataURL()
       link.click();
+    },
+    getBookingStatus() {
+      let tracking_id = window.location.pathname.split('/').pop();
+
+      axios.get(process.env.VUE_APP_API + `bookings/status/${this.$route.params.id}`, {
+          withCredentials: true,  
+          headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+          "Access-Control-Allow-Origin": "*"
+          }
+      }).then(response=>{
+        console.log(response.data.tracking.tracking_status);
+        this.shipment.tracking_status = response.data.tracking.tracking_status;
+          // console.log(response);
+      }).catch(error=>{
+          console.log(error)
+      })
     }
   }
 };

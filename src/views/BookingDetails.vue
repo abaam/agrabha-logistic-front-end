@@ -475,6 +475,8 @@ export default {
       return {
           role: localStorage.getItem('role'),
           user_id: localStorage.getItem('user_id'), 
+          customer_id: '',
+          tracking_id: Math.floor(100000000000 + Math.random() * 999999999999),
           sales: [],
           shipment: {
             tracking_status:"Picked up",
@@ -552,6 +554,7 @@ export default {
         this.shipment.receiver_name = response.data.booking.receiver_name
         this.value = response.data.qr_code.url
         this.shipment.amount = response.data.booking.payment_total
+        this.customer_id = response.data.booking.user_id
 
         if (localStorage.getItem('role') == 1) {
           $('#driver-name').hide()
@@ -582,6 +585,8 @@ export default {
 
         if(response.data.booking.payment_status == 0){
           var payment_status = "Pending";
+          $('#approve-payment').hide()
+          $('#view-payment-details').hide();
         }else if(response.data.booking.payment_status == 1){
           var payment_status = "Pending Approval";
           $('#payment-status').attr('class', 'text-blue')
@@ -703,10 +708,10 @@ export default {
         $('#shipment-amount').hide()
         $('#shipment-status-select').on('change', function() {
           var selected_status = $(this).find(":selected").val();
-          if(selected_status.includes("delivered") && payment_method == "Cash On Delivery"){
+          if(selected_status == "Delivered" && payment_method == "Cash On Delivery"){
             $('#shipment-amount').show()
             $('#shipment-location-field').hide()
-          } else if(selected_status.includes("arrived") || selected_status.includes("departed")){
+          } else if(selected_status == "Arrived at" || selected_status == "Departed from"){
             $('#shipment-amount').hide()
             $('#shipment-location-field').show()
           } else {
@@ -764,7 +769,10 @@ export default {
           full_name: this.sales.full_name,
           mobile_number: this.sales.mobile_number,
           amount: this.sales.amount,
-          ref_number: this.sales.ref_number
+          ref_number: this.sales.ref_number,
+          payment_method: document.getElementById("payment_method_text").innerText,
+          user_id: this.user_id,
+          link: window.location.origin + '/booking-details/' + booking_id
       })
       .then(function (response) {
         location.reload(true);
@@ -791,7 +799,10 @@ export default {
           pick_up_location : this.shipment.pick_up_location,
           drop_off_location : this.shipment.drop_off_location,
           amount: this.shipment.amount,
-          payment_method: this.shipment.payment_method
+          payment_method: this.shipment.payment_method,
+          user_id: this.customer_id,
+          tracking_id: this.tracking_id,
+          link: window.location.origin + '/tracking/'
       })
       .then(function (response) {
         location.reload(true);
@@ -863,7 +874,9 @@ export default {
           Booking.acceptBooking({
             booking_id: booking_id,
             driver_id: this.user_id,
-            payment_method: this.shipment.payment_method
+            user_id: this.customer_id,
+            payment_method: this.shipment.payment_method,
+            link: window.location.origin + '/booking-details/' + booking_id
           })
           .then(function (response) {
             currentObj.output = response.data.booking;
@@ -901,7 +914,12 @@ export default {
           let currentObj = this;
           let booking_id = window.location.pathname.split('/').pop();
 
-          Booking.approvePayment({booking_id})
+          Booking.approvePayment({
+            booking_id: booking_id,
+            user_id: this.customer_id,
+            payment_method: document.getElementById("payment_method_text").innerText,
+            link: window.location.origin + '/booking-details/' + booking_id
+          })
           .then(function (response) {
             currentObj.output = response.data.booking;
 

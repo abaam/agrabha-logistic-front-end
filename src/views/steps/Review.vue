@@ -854,13 +854,26 @@ export default {
 
       var distance = haversineDistance(originMarker, destinationMarker);
       var payment_total = [];
+      var user_id = [];
+      var link = [];
       payment_total.push({
         name: 'payment_total', 
-        value: parseFloat(localStorage.getItem('distance') * 200).toLocaleString()
+        value: parseFloat(localStorage.getItem('distance') * 200).toLocaleString(),
       });
+      user_id.push({
+        name: 'user_id', 
+        value: localStorage.getItem('user_id')
+      });
+      link.push({
+        name: 'link',
+        value: window.location.origin + '/booking-details/' + localStorage.getItem('booking_id')
+      });
+
 
       localStorage['payment_total'] = JSON.stringify(payment_total);
       localStorage['booking_form'] = JSON.stringify(JSON.parse(localStorage['booking_form']).concat(JSON.parse(localStorage["payment_total"])));
+      localStorage['booking_form'] = JSON.stringify(JSON.parse(localStorage['booking_form']).concat(user_id));
+      localStorage['booking_form'] = JSON.stringify(JSON.parse(localStorage['booking_form']).concat(link));
       $('#total-amount').html(parseFloat(distance.toFixed(2)).toLocaleString() + ' Kms');
       $('#payment-total').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());
       $('#amount-to-pay').html('₱ ' + parseFloat(localStorage.getItem('distance') * 200).toLocaleString());

@@ -1,9 +1,12 @@
 <template>
     <!-- User Menu -->
-    <Menu as="div" class="hidden md:flex items-center relative z-40">
+    <Menu as="div" class="md:flex items-center relative z-40">
         <div class="mr-6 inline-flex relative w-fit">
-            <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                4
+            <span v-if="notification.count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                {{notification.count}}
+            </span>
+            <span v-else class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                0
             </span>
             <div class="bg-blue-light flex items-center justify-center text-center rounded-lg shadow-lg">
                 <div>
@@ -13,6 +16,47 @@
                 </div>
             </div>
         </div>
+
+        <!-- Dropdown menu -->
+        <div id="dropdownNotification" class="hidden z-20 w-96 max-w-sm bg-gray-100 rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700 overflow-y-auto max-h-80" aria-labelledby="dropdownNotificationButton" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 16040px);">
+            <div class="block py-2 px-4 font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white">
+                Notifications
+            </div>
+            <div v-if="notification.count != 0" class="divide-y divide-gray-100 dark:divide-gray-700" 
+                v-for="push_notification in notification">
+                <a :href="push_notification.link" class="flex py-3 px-4 hover:bg-white dark:hover:bg-gray-700">
+                <div class="flex-shrink-0">
+                    <img class="w-11 h-11 rounded-full" 
+                    :src="push_notification.img_link" alt="Jese image">
+                    <div class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-blue-600 rounded-full border border-white dark:border-gray-800">
+                    <svg class="w-3 h-3 text-white" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
+                    </div>
+                </div>
+                <div class="pl-3 w-full">
+                    <div class="text-gray-500 text-sm mb-1.5 dark:text-gray-400">
+                        <span class="font-semibold text-gray-900 dark:text-white" v-if="push_notification.from_user_name != 'Admin'">
+                            {{ push_notification.from_user_name }}
+                        </span>
+                        <span v-if="push_notification.description.includes('payment has been approved') && this.role == '1'">
+                            A booking is available. Check the details.
+                        </span>
+                        <span v-else>
+                            {{ push_notification.description }}
+                        </span>
+                    </div>
+                    <div class="text-xs text-blue-600 dark:text-blue-500">{{moment(push_notification.created_at).fromNow()}}</div>
+                </div>
+                </a>
+            </div>
+            <div v-else class="divide-y divide-gray-100 dark:divide-gray-700">
+                <p class="block leading-6 text-grey-dark text-center m-5">
+                    You'll see all your notifications here.
+                </p>
+            </div>
+            <div class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
+            </div>
+        </div>
+
         <MenuButton>            
             <button class="flex space-x-4 items-center">
                 <img class="rounded-full bg-grey w-10 h-10" src="https://picsum.photos/200" alt="">
@@ -57,6 +101,7 @@
     import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue"
     import 'tw-elements';
     import { loadScript, unloadScript } from "vue-plugin-load-script";
+    import moment from 'moment'
 
     const userMenus = [
         {
@@ -81,7 +126,13 @@
         components: {
             Menu, MenuButton, MenuItems, MenuItem, UserCircleIcon, LogoutIcon, ChevronDownIcon, BellIcon
         },
-
+        created() {
+            this.interval = setInterval(this.fetchNotifications, 2000),
+            this.moment = moment
+        },
+        beforeDestroy () {
+            clearInterval(this.interval)
+        },
         methods: {
             logout(menu) {
                 if(menu == 'Logout'){
@@ -107,6 +158,19 @@
                         });
                     })
                 }
+            },
+            fetchNotifications() {
+                axios.get(process.env.VUE_APP_API + `notifications?user_id=${this.user_id}&role=` + this.role, {
+                    withCredentials: true,
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+                    "Access-Control-Allow-Origin": "*"
+                    }
+                }).then((response) => {
+                    this.notification = response.data.notifications;
+                    this.notification.count = response.data.count;
+                });
             }
         },
         mounted: function() {
@@ -149,7 +213,12 @@
         },
         data() {
             return {
-                role: localStorage.getItem('role')
+                role: localStorage.getItem('role'),
+                user_id: localStorage.getItem('user_id'),
+                notification: {
+                    count: ''
+                },
+                interval: null
             };
         }
     }

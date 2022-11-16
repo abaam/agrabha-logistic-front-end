@@ -387,7 +387,8 @@ export default {
       to_receive: [],
       search: "",
       show_entries: "5",
-      role: localStorage.getItem('role')
+      role: localStorage.getItem('role'),
+      user_id: localStorage.getItem('user_id')
     };
   },
   created() {
@@ -404,7 +405,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings?page=${pageNum}&entries=${this.show_entries}`, {
+              `bookings?page=${pageNum}&entries=${this.show_entries}&user_id=${this.user_id}`, {
               withCredentials: true,  
               headers: {
               'Content-Type': 'application/json',
@@ -429,7 +430,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&page=${pageNum}&entries=${this.show_entries}&user_id=${this.user_id}`, {
               withCredentials: true,  
               headers: {
               'Content-Type': 'application/json',
@@ -458,7 +459,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&page=booking&role=${this.role}&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&page=booking&role=${this.role}&entries=${this.show_entries}&user_id=${this.user_id}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -478,7 +479,7 @@ export default {
       if (this.search == "") {
         axios
           .get(
-            process.env.VUE_APP_API + "bookings?entries=" + event.target.value, {
+            process.env.VUE_APP_API + `bookings?user_id=${this.user_id}&entries=` + event.target.value, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -504,7 +505,7 @@ export default {
         axios
           .get(
             process.env.VUE_APP_API +
-              `bookings/search?q=${this.search}&entries=${this.show_entries}`, {
+              `bookings/search?q=${this.search}&entries=${this.show_entries}&user_id=${this.user_id}`, {
               withCredentials: true,
               headers: {
               'Content-Type': 'application/json',
@@ -521,7 +522,7 @@ export default {
     },
 
     fetchForPickup() {
-      axios.get(process.env.VUE_APP_API + `bookings`, {
+      axios.get(process.env.VUE_APP_API + `bookings?user_id=${this.user_id}`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',
@@ -540,7 +541,7 @@ export default {
     },
 
     fetchToReceive() {
-      axios.get(process.env.VUE_APP_API + `bookings`, {
+      axios.get(process.env.VUE_APP_API + `bookings?user_id=${this.user_id}`, {
         withCredentials: true,
         headers: {
         'Content-Type': 'application/json',

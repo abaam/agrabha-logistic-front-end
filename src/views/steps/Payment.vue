@@ -26,7 +26,7 @@
         name="paymaya"
       />
     </div>
-    <div class="">
+    <div class="mb-2">
       <label
         for="gcash"
         class="flex h-20 w-full cursor-pointer items-center justify-between rounded-md border border-grey-light px-6 py-5"

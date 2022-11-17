@@ -7,11 +7,22 @@
         </h2>
 
         <!-- Customer -->
-        <router-link v-show="role == 2"
+        <router-link v-show="role == 2 && Object.keys(check_profile).length > 1"
           to="/bookings/create"
           class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded"
-          >Create Booking</router-link
-        >
+          >Create Booking
+        </router-link>
+        
+        <a v-show="role == 2 &&  Object.keys(check_profile).length == 0" data-tooltip-target="tooltip-default" data-tooltip-placement="bottom"
+          class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 text-lg border-b-4 border-blue-700 hover:border-blue-500 rounded cursor-default"
+          >Create Booking
+        </a>
+
+        <div id="tooltip-default" role="tooltip" 
+        class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
+            You must update your profile first.
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
       </div>
 
       <div class="hidden gap-y-3 rounded-md bg-white py-6 shadow md:grid">
@@ -366,6 +377,7 @@
 <script>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import 'flowbite';
 import _ from "lodash";
 import DashboardLayout from "@/views/DashboardLayout.vue";
 import Pagination from "@/components/Pagination.vue";
@@ -385,6 +397,7 @@ export default {
       bookings: [],
       for_pickup: [],
       to_receive: [],
+      check_profile: [],
       search: "",
       show_entries: "5",
       role: localStorage.getItem('role'),
@@ -394,7 +407,7 @@ export default {
   created() {
       this.fetchBookings(),
       this.fetchForPickup(),
-      this.fetchToReceive()
+      this.checkUserProfile()
   },
   methods: {
     fetchBookings() {
@@ -558,6 +571,21 @@ export default {
         }
       });
     },
+
+    checkUserProfile() {
+      axios.get(process.env.VUE_APP_API + 'users/checkProfile', {
+        withCredentials: true,  
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('csrf_token'),
+        "Access-Control-Allow-Origin": "*"
+        }
+      }).then((response) => {
+        this.check_profile = response.data
+      }).catch(error=>{
+          console.log(error)
+      })
+    }
   },
   components: {
     DashboardLayout,

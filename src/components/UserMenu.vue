@@ -18,13 +18,13 @@
         </div>
 
         <!-- Dropdown menu -->
-        <div id="dropdownNotification" class="hidden z-20 w-96 max-w-sm bg-gray-100 rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700 overflow-y-auto max-h-80" aria-labelledby="dropdownNotificationButton" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 16040px);">
+        <div id="dropdownNotification" class="hidden z-20 w-96 max-w-sm rounded divide-y divide-gray-100 shadow dark:bg-gray-800 dark:divide-gray-700 overflow-y-auto max-h-80" aria-labelledby="dropdownNotificationButton" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 16040px);">
             <div class="block py-2 px-4 font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white">
                 Notifications
             </div>
-            <div v-if="notification.count != 0" class="divide-y divide-gray-100 dark:divide-gray-700" 
+            <div v-if="notification.length" class="divide-y divide-gray-100 dark:divide-gray-700" 
                 v-for="push_notification in notification">
-                <a :href="push_notification.link" class="flex py-3 px-4 hover:bg-white dark:hover:bg-gray-700">
+                <a @click="viewNotification(push_notification.id, push_notification.link)" v-bind:class="(push_notification.seen == 0)?'flex py-3 px-4 bg-gray-100 hover:bg-white dark:hover:bg-gray-700 cursor-pointer':'flex py-3 px-4 bg-white hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer'">
                 <div class="flex-shrink-0">
                     <img class="w-11 h-11 rounded-full" 
                     :src="push_notification.img_link" alt="Jese image">
@@ -102,6 +102,7 @@
     import 'tw-elements';
     import { loadScript, unloadScript } from "vue-plugin-load-script";
     import moment from 'moment'
+    import Notification from "../api/notification";
 
     const userMenus = [
         {
@@ -171,6 +172,13 @@
                     this.notification = response.data.notifications;
                     this.notification.count = response.data.count;
                 });
+            },
+            viewNotification(id, link) {
+                Notification.view({
+                    id: id
+                }).then((response) => {    
+                    window.location.replace(link);
+                })
             }
         },
         mounted: function() {

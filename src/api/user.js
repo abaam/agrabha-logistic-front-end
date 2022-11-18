@@ -22,5 +22,17 @@ export default {
 
   auth() {
     return Api.get('/user');
-  }
+  },
+
+  async requestVerification(form) {
+    await Csrf.getCookie();
+
+    return Api.post('api/request-verification', form);
+  },
+
+  async forgotPassword(form) {
+    await Csrf.getCookie();
+
+    return Api.post('api/forgot-password', form);
+  },
 };

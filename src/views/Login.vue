@@ -61,9 +61,7 @@
                         </div>
 
                         <div class="text-sm">
-                            <a href="#" class="font-semibold text-blue-light hover:text-blue">
-                                Forgot your password?
-                            </a>
+                            <router-link to="/request-verification" class="font-semibold text-blue-light hover:text-blue">Forgot your password?</router-link>
                         </div>
                     </div>
                     

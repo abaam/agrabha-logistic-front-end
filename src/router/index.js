@@ -40,6 +40,18 @@ const routes = [
     component: () => import ('../views/Authentication.vue')
   },
   {
+    path: '/request-verification',
+    name: 'Request Verification',
+    component: () => import ('../views/RequestVerification.vue'),
+    meta: { guestOnly: true }
+  },
+  {
+    path: '/forgot-password',
+    name: 'Forgot Password',
+    component: () => import ('../views/ForgotPassword.vue'),
+    meta: { guestOnly: true }
+  },
+  {
     path: '/profile',
     name: 'Profile',
     component: () => import ('../views/Profile.vue'),

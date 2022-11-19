@@ -409,43 +409,46 @@
                 <div class="my-6">
                   <h4 class="block text-lg font-semibold">Password</h4>
                   <p class="block text-grey-dark">
-                    Manage your account security in this section.
+                    Manage your account security in this sectionsssss.
                   </p>
                 </div>
-                <form
-                  action=""
-                  class="mb-8 divide-y divide-grey-light rounded-md bg-white px-3 shadow md:px-6"
-                >
+                <Form @submit="changePassword()" :validation-schema="password_schema" v-slot="{ errors }" id="frm_change_pass">
                   <div class="grid py-6">
                     <div class="grid lg:grid-cols-2 lg:gap-x-2">
                       <div class="mb-2">
                         <label
                           for="current-password"
                           class="block text-sm font-semibold"
-                          >Current Password</label
+                          >New Password</label
                         >
-                        <input
-                          type="password"
-                          id="current-password"
-                          name="current_password"
-                          class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
-                          placeholder="Current Password"
-                        />
+                        <Field
+                            type="password"
+                            id="new_password"
+                            name="new_password"
+                            class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
+                            :class="errors['new_password'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
+                            placeholder="New Password"
+                            v-model="credential.new_password"
+                          />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="new_password" />
                       </div>
 
                       <div class="mb-2">
                         <label
                           for="new-password"
                           class="block text-sm font-semibold"
-                          >New Password</label
+                          >Confirm Password</label
                         >
-                        <input
+                        <Field
                           type="password"
-                          id="new-password"
-                          name="new_password"
+                          id="confirm_password"
+                          name="confirm_password"
                           class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
-                          placeholder="New Password"
+                          :class="errors['confirm_password'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
+                          placeholder="Confirm Password"
+                          v-model="credential.confirm_password"
                         />
+                        <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="confirm_password" />
                       </div>
                     </div>
 
@@ -456,7 +459,7 @@
                       />
                     </div>
                   </div>
-                </form>
+                </Form>
               </div>
             </TabPanel>
           </TabPanels>
@@ -503,6 +506,10 @@ export default {
         middle_name: '',
         last_name: '',
         name_extension: ''
+      },
+      credential: {
+        new_password: '',
+        confirm_password: ''
       }
     }
   },
@@ -544,6 +551,15 @@ export default {
           .required("Province is required")
     });
 
+    const password_schema = yup.object().shape({
+      new_password: yup
+          .string()
+          .required("New password is required"),
+      confirm_password: yup
+        .string()
+        .oneOf([yup.ref('new_password'), null], 'Password does not must match'),
+    });
+
     return {
       isOpen,
       showNameInput,
@@ -553,7 +569,8 @@ export default {
       showAddressInput,
       schema,
       email_schema,
-      address_schema
+      address_schema,
+      password_schema
     };
   },
   components: {
@@ -654,21 +671,8 @@ export default {
       let currentObj = this;
       Profile.storeName({user})
         .then(function (response) {        
-          // currentObj.output = response.data;
-          // $('.animate-spin').hide();
-          // $('#btn-booking-mdl').click();
-          // console.log(response);
           currentObj.profile = response.data;
-          // if(response.data.middle_name == '') {
-          //     var middle_name = '';
-          //   } else {
-          //     var middle_name = response.data.middle_name.charAt(0) +'. ';
-          //   }
-          // currentObj.profile['full_name'] = response.data.first_name + ' '+ middle_name + response.data.last_name +' ' + response.data.name_extension;
-          // currentObj.profile['address'] = response.data.house_number + ' ' + response.data.street + ', ' + response.data.barangay + ', '+ response.data.city + ', '+ response.data.province + ', '+ response.data.zip_code; 
-          // currentObj.profile['temp_email'] = response.data.email;
-          // currentObj.profile['temp_mobile_number'] = response.data.mobile_number;
-          // currentObj.toggleName();
+
           currentObj.buildData(currentObj.profile);
           currentObj.toggleName();
         })
@@ -702,6 +706,47 @@ export default {
         .catch(function (error) {
           currentObj.output = error;
         });
+    },
+    changePassword() {
+      let that = this;
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "Your password will automatically changed.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, change it!',
+        cancelButtonText: 'No'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let currentObj = this;
+          let data = this.credential;
+
+          Profile.changePassword({data})
+          Profile.changePassword({
+              new_password: currentObj.credential.new_password,
+              confirm_password: currentObj.credential.confirm_password
+          })
+          .then(function (response) {
+            that.$swal.fire(
+              'Password updated!',
+              currentObj.output = response.data,
+              'success'
+            )
+
+            setTimeout(function() { 
+              document.getElementById("frm_change_pass").reset();
+            }, 2000);
+          })
+          .catch(function (error) {
+            currentObj.output = error;
+          });
+        } else {
+          document.getElementById("frm_change_pass").reset();
+
+        }
+      })
     },
     buildData(user_profile) {
       if(user_profile.middle_name == '') {

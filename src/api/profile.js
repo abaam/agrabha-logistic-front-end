@@ -19,4 +19,10 @@ export default {
   
       return Api.post('api/users/storeAddress', form);
     },
+
+    async changePassword(form) {
+      await Csrf.getCookie();
+      console.log(form);
+      return Api.post('api/users/changePassword', form);
+    }
 };

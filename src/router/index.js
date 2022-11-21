@@ -130,12 +130,6 @@ const routes = [
     meta: { authOnly: true }
   },
   {
-    path: '/users',
-    name: 'Users',
-    component: () => import ('../views/admin/Users.vue'),
-    meta: { authOnly: true, admin: true, role: 3 }
-  },
-  {
     path: '/payment-approval',
     name: 'Pending Approval',
     component: () => import ('../views/admin/PendingApproval.vue'),
@@ -151,6 +145,18 @@ const routes = [
     path: '/admin/transactions',
     name: 'Admin Transactions',
     component: () => import ('../views/admin/Transactions.vue'),
+    meta: { authOnly: true, admin: true, role: 3 }
+  },
+  {
+    path: '/customers',
+    name: 'Customers',
+    component: () => import ('../views/admin/Customers.vue'),
+    meta: { authOnly: true, admin: true, role: 3 }
+  },
+  {
+    path: '/drivers',
+    name: 'Drivers',
+    component: () => import ('../views/admin/Drivers.vue'),
     meta: { authOnly: true, admin: true, role: 3 }
   },
 ]

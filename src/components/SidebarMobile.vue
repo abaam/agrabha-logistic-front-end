@@ -15,7 +15,7 @@
                         <div class="flex items-center justify-start">
                             <img class="rounded-full bg-grey w-10 h-10 flex-none mr-3" src="https://picsum.photos/200" alt="">
                             <div class="flex flex-col text-left flex-1">
-                                <span class="text-white font-semibold">Charles Marnie</span>
+                                <span class="text-white font-semibold">{{ user_name }}</span>
                                 <router-link to="/profile" class="text-sm text-grey-light cursor-pointer">View Profile</router-link>
                             </div>
                         </div>
@@ -117,16 +117,16 @@
                     <div class="absolute bottom-0 right-0 left-0 z-10 p-3 flex items-center w-full">
                         <ul class="w-full">
                             <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                                <a href="/profile" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <router-link to="/profile" class="flex items-center space-x-3 w-full px-3 py-2">
                                 <UserCircleIcon class="h-5 w-5"/>
                                 <span>Profile</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li class="text-white hover:bg-blue hover:text-grey-light rounded-md mb-8">
-                                <a href="/security" class="flex items-center space-x-3 w-full px-3 py-2">
+                                <router-link to="/security" class="flex items-center space-x-3 w-full px-3 py-2">
                                 <ShieldCheckIcon class="h-5 w-5"/>
                                 <span>Security</span>
-                                </a>
+                                </router-link>
                             </li>
                             <li class="flex justify-center font-medium rounded text-white bg-green-light hover:bg-green focus:outline-none focus:bg-green-light">
                                 <router-link to="" active-class="bg-blue rounded" class="flex items-center justify-center w-full py-2 px-4"  @click="logout">
@@ -232,7 +232,8 @@
         },
         data() {
             return {
-                role: localStorage.getItem('role')
+                role: localStorage.getItem('role'),
+                user_name: localStorage.getItem('user_name'),
             };
         },
         methods: {

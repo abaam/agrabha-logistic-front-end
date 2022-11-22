@@ -99,7 +99,7 @@
                             </router-link>
                         </li>
                         <li class="text-white hover:bg-blue hover:text-grey-light rounded-md">
-                            <router-link to="/profile" class="flex items-center space-x-3 w-full px-3 py-2">
+                            <router-link to="/security" class="flex items-center space-x-3 w-full px-3 py-2">
                             <ShieldCheckIcon class="h-5 w-5"/>
                             <span>Security</span>
                             </router-link>

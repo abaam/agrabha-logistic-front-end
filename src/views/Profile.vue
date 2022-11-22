@@ -10,7 +10,7 @@
       </div>
 
       <div class="bg-transparent md:mt-4">
-        <TabGroup>
+        <TabGroup :selectedIndex="current_route">
           <TabList
             class="sticky top-14 z-40 -mx-3 flex justify-evenly border-b border-grey-light bg-white md:relative md:top-0 md:z-0 md:mx-0 md:justify-start md:space-x-12 md:bg-transparent"
           >
@@ -404,7 +404,7 @@
                 </div>
               </div>
             </TabPanel>
-            <TabPanel>
+            <TabPanel data-headlessui-state="selected">
               <div class="grid">
                 <div class="my-6">
                   <h4 class="block text-lg font-semibold">Password</h4>
@@ -510,7 +510,8 @@ export default {
       credential: {
         new_password: '',
         confirm_password: ''
-      }
+      },
+      current_route: 0
     }
   },
   setup() {
@@ -587,6 +588,26 @@ export default {
   },
   mounted() {
     this.showUserProfile();
+    if(this.$route.path === '/profile') {
+      this.current_route = ref(0);
+      console.log('Profile');
+    } else if(this.$route.path === '/security') {
+      this.current_route = ref(1);
+      console.log('Security');
+    }
+    console.log(this.$route);
+  },
+  watch: {
+    // whenever question changes, this function will run
+    $route (to, from){
+      if(this.$route.path === '/profile') {
+        this.current_route = ref(0);
+        console.log('Changed');
+      } else if(this.$route.path === '/security') {
+        this.current_route = ref(1);
+        console.log('Security');
+      }
+    }
   },
   methods: {
     toggleName() {

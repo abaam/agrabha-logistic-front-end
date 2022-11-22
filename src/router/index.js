@@ -58,6 +58,12 @@ const routes = [
     meta: { authOnly: true }
   },
   {
+    path: '/security',
+    name: 'Security',
+    component: () => import ('../views/Profile.vue'),
+    meta: { authOnly: true }
+  },
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: () => import ('../views/Dashboard.vue'),

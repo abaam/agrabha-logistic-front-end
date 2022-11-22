@@ -113,7 +113,7 @@
             icon: 'UserCircleIcon'
         },
         {
-            href: '/profile',
+            href: '/security',
             label: 'Security',
             icon: 'ShieldCheckIcon'
         },
@@ -141,7 +141,7 @@
             icon: 'UserCircleIcon'
         },
         {
-            href: '/profile',
+            href: '/security',
             label: 'Security',
             icon: 'ShieldCheckIcon'
         },
@@ -174,7 +174,7 @@
             icon: 'UserCircleIcon'
         },
         {
-            href: '/profile',
+            href: '/security',
             label: 'Security',
             icon: 'ShieldCheckIcon'
         },

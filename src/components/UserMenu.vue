@@ -60,15 +60,16 @@
         <MenuButton>            
             <button class="flex space-x-4 items-center">
                 <img class="rounded-full bg-grey w-10 h-10" src="https://picsum.photos/200" alt="">
+                <span class="hidden md:flex">{{ user_name }}</span>
 
                 <!-- Driver -->
-                <span v-show="role == 1" class="hidden md:flex">Driver</span>
+                <!-- <span v-show="role == 1" class="hidden md:flex">Driver</span> -->
 
                 <!-- Customer -->
-                <span v-show="role == 2" class="hidden md:flex">Customer</span>
+                <!-- <span v-show="role == 2" class="hidden md:flex">Customer</span> -->
 
                 <!-- Admin -->
-                <span v-show="role == 3" class="hidden md:flex">Admin</span>
+                <!-- <span v-show="role == 3" class="hidden md:flex">Admin</span> -->
                 <ChevronDownIcon class="h-4 w-4 hidden md:flex" />
             </button>
         </MenuButton>
@@ -222,6 +223,7 @@
         data() {
             return {
                 role: localStorage.getItem('role'),
+                user_name: localStorage.getItem('user_name'),
                 user_id: localStorage.getItem('user_id'),
                 notification: {
                     count: ''

@@ -154,6 +154,7 @@
                         localStorage.setItem('auth', 'true');
                         localStorage.setItem('role', response.data.role);
                         localStorage.setItem('user_id', response.data.id);
+                        localStorage.setItem('user_name', response.data.user_name);
 
                         createToast('Welcome! Logged-in successfully.',
                         {

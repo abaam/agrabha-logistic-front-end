@@ -244,32 +244,34 @@
                       </button>
                     </div>
 
-                    <form action="" class="" v-if="showMobileInput">
+                    <Form @submit="changeNumber()" v-if="showMobileInput" :validation-schema="phone_schema" v-slot="{ errors }">
                       <div class="grid w-full">
                         <div class="mb-2">
                           <label
                             for="mobile-number"
                             class="block text-sm font-semibold"
-                            >Mobile number</label
+                            >New Mobile Number</label
                           >
-                          <input
+                          <Field
                             type="number"
-                            id="mobile-number"
+                            id="mobile_number"
                             name="mobile_number"
                             class="focus:outline-none relative block w-full appearance-none rounded border border-grey px-3 py-2 text-gray-800 placeholder-grey focus:z-10 focus:border-grey-dark focus:ring-0 focus:ring-grey-dark sm:text-sm"
-                            placeholder="Mobile number"
+                            :class="errors['mobile_number'] ? 'border border-purple focus:ring-purple focus:ring-0 focus:border-purple' : 'border border-grey focus:ring-grey-dark focus:ring-0 focus:border-grey-dark'"
+                            placeholder="New Mobile Number"
                             v-model="profile.mobile_number"
                           />
+                          <ErrorMessage class="text-purple font-semibold text-sm block my-1" name="mobile_number" />
                         </div>
                       </div>
 
                       <div class="mt-2 flex items-center justify-end">
                         <ButtonSolidBlue
                           class="w-full md:w-auto"
-                          buttonText="Save"
-                        />
+                          buttonText="Submit"
+                        >Submit</ButtonSolidBlue>
                       </div>
-                    </form>
+                    </Form>
                   </div>
                   <div class="grid gap-4 py-6">
                     <div class="flex items-center justify-between">
@@ -561,6 +563,16 @@ export default {
         .oneOf([yup.ref('new_password'), null], 'Password does not must match'),
     });
 
+    const phone_schema = yup.object().shape({
+      mobile_number: yup
+                .string()
+                .required("Phone number is required")
+                .matches(
+                /^(09|\+639)\d{9}$/,
+                "Invalid phone number"
+                ),
+    });
+
     return {
       isOpen,
       showNameInput,
@@ -571,7 +583,8 @@ export default {
       schema,
       email_schema,
       address_schema,
-      password_schema
+      password_schema,
+      phone_schema
     };
   },
   components: {
@@ -590,22 +603,17 @@ export default {
     this.showUserProfile();
     if(this.$route.path === '/profile') {
       this.current_route = ref(0);
-      console.log('Profile');
     } else if(this.$route.path === '/security') {
       this.current_route = ref(1);
-      console.log('Security');
     }
-    console.log(this.$route);
   },
   watch: {
     // whenever question changes, this function will run
     $route (to, from){
       if(this.$route.path === '/profile') {
         this.current_route = ref(0);
-        console.log('Changed');
       } else if(this.$route.path === '/security') {
         this.current_route = ref(1);
-        console.log('Security');
       }
     }
   },
@@ -738,13 +746,12 @@ export default {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, change it!',
-        cancelButtonText: 'No'
+        cancelButtonText: 'No',
       }).then((result) => {
         if (result.isConfirmed) {
           let currentObj = this;
           let data = this.credential;
 
-          Profile.changePassword({data})
           Profile.changePassword({
               new_password: currentObj.credential.new_password,
               confirm_password: currentObj.credential.confirm_password
@@ -766,6 +773,86 @@ export default {
         } else {
           document.getElementById("frm_change_pass").reset();
 
+        }
+      })
+    },
+    changeNumber() {
+      let that = this;
+      Profile.mobileVerification({
+          new_mobile_number: this.profile.mobile_number
+      })
+      .then(function (response) {
+        if(response.data.status === true) {
+          that.$swal.fire({
+            title: 'Verification code has been sent to your new number',
+            input: 'text',
+            inputAttributes: {
+              autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            preConfirm: (verification_code) => {
+              Profile.changeMobileNumber({
+                  new_mobile_number: that.profile.mobile_number,
+                  verification_code: verification_code
+              })
+              .then(function (response) {
+                if(response.data.status) {
+                  that.profile.temp_mobile_number = that.profile.mobile_number;
+                  that.toggleMobile();
+
+                  that.$swal.fire(
+                    response.data.message,
+                    that.output = response.data,
+                    'success'
+                  )
+                } else {
+                  that.inputVerification(that.profile.mobile_number);
+                }
+              });
+            }
+          })
+        }
+      })
+      .catch(function (error) {
+        currentObj.output = error;
+      });
+    },
+    inputVerification(mobile_number) {
+      let that = this;
+      this.$swal.fire({
+        title: 'Incorrect verification code. Please try again.',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        showLoaderOnConfirm: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        preConfirm: (verification_code) => {
+          Profile.changeMobileNumber({
+              new_mobile_number: that.profile.mobile_number,
+              verification_code: verification_code
+          })
+          .then(function (response) {
+            if(response.data.status) {
+              that.profile.temp_mobile_number = that.profile.mobile_number;
+              that.toggleMobile();
+
+              that.$swal.fire(
+                response.data.message,
+                that.output = response.data,
+                'success'
+              )
+            } else {
+              that.inputVerification(mobile_number)
+            }
+          });
         }
       })
     },

@@ -24,5 +24,17 @@ export default {
       await Csrf.getCookie();
       console.log(form);
       return Api.post('api/users/changePassword', form);
-    }
+    },
+
+    async mobileVerification(form) {
+      await Csrf.getCookie();
+  
+      return Api.post('api/users/mobileVerification', form);
+    },
+
+    async changeMobileNumber(form) {
+      await Csrf.getCookie();
+  
+      return Api.post('api/users/changeMobileNumber', form);
+    },
 };

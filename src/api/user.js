@@ -35,4 +35,10 @@ export default {
 
     return Api.post('api/forgot-password', form);
   },
+
+  async mobileVerification(form) {
+    await Csrf.getCookie();
+
+    return Api.post('api/mobileVerification', form);
+  },
 };

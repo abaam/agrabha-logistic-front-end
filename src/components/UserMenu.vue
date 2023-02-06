@@ -129,11 +129,12 @@
             Menu, MenuButton, MenuItems, MenuItem, UserCircleIcon, LogoutIcon, ChevronDownIcon, BellIcon
         },
         created() {
-            this.interval = setInterval(this.fetchNotifications, 2000),
+            // this.interval = setInterval(this.fetchNotifications, 2000),
+            this.fetchNotifications
             this.moment = moment
         },
         beforeDestroy () {
-            clearInterval(this.interval)
+            // clearInterval(this.interval)
         },
         methods: {
             logout(menu) {
